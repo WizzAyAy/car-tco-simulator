@@ -2,8 +2,11 @@ import { VEHICLE_PRESETS } from '@cts/shared/vehicles'
 import { Hono } from 'hono'
 import { electricityTariffsProvider } from '../providers/electricity'
 import { fuelPricesProvider } from '../providers/fuel-prices'
+import { og } from './og'
 
 export const api = new Hono()
+
+api.route('/og', og)
 
 api.get('/health', c => c.json({ ok: true, ts: Date.now() }))
 
