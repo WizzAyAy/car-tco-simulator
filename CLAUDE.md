@@ -37,7 +37,7 @@ packages/shared/ — Types et moteur TCO partagés
 
 - Toujours lire le code existant avant de modifier
 - Tests sur demande uniquement (sauf pour le moteur TCO qui doit rester couvert)
-- Garder ce CLAUDE.md à jour : tout changement d'archi, commande, service, type ou constante doit être reflété ici
+- **Docs toujours synchrones avec le code** : toute PR qui change l'archi, une commande, un service, une route, un type, une constante ou un poste de coût doit mettre à jour **tous** les fichiers `.md` concernés dans le même commit — `CLAUDE.md` (conventions/archi), `README.md` (usage public + features), `PLAN.md` (plan/scope), `DESIGN.md` (système de design). Un `.md` périmé est traité comme un bug. `CLAUDE.md` reste la source de vérité des conventions, `README.md` celle de l'usage.
 - Toute modification de l'UI passe par le système de design `DESIGN.md`
 
 ## Domaine TCO

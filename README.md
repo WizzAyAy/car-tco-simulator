@@ -1,19 +1,31 @@
 # Car TCO Simulator
 
-Web app pour simuler et comparer le **coût total d'usage (TCO)** de 2 voitures sur une durée configurable. Carburant, entretien, assurance, dépréciation, malus, financement, coût social du carbone — tout est inclus.
+[![CI](https://github.com/WizzAyAy/car-tco-simulator/actions/workflows/ci.yml/badge.svg)](https://github.com/WizzAyAy/car-tco-simulator/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](#licence)
+
+Web app pour simuler et comparer le **coût total d'usage (TCO)** de 2 voitures sur une durée configurable. Carburant, entretien, assurance, dépréciation, malus, financement (cash / crédit / **LOA**), coût social du carbone — tout est inclus.
 
 > **Insight clé** : un break essence à 10 k€ peut coûter plus cher à l'usage qu'un SUV électrique à 30 k€, selon le profil conducteur. Le simulateur rend cette contre-intuition lisible.
+
+## Fonctionnalités
+
+- **Moteur TCO pur** — calcul année-par-année, poste-par-poste, testé en isolation (41 tests).
+- **3 modes d'acquisition** — achat cash, crédit auto, ou **LOA/LLD** (loyers, apport, forfait km, option d'achat).
+- **Point de bascule** — le seuil de km/an à partir duquel la voiture gagnante s'inverse.
+- **Analyse de sensibilité (tornado)** — quelle hypothèse pèse le plus sur l'écart (km, prix énergie, dépréciation, durée, taux).
+- **Prix en temps réel** — carburants et électricité via les open data, avec fallback statique snapshoté.
+- **Partage social** — image Open Graph générée dynamiquement (`/api/og`) + meta injectées par comparaison (côté serveur pour les crawlers, côté client pour le SEO).
+- **Pages SEO** `/compare/:a-vs-:b`, **recommandation inversée** `/recommend`, et **widget `<iframe>`** `/embed`.
 
 ## Stack
 
 - **Frontend** : Vue 3 + TypeScript + Vite + Pinia + Vue Router + VueUse + Tailwind CSS v4
 - **Charts** : ECharts via vue-echarts
-- **Backend** : Hono + TS (sert le bundle web + proxy open APIs avec cache LRU)
+- **Backend** : Hono + TS (sert le bundle web + proxy open APIs avec cache LRU + génération d'image OG)
 - **Domaine partagé** : `@cts/shared` — moteur TCO en TS pur, testé en isolation
 - **Package manager** : pnpm 10 (workspaces)
-- **Tests** : Vitest
-- **Lint** : ESLint flat config (style Antfu)
-- **Type-check** : vue-tsc + tsc strict (`noUncheckedIndexedAccess` activé)
+- **Tests** : Vitest · **Lint** : ESLint flat config (style Antfu) · **Type-check** : vue-tsc + tsc strict (`noUncheckedIndexedAccess`)
+- **CI** : GitHub Actions (typecheck + lint + test + build)
 
 ## Arborescence
 
@@ -21,9 +33,10 @@ Web app pour simuler et comparer le **coût total d'usage (TCO)** de 2 voitures 
 car-tco-simulator/
 ├── apps/
 │   ├── web/                Vue 3 SPA
-│   └── api/                Hono backend (proxy + statique)
+│   └── api/                Hono backend (proxy + OG image + statique)
 ├── packages/
 │   └── shared/             Types + moteur TCO + presets véhicules
+├── .github/workflows/      CI
 ├── PLAN.md                 Plan d'exécution détaillé
 ├── CLAUDE.md               Conventions projet
 └── README.md
@@ -49,10 +62,10 @@ pnpm dev:api
 ## Qualité
 
 ```bash
-pnpm typecheck   # tous les packages
-pnpm lint
-pnpm test        # 10 tests sur le moteur TCO
-pnpm build
+pnpm typecheck   # tous les packages (vue-tsc + tsc)
+pnpm lint        # eslint (style Antfu)
+pnpm test        # vitest — moteur TCO (41 tests)
+pnpm build       # build web + api
 ```
 
 ## Architecture
@@ -73,26 +86,28 @@ Postes couverts :
 - Carte grise (année 1)
 - Bonus / Malus écologique (année 1, peut être négatif)
 - Réparations (provision croissante avec l'âge, VE = -45 %)
-- Intérêts du crédit (si financement activé)
-- Dépréciation (courbe par catégorie × énergie)
+- Intérêts du crédit (mode `credit`)
+- **Loyers LOA/LLD** (mode `leasing` : apport + loyers + dépassement de forfait km)
+- Dépréciation (courbe par catégorie × énergie ; nulle en leasing sans option d'achat)
 - Coût social du carbone (optionnel, base ADEME)
 
-### Backend (`apps/api`)
+> **Modes d'acquisition** : `TCOInput.acquisitionMode` ∈ `'cash' | 'credit' | 'leasing'`. Voir `CLAUDE.md` pour le détail du modèle LOA (option d'achat, valeur résiduelle, hypothèses).
 
-Routes minimales :
+L'analyse de sensibilité (point de bascule km + tornado) vit dans `tco/sensitivity.ts`, également pure et testée.
+
+### Backend (`apps/api`)
 
 - `GET /api/health`
 - `GET /api/fuel-prices` — proxy data.gouv.fr (prix carburants instantané), TTL 1 h
 - `GET /api/electricity-tariffs` — tarifs réglementés + bornes publiques, TTL 24 h
 - `GET /api/vehicle-presets` — catalogue de presets
+- `GET /api/og?winner=&loser=&savings=&duration=` — image Open Graph 1200×630 (satori + resvg), cache 24 h
 
-Chaque provider a un **fallback statique** snapshoté pour résilience si l'API publique est down.
-
-En production, Hono sert aussi le build statique du web depuis `apps/web/dist/`.
+Chaque provider de données a un **fallback statique** snapshoté pour résilience si l'API publique est down. En production, Hono sert le build statique du web depuis `apps/web/dist/` et **injecte les meta sociales par comparaison** sur les routes `/compare/:a-vs-:b`.
 
 ### Frontend (`apps/web`)
 
-- **Pinia store** `useSimulationStore` : véhicule A, véhicule B, profil, durée, paramètres → résultats calculés en `computed`.
+- **Pinia store** `useSimulationStore` : véhicule A, véhicule B, profil, durée, mode d'acquisition, paramètres → résultats calculés en `computed`.
 - **URL state sync** : l'état est encodé en query param `?s=…` à chaque modification → partageable.
 - **Live prices** : au chargement, fetch des prix carburants + élec et écrasement des valeurs par défaut.
 
@@ -100,7 +115,7 @@ En production, Hono sert aussi le build statique du web depuis `apps/web/dist/`.
 
 - `/` — comparateur interactif (page reine), état partageable via `?s=…`.
 - `/compare` — index SEO listant les comparatifs populaires (maillage interne).
-- `/compare/:slugA-vs-:slugB` — comparatif pré-rempli par slug (le slug est l'`id` du preset, ex. `clio-essence-vs-e208-electric`). Met à jour `<title>` et `<meta name="description">` par comparaison.
+- `/compare/:slugA-vs-:slugB` — comparatif pré-rempli par slug (le slug est l'`id` du preset, ex. `clio-essence-vs-e208-electric`). `<title>`, `<meta name="description">` et meta sociales par comparaison.
 - `/recommend` — recommandation inversée : un profil léger (km/an, type de trajet, budget, charge maison) classe **tous** les presets par TCO et met en avant le moins cher.
 - `/embed` — version compacte sans chrome (verdict + courbe cumulée), à intégrer en `<iframe>`.
 
@@ -134,7 +149,7 @@ Sans query params, l'`iframe` retombe sur le couple de véhicules par défaut du
 - Pas de catalogue exhaustif de modèles — duplique un preset et tweake.
 - Tempo / heures creuses simplifié (un seul tarif moyen) — version avancée en v2.
 - Pas de géocodage des prix locaux par adresse — moyenne nationale.
-- Pas de simulation LOA / leasing — uniquement achat (cash ou crédit auto classique).
+- Lecture par plaque (SIV) — envisagée, en attente (API tierce + donnée personnelle).
 
 ## Licence
 
