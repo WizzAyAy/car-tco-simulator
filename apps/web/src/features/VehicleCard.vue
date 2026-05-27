@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Energy, PurchaseCondition, Vehicle, VehicleCategory } from '@cts/shared'
-import { CATEGORY_LABELS_FR, CATEGORY_ORDER, VEHICLE_PRESETS } from '@cts/shared'
+import type { Energy, PurchaseCondition, Vehicle } from '@cts/shared'
 import { computed } from 'vue'
 import ListingLinksDropdown from '~/features/ListingLinksDropdown.vue'
+import VehiclePicker from '~/features/VehiclePicker.vue'
 
 const props = defineProps<{
   vehicle: Vehicle
@@ -20,14 +20,6 @@ const emit = defineEmits<{
   (e: 'setCondition', c: PurchaseCondition): void
 }>()
 
-const ENERGY_MARKERS: Record<Energy, string> = {
-  gasoline: '⛽',
-  diesel: '⛽',
-  hybrid: '🍃',
-  phev: '🔌',
-  electric: '⚡',
-}
-
 const ENERGY_LABELS: Record<Energy, string> = {
   gasoline: 'Essence',
   diesel: 'Diesel',
@@ -39,19 +31,6 @@ const ENERGY_LABELS: Record<Energy, string> = {
 const energyLabel = computed(() => ENERGY_LABELS[props.vehicle.energy])
 
 const consumptionUnit = computed(() => (props.vehicle.energy === 'electric' ? 'kWh/100km' : 'L/100km'))
-
-const presetsByCategory = computed(() => {
-  const groups: Record<VehicleCategory, typeof VEHICLE_PRESETS[number][]> = {
-    cityCar: [],
-    compact: [],
-    sedan: [],
-    estate: [],
-    suv: [],
-    utility: [],
-  }
-  for (const p of VEHICLE_PRESETS) groups[p.category].push(p)
-  return groups
-})
 
 const conditionOptions: { value: PurchaseCondition, label: string, sub: string }[] = [
   { value: 'new', label: 'Neuf', sub: '0 km' },
@@ -98,26 +77,7 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
       <ListingLinksDropdown :vehicle="vehicle" :condition="condition" />
     </div>
 
-    <label class="label"><span>Modèle</span></label>
-    <select
-      class="input-base mb-4"
-      :value="vehicle.id"
-      @change="emit('selectPreset', ($event.target as HTMLSelectElement).value)"
-    >
-      <optgroup
-        v-for="cat in CATEGORY_ORDER"
-        :key="cat"
-        :label="CATEGORY_LABELS_FR[cat]"
-      >
-        <option
-          v-for="preset in presetsByCategory[cat]"
-          :key="preset.id"
-          :value="preset.id"
-        >
-          {{ ENERGY_MARKERS[preset.energy] }} {{ preset.label }}
-        </option>
-      </optgroup>
-    </select>
+    <VehiclePicker :model-value="vehicle.id" @update:model-value="(id) => emit('selectPreset', id)" />
 
     <label class="label"><span>État du véhicule</span></label>
     <div class="grid grid-cols-3 gap-2 mb-4">
