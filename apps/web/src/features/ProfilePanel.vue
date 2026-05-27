@@ -1,15 +1,40 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import type { TripMix } from '@cts/shared'
+import { computed, ref } from 'vue'
 import SliderInput from '~/components/SliderInput.vue'
 import { formatEuro, formatKm } from '~/composables/useFormatters'
 import { useSimulationStore } from '~/stores/simulation'
 
 const store = useSimulationStore()
 
-const tripSum = computed(() => {
+interface TripProfile {
+  id: string
+  label: string
+  mix: TripMix
+}
+
+const TRIP_PROFILES: readonly TripProfile[] = [
+  { id: 'city', label: 'Ville', mix: { urban: 0.7, road: 0.25, highway: 0.05 } },
+  { id: 'mixed', label: 'Mixte', mix: { urban: 0.45, road: 0.35, highway: 0.2 } },
+  { id: 'road', label: 'Route', mix: { urban: 0.25, road: 0.5, highway: 0.25 } },
+  { id: 'highway', label: 'Autoroute', mix: { urban: 0.15, road: 0.25, highway: 0.6 } },
+]
+
+const activeProfileId = computed(() => {
   const m = store.profile.tripMix
-  return m.urban + m.road + m.highway
+  const found = TRIP_PROFILES.find(p =>
+    Math.abs(p.mix.urban - m.urban) < 0.03
+    && Math.abs(p.mix.road - m.road) < 0.03
+    && Math.abs(p.mix.highway - m.highway) < 0.03,
+  )
+  return found?.id ?? null
 })
+
+const showCustom = ref(activeProfileId.value === null)
+
+function setTripProfile(mix: TripMix) {
+  store.profile.tripMix = { ...mix }
+}
 
 function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
   const mix = { ...store.profile.tripMix, [field]: newValue }
@@ -41,37 +66,63 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
         :display="(v) => formatKm(v)"
       />
 
-      <div class="grid grid-cols-3 gap-2">
-        <SliderInput
-          :model-value="Math.round(store.profile.tripMix.urban * 100)"
-          :min="0"
-          :max="100"
-          :step="5"
-          label="Urbain"
-          unit="%"
-          @update:model-value="(v) => normalizeTrips('urban', v / 100)"
-        />
-        <SliderInput
-          :model-value="Math.round(store.profile.tripMix.road * 100)"
-          :min="0"
-          :max="100"
-          :step="5"
-          label="Route"
-          unit="%"
-          @update:model-value="(v) => normalizeTrips('road', v / 100)"
-        />
-        <SliderInput
-          :model-value="Math.round(store.profile.tripMix.highway * 100)"
-          :min="0"
-          :max="100"
-          :step="5"
-          label="Autoroute"
-          unit="%"
-          @update:model-value="(v) => normalizeTrips('highway', v / 100)"
-        />
-      </div>
-      <div v-if="Math.abs(tripSum - 1) > 0.02" class="text-xs text-warn">
-        Les pourcentages seront normalisés automatiquement.
+      <div>
+        <div class="label flex items-center justify-between">
+          <span>Type de trajet</span>
+          <button
+            type="button"
+            class="text-xs font-normal text-ink-subtle hover:text-ink transition-colors"
+            @click="showCustom = !showCustom"
+          >
+            {{ showCustom ? 'Masquer' : 'Ajuster finement' }}
+          </button>
+        </div>
+        <div class="grid grid-cols-4 gap-2">
+          <button
+            v-for="p in TRIP_PROFILES"
+            :key="p.id"
+            class="btn btn-ghost text-xs px-2 py-1.5"
+            :class="activeProfileId === p.id ? '!bg-ink !text-canvas-elevated !border-ink' : ''"
+            @click="setTripProfile(p.mix)"
+          >
+            {{ p.label }}
+          </button>
+        </div>
+        <p v-if="activeProfileId === null" class="text-xs text-ink-subtle mt-2">
+          Personnalisé : {{ Math.round(store.profile.tripMix.urban * 100) }}% ville ·
+          {{ Math.round(store.profile.tripMix.road * 100) }}% route ·
+          {{ Math.round(store.profile.tripMix.highway * 100) }}% autoroute
+        </p>
+
+        <div v-if="showCustom" class="grid grid-cols-3 gap-2 mt-3">
+          <SliderInput
+            :model-value="Math.round(store.profile.tripMix.urban * 100)"
+            :min="0"
+            :max="100"
+            :step="5"
+            label="Urbain"
+            unit="%"
+            @update:model-value="(v) => normalizeTrips('urban', v / 100)"
+          />
+          <SliderInput
+            :model-value="Math.round(store.profile.tripMix.road * 100)"
+            :min="0"
+            :max="100"
+            :step="5"
+            label="Route"
+            unit="%"
+            @update:model-value="(v) => normalizeTrips('road', v / 100)"
+          />
+          <SliderInput
+            :model-value="Math.round(store.profile.tripMix.highway * 100)"
+            :min="0"
+            :max="100"
+            :step="5"
+            label="Autoroute"
+            unit="%"
+            @update:model-value="(v) => normalizeTrips('highway', v / 100)"
+          />
+        </div>
       </div>
 
       <div>
