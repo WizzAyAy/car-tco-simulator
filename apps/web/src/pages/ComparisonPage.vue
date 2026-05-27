@@ -3,9 +3,11 @@ import type { Vehicle } from '@cts/shared'
 import { ref } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
 import BreakdownChart from '~/features/BreakdownChart.vue'
+import BreakEvenCard from '~/features/BreakEvenCard.vue'
 import CumulativeChart from '~/features/CumulativeChart.vue'
 import ProfilePanel from '~/features/ProfilePanel.vue'
 import SettingsPanel from '~/features/SettingsPanel.vue'
+import TornadoChart from '~/features/TornadoChart.vue'
 import VehicleCard from '~/features/VehicleCard.vue'
 import VerdictHero from '~/features/VerdictHero.vue'
 import WizardModal from '~/features/WizardModal.vue'
@@ -83,6 +85,12 @@ function updateVehicleB(v: Vehicle) {
       <section class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
         <CumulativeChart />
         <BreakdownChart />
+      </section>
+
+      <!-- Sensitivity analyses -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
+        <BreakEvenCard />
+        <TornadoChart />
       </section>
 
       <!-- Configuration sidebar / panels -->
