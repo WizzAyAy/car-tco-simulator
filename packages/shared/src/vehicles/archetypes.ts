@@ -20,6 +20,28 @@ const ENERGY_LABELS_FR: Record<Energy, string> = {
 
 const ENERGY_ORDER: readonly Energy[] = ['gasoline', 'diesel', 'hybrid', 'phev', 'electric']
 
+/**
+ * Premium brands are excluded from the median so an archetype reflects the
+ * typical, mainstream car of its segment rather than being pulled up by a few
+ * luxury models. Exclusion only applies when enough mainstream models remain
+ * (see MIN_BUCKET_SIZE); segments that are genuinely premium-only (e.g. an
+ * electric sedan) keep their full bucket so the archetype still exists.
+ */
+const PREMIUM_BRANDS: ReadonlySet<string> = new Set([
+  'Audi',
+  'BMW',
+  'Mercedes',
+  'Tesla',
+  'Polestar',
+  'Volvo',
+  'Porsche',
+  'Lexus',
+  'Jaguar',
+  'Genesis',
+  'Mini',
+  'DS',
+])
+
 /** Minimum real models in a bucket to derive a representative archetype. */
 const MIN_BUCKET_SIZE = 3
 
@@ -70,6 +92,10 @@ export function buildArchetypes(presets: readonly Vehicle[] = VEHICLE_PRESETS): 
       if (bucket.length < MIN_BUCKET_SIZE)
         continue
 
+      // Prefer mainstream models; fall back to the full bucket for premium-only segments.
+      const mainstream = bucket.filter(v => !PREMIUM_BRANDS.has(v.brand))
+      const sample = mainstream.length >= MIN_BUCKET_SIZE ? mainstream : bucket
+
       const isElectric = energy === 'electric'
       const isEv = energy === 'electric' || energy === 'phev'
 
@@ -80,22 +106,22 @@ export function buildArchetypes(presets: readonly Vehicle[] = VEHICLE_PRESETS): 
         searchModel: CATEGORY_LABELS_FR[category],
         category,
         energy,
-        purchasePrice: roundTo(medianOf(bucket, 'purchasePrice'), 100),
-        consumption: Math.round(medianOf(bucket, 'consumption') * 10) / 10,
-        co2: isElectric ? 0 : Math.round(medianOf(bucket, 'co2')),
-        insuranceCategory: Math.round(medianOf(bucket, 'insuranceCategory')),
-        maintenanceAnnual: roundTo(medianOf(bucket, 'maintenanceAnnual'), 10),
-        tireLifeKm: roundTo(medianOf(bucket, 'tireLifeKm'), 1000),
-        tireSetPrice: roundTo(medianOf(bucket, 'tireSetPrice'), 10),
-        malus: roundTo(medianOf(bucket, 'malus'), 10),
-        bonus: roundTo(medianOf(bucket, 'bonus'), 10),
-        curbWeight: roundTo(medianOf(bucket, 'curbWeight'), 5),
-        releaseYear: Math.round(medianOf(bucket, 'releaseYear')),
+        purchasePrice: roundTo(medianOf(sample, 'purchasePrice'), 100),
+        consumption: Math.round(medianOf(sample, 'consumption') * 10) / 10,
+        co2: isElectric ? 0 : Math.round(medianOf(sample, 'co2')),
+        insuranceCategory: Math.round(medianOf(sample, 'insuranceCategory')),
+        maintenanceAnnual: roundTo(medianOf(sample, 'maintenanceAnnual'), 10),
+        tireLifeKm: roundTo(medianOf(sample, 'tireLifeKm'), 1000),
+        tireSetPrice: roundTo(medianOf(sample, 'tireSetPrice'), 10),
+        malus: roundTo(medianOf(sample, 'malus'), 10),
+        bonus: roundTo(medianOf(sample, 'bonus'), 10),
+        curbWeight: roundTo(medianOf(sample, 'curbWeight'), 5),
+        releaseYear: Math.round(medianOf(sample, 'releaseYear')),
         isArchetype: true,
       }
 
       if (isEv) {
-        const range = roundTo(median(bucket.map(v => v.wltpRangeKm ?? 0).filter(n => n > 0)), 5)
+        const range = roundTo(median(sample.map(v => v.wltpRangeKm ?? 0).filter(n => n > 0)), 5)
         if (range > 0)
           archetype.wltpRangeKm = range
       }

@@ -37,6 +37,17 @@ describe('vehicle archetypes', () => {
     expect(buildArchetypes(VEHICLE_PRESETS)).toEqual(buildArchetypes(VEHICLE_PRESETS))
   })
 
+  it('reflects mainstream prices, not premium-inflated medians', () => {
+    const compactGas = VEHICLE_ARCHETYPES.find(a => a.id === 'archetype-compact-gasoline')
+    const compactEv = VEHICLE_ARCHETYPES.find(a => a.id === 'archetype-compact-electric')
+    expect(compactGas).toBeDefined()
+    expect(compactEv).toBeDefined()
+    // A mainstream compact gasoline must stay clearly cheaper than the EV archetype,
+    // and below the premium-inflated all-bucket median (~35.7k).
+    expect(compactGas!.purchasePrice).toBeLessThan(33000)
+    expect(compactGas!.purchasePrice).toBeLessThan(compactEv!.purchasePrice)
+  })
+
   it('skips sparse buckets (fewer than 3 real models)', () => {
     for (const a of VEHICLE_ARCHETYPES) {
       const count = VEHICLE_PRESETS.filter(v => v.category === a.category && v.energy === a.energy).length
