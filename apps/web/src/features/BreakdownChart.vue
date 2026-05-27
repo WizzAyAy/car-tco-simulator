@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { CostCategory } from '@cts/shared'
 import type { EChartsOption } from 'echarts'
-import { use } from 'echarts/core'
 import { BarChart } from 'echarts/charts'
 import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/components'
+import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { computed } from 'vue'
 import VChart from 'vue-echarts'
@@ -21,6 +21,7 @@ const CATEGORIES_ORDER: CostCategory[] = [
   'maintenance',
   'repairs',
   'tires',
+  'leasing',
   'financing',
   'malus',
   'parking',
@@ -92,7 +93,9 @@ const option = computed<EChartsOption>(() => {
 
 <template>
   <div class="card card-pad">
-    <h3 class="text-base font-semibold mb-1">Décomposition par poste de coût</h3>
+    <h3 class="text-base font-semibold mb-1">
+      Décomposition par poste de coût
+    </h3>
     <p class="text-xs text-ink-subtle mb-4">
       Chaque couleur représente un type de dépense sur toute la durée. Survole les barres pour les détails.
     </p>

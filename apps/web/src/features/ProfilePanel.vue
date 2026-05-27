@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useSimulationStore } from '~/stores/simulation'
+import { computed } from 'vue'
 import SliderInput from '~/components/SliderInput.vue'
 import { formatEuro, formatKm } from '~/composables/useFormatters'
-import { computed } from 'vue'
+import { useSimulationStore } from '~/stores/simulation'
 
 const store = useSimulationStore()
 
@@ -14,7 +14,8 @@ const tripSum = computed(() => {
 function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
   const mix = { ...store.profile.tripMix, [field]: newValue }
   const sum = mix.urban + mix.road + mix.highway
-  if (sum === 0) return
+  if (sum === 0)
+    return
   store.profile.tripMix = {
     urban: mix.urban / sum,
     road: mix.road / sum,
@@ -74,7 +75,9 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
       </div>
 
       <div>
-        <div class="label">Conducteur</div>
+        <div class="label">
+          Conducteur
+        </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="text-xs text-ink-subtle">Âge</label>
@@ -84,7 +87,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
               min="18"
               max="90"
               class="input-base font-num mt-1"
-            />
+            >
           </div>
           <div>
             <label class="text-xs text-ink-subtle">Bonus-malus (CRM)</label>
@@ -95,13 +98,15 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
               min="0.5"
               max="3.5"
               class="input-base font-num mt-1"
-            />
+            >
           </div>
         </div>
       </div>
 
       <div>
-        <div class="label">Formule d'assurance</div>
+        <div class="label">
+          Formule d'assurance
+        </div>
         <div class="grid grid-cols-3 gap-2">
           <button
             v-for="tier in (['thirdParty', 'thirdPartyPlus', 'comprehensive'] as const)"
@@ -116,7 +121,9 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
       </div>
 
       <div>
-        <div class="label">Prix carburants & électricité</div>
+        <div class="label">
+          Prix carburants & électricité
+        </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="text-xs text-ink-subtle">Essence (€/L)</label>
@@ -125,7 +132,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
               type="number"
               step="0.01"
               class="input-base font-num mt-1"
-            />
+            >
           </div>
           <div>
             <label class="text-xs text-ink-subtle">Diesel (€/L)</label>
@@ -134,7 +141,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
               type="number"
               step="0.01"
               class="input-base font-num mt-1"
-            />
+            >
           </div>
           <div>
             <label class="text-xs text-ink-subtle">Élec maison (€/kWh)</label>
@@ -143,7 +150,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
               type="number"
               step="0.0001"
               class="input-base font-num mt-1"
-            />
+            >
           </div>
           <div>
             <label class="text-xs text-ink-subtle">Élec borne rapide (€/kWh)</label>
@@ -152,15 +159,17 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
               type="number"
               step="0.01"
               class="input-base font-num mt-1"
-            />
+            >
           </div>
         </div>
       </div>
 
       <div>
-        <div class="label">Recharge électrique</div>
+        <div class="label">
+          Recharge électrique
+        </div>
         <label class="flex items-center gap-2 text-sm cursor-pointer">
-          <input v-model="store.profile.hasHomeCharging" type="checkbox" class="accent-ink" />
+          <input v-model="store.profile.hasHomeCharging" type="checkbox" class="accent-ink">
           Je peux recharger à domicile
         </label>
         <div v-if="store.profile.hasHomeCharging" class="mt-3">
@@ -178,7 +187,9 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
       </div>
 
       <div>
-        <div class="label">Stationnement</div>
+        <div class="label">
+          Stationnement
+        </div>
         <div class="grid grid-cols-3 gap-2 mb-2">
           <button
             v-for="t in (['garage', 'street', 'paidParking'] as const)"
@@ -195,8 +206,8 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
             v-model.number="store.profile.paidParkingMonthly"
             type="number"
             class="input-base font-num"
-            :placeholder="formatEuro(store.profile.paidParkingMonthly) + '/mois'"
-          />
+            :placeholder="`${formatEuro(store.profile.paidParkingMonthly)}/mois`"
+          >
         </div>
       </div>
     </div>

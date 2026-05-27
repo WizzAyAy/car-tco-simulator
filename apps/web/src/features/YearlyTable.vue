@@ -24,7 +24,9 @@ const visible = computed(() => (showAll.value ? rows.value : rows.value.slice(0,
 
 <template>
   <div class="card card-pad">
-    <h3 class="text-base font-semibold mb-1">Détail année par année</h3>
+    <h3 class="text-base font-semibold mb-1">
+      Détail année par année
+    </h3>
     <p class="text-xs text-ink-subtle mb-4">
       Le delta cumulé négatif signifie que la voiture B coûte moins cher à ce moment-là.
     </p>
@@ -33,12 +35,24 @@ const visible = computed(() => (showAll.value ? rows.value : rows.value.slice(0,
       <table class="w-full text-sm font-num tabular-nums">
         <thead class="border-b border-line">
           <tr class="text-xs text-ink-subtle uppercase tracking-wide">
-            <th class="text-left py-2 pr-3 font-medium">Année</th>
-            <th class="text-right py-2 px-3 font-medium">A · cette année</th>
-            <th class="text-right py-2 px-3 font-medium">A · cumulé</th>
-            <th class="text-right py-2 px-3 font-medium">B · cette année</th>
-            <th class="text-right py-2 px-3 font-medium">B · cumulé</th>
-            <th class="text-right py-2 pl-3 font-medium">Δ cumulé (B−A)</th>
+            <th class="text-left py-2 pr-3 font-medium">
+              Année
+            </th>
+            <th class="text-right py-2 px-3 font-medium">
+              A · cette année
+            </th>
+            <th class="text-right py-2 px-3 font-medium">
+              A · cumulé
+            </th>
+            <th class="text-right py-2 px-3 font-medium">
+              B · cette année
+            </th>
+            <th class="text-right py-2 px-3 font-medium">
+              B · cumulé
+            </th>
+            <th class="text-right py-2 pl-3 font-medium">
+              Δ cumulé (B−A)
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -47,11 +61,21 @@ const visible = computed(() => (showAll.value ? rows.value : rows.value.slice(0,
             :key="row.year"
             class="border-b border-line/60 hover:bg-canvas transition-colors"
           >
-            <td class="py-2.5 pr-3 font-sans">An {{ row.year }}</td>
-            <td class="text-right py-2.5 px-3">{{ formatEuro(row.a) }}</td>
-            <td class="text-right py-2.5 px-3 text-ink-muted">{{ formatEuro(row.aCum) }}</td>
-            <td class="text-right py-2.5 px-3">{{ formatEuro(row.b) }}</td>
-            <td class="text-right py-2.5 px-3 text-ink-muted">{{ formatEuro(row.bCum) }}</td>
+            <td class="py-2.5 pr-3 font-sans">
+              An {{ row.year }}
+            </td>
+            <td class="text-right py-2.5 px-3">
+              {{ formatEuro(row.a) }}
+            </td>
+            <td class="text-right py-2.5 px-3 text-ink-muted">
+              {{ formatEuro(row.aCum) }}
+            </td>
+            <td class="text-right py-2.5 px-3">
+              {{ formatEuro(row.b) }}
+            </td>
+            <td class="text-right py-2.5 px-3 text-ink-muted">
+              {{ formatEuro(row.bCum) }}
+            </td>
             <td
               class="text-right py-2.5 pl-3 font-medium"
               :class="row.diff < 0 ? 'text-accent' : row.diff > 0 ? 'text-warn' : 'text-ink-subtle'"

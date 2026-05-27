@@ -10,18 +10,18 @@ export type VehicleCategory =
 
 export type InsuranceTier = 'thirdParty' | 'thirdPartyPlus' | 'comprehensive'
 
-export type TripMix = {
+export interface TripMix {
   urban: number
   road: number
   highway: number
 }
 
-export type ChargeMix = {
+export interface ChargeMix {
   home: number
   fastStation: number
 }
 
-export type Vehicle = {
+export interface Vehicle {
   id: string
   label: string
   /** Brand for external listing search (e.g. "Renault", "Peugeot", "Tesla") */
@@ -45,7 +45,7 @@ export type Vehicle = {
   wltpRangeKm?: number
 }
 
-export type DriverProfile = {
+export interface DriverProfile {
   annualKm: number
   tripMix: TripMix
   region: string
@@ -65,17 +65,41 @@ export type DriverProfile = {
 
 export type PurchaseCondition = 'new' | 'usedRecent' | 'usedOld'
 
-export type TCOInput = {
+export type AcquisitionMode = 'cash' | 'credit' | 'leasing'
+
+export interface LeasingConfig {
+  /** Upfront "premier loyer majoré" / apport paid in year 1 */
+  initialDeposit: number
+  monthlyRent: number
+  termMonths: number
+  /** Contractual annual mileage cap (forfait km) */
+  mileageCapPerYear: number
+  /** Per-km charge applied to mileage driven above the cap */
+  overageCostPerKm: number
+  /** LOA buyback option (option d'achat); false models a pure LLD */
+  buyOption: boolean
+  /** Residual buyback price paid at the end of the term if buyOption is exercised */
+  buyOptionPrice: number
+}
+
+export interface TCOInput {
   vehicle: Vehicle
   profile: DriverProfile
   durationYears: number
   purchaseCondition: PurchaseCondition
+  /**
+   * Acquisition mode. Optional for backward compatibility: when omitted it is
+   * derived from `financing.enabled` (true → 'credit', false → 'cash').
+   */
+  acquisitionMode?: AcquisitionMode
   financing: {
     enabled: boolean
     downPayment: number
     aprPercent: number
     termYears: number
   }
+  /** Leasing (LOA/LLD) configuration, used only when acquisitionMode === 'leasing' */
+  leasing?: LeasingConfig
   includeCarbonExternality: boolean
   carbonPricePerTon: number
   inflationPercent: number
@@ -118,10 +142,11 @@ export type CostCategory =
   | 'malus'
   | 'repairs'
   | 'financing'
+  | 'leasing'
   | 'depreciation'
   | 'carbon'
 
-export type YearlyBreakdown = {
+export interface YearlyBreakdown {
   year: number
   age: number
   costs: Record<CostCategory, number>
@@ -129,7 +154,7 @@ export type YearlyBreakdown = {
   cumulative: number
 }
 
-export type TCOResult = {
+export interface TCOResult {
   vehicleId: string
   vehicleLabel: string
   durationYears: number
@@ -142,7 +167,7 @@ export type TCOResult = {
   co2EmittedKg: number
 }
 
-export type ComparisonResult = {
+export interface ComparisonResult {
   a: TCOResult
   b: TCOResult
   winner: 'a' | 'b' | 'tie'

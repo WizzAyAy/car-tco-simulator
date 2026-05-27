@@ -1,6 +1,6 @@
 import type { ComparisonResult } from '../types'
 
-export type VerdictSummary = {
+export interface VerdictSummary {
   headline: string
   sub: string
 }

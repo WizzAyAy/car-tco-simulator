@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { DEFAULT_LIFESTYLE, findTraditionalComparator, rankVehicles, scoreVehicle } from '../src/wizard'
 import { findPresetById, VEHICLE_PRESETS } from '../src/vehicles'
+import { DEFAULT_LIFESTYLE, findTraditionalComparator, rankVehicles, scoreVehicle } from '../src/wizard'
 
 describe('lifestyle wizard scorer', () => {
   it('urban solo low-budget user gets a city car suggested first', () => {
@@ -42,7 +42,7 @@ describe('lifestyle wizard scorer', () => {
     expect(ranked[0]!.vehicle.energy).not.toBe('electric')
   })
 
-  it('EV with insufficient range for very long daily commute gets a warning', () => {
+  it('eV with insufficient range for very long daily commute gets a warning', () => {
     const spring = findPresetById('spring-electric')!
     // 150km one-way × 2 = 300km daily, Spring 220km WLTP × 0.78 = 171km — insufficient
     const score = scoreVehicle(spring, {

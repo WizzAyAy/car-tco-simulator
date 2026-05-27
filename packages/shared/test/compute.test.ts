@@ -50,7 +50,7 @@ describe('computeTCO', () => {
     expect(result.byYear[0]?.costs.insurance).toBe(1000)
   })
 
-  it('EV running costs (excluding depreciation) are lower than diesel at high mileage', () => {
+  it('eV running costs (excluding depreciation) are lower than diesel at high mileage', () => {
     const e208 = findPresetById('e208-electric')!
     const clioDiesel = findPresetById('clio-diesel')!
     const profile = {

@@ -18,7 +18,8 @@ function easeOutCubic(t: number): number {
 }
 
 function animateTo(target: number) {
-  if (raf) cancelAnimationFrame(raf)
+  if (raf)
+    cancelAnimationFrame(raf)
   const start = displayed.value
   const startTime = performance.now()
   const delta = target - start
@@ -26,7 +27,8 @@ function animateTo(target: number) {
     const elapsed = now - startTime
     const t = Math.min(1, elapsed / props.duration)
     displayed.value = start + delta * easeOutCubic(t)
-    if (t < 1) raf = requestAnimationFrame(tick)
+    if (t < 1)
+      raf = requestAnimationFrame(tick)
     else displayed.value = target
   }
   raf = requestAnimationFrame(tick)

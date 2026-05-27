@@ -1,4 +1,4 @@
-export type FuelPricesResponse = {
+export interface FuelPricesResponse {
   source: string
   updated: string
   prices: {
@@ -9,7 +9,7 @@ export type FuelPricesResponse = {
   }
 }
 
-export type ElectricityTariffsResponse = {
+export interface ElectricityTariffsResponse {
   source: string
   updated: string
   tariffs: {

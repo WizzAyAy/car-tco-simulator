@@ -1,7 +1,8 @@
-import type { DriverProfile, PurchaseCondition, TCOInput, TCOResult, Vehicle } from '@cts/shared'
+import type { AcquisitionMode, DriverProfile, PurchaseCondition, TCOInput, TCOResult, Vehicle } from '@cts/shared'
 import {
   compareTCO,
   computeTCO,
+  DEFAULT_LEASING,
   DEFAULT_PROFILE,
   estimateUsedPrice,
   findPresetById,
@@ -37,10 +38,18 @@ export const useSimulationStore = defineStore('simulation', () => {
   const energyInflationPercent = ref(3.0)
   const includeCarbonExternality = ref(false)
   const carbonPricePerTon = ref(90)
-  const financingEnabled = ref(false)
+  const acquisitionMode = ref<AcquisitionMode>('cash')
+  const financingEnabled = computed(() => acquisitionMode.value === 'credit')
   const financingDownPayment = ref(0)
   const financingApr = ref(4.5)
   const financingTermYears = ref(5)
+  const leasingInitialDeposit = ref(DEFAULT_LEASING.initialDeposit)
+  const leasingMonthlyRent = ref(DEFAULT_LEASING.monthlyRent)
+  const leasingTermMonths = ref(DEFAULT_LEASING.termMonths)
+  const leasingMileageCapPerYear = ref(DEFAULT_LEASING.mileageCapPerYear)
+  const leasingOverageCostPerKm = ref(DEFAULT_LEASING.overageCostPerKm)
+  const leasingBuyOption = ref(DEFAULT_LEASING.buyOption)
+  const leasingBuyOptionPrice = ref(DEFAULT_LEASING.buyOptionPrice)
 
   const livePricesLoaded = ref(false)
   const pricesSource = ref<'unknown' | 'live' | 'static-fallback'>('unknown')
@@ -58,22 +67,26 @@ export const useSimulationStore = defineStore('simulation', () => {
 
   function selectPresetA(id: string) {
     const v = findPresetById(id)
-    if (v) vehicleA.value = applyConditionDefaults(cloneVehicle(v), v, conditionA.value)
+    if (v)
+      vehicleA.value = applyConditionDefaults(cloneVehicle(v), v, conditionA.value)
   }
   function selectPresetB(id: string) {
     const v = findPresetById(id)
-    if (v) vehicleB.value = applyConditionDefaults(cloneVehicle(v), v, conditionB.value)
+    if (v)
+      vehicleB.value = applyConditionDefaults(cloneVehicle(v), v, conditionB.value)
   }
 
   function setConditionA(c: PurchaseCondition) {
     conditionA.value = c
     const preset = findPresetById(vehicleA.value.id)
-    if (preset) vehicleA.value = applyConditionDefaults(vehicleA.value, preset, c)
+    if (preset)
+      vehicleA.value = applyConditionDefaults(vehicleA.value, preset, c)
   }
   function setConditionB(c: PurchaseCondition) {
     conditionB.value = c
     const preset = findPresetById(vehicleB.value.id)
-    if (preset) vehicleB.value = applyConditionDefaults(vehicleB.value, preset, c)
+    if (preset)
+      vehicleB.value = applyConditionDefaults(vehicleB.value, preset, c)
   }
 
   function buildInput(vehicle: Vehicle, condition: PurchaseCondition): TCOInput {
@@ -82,11 +95,21 @@ export const useSimulationStore = defineStore('simulation', () => {
       profile: profile.value,
       durationYears: durationYears.value,
       purchaseCondition: condition,
+      acquisitionMode: acquisitionMode.value,
       financing: {
-        enabled: financingEnabled.value,
+        enabled: acquisitionMode.value === 'credit',
         downPayment: financingDownPayment.value,
         aprPercent: financingApr.value,
         termYears: financingTermYears.value,
+      },
+      leasing: {
+        initialDeposit: leasingInitialDeposit.value,
+        monthlyRent: leasingMonthlyRent.value,
+        termMonths: leasingTermMonths.value,
+        mileageCapPerYear: leasingMileageCapPerYear.value,
+        overageCostPerKm: leasingOverageCostPerKm.value,
+        buyOption: leasingBuyOption.value,
+        buyOptionPrice: leasingBuyOptionPrice.value,
       },
       includeCarbonExternality: includeCarbonExternality.value,
       carbonPricePerTon: carbonPricePerTon.value,
@@ -136,10 +159,18 @@ export const useSimulationStore = defineStore('simulation', () => {
     energyInflationPercent,
     includeCarbonExternality,
     carbonPricePerTon,
+    acquisitionMode,
     financingEnabled,
     financingDownPayment,
     financingApr,
     financingTermYears,
+    leasingInitialDeposit,
+    leasingMonthlyRent,
+    leasingTermMonths,
+    leasingMileageCapPerYear,
+    leasingOverageCostPerKm,
+    leasingBuyOption,
+    leasingBuyOptionPrice,
     livePricesLoaded,
     pricesSource,
     pricesUpdatedAt,

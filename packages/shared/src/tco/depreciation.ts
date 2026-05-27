@@ -1,7 +1,22 @@
 import type { Energy, VehicleCategory } from '../types'
 
 const BASE_CURVE: readonly number[] = [
-  1.0, 0.75, 0.62, 0.52, 0.45, 0.4, 0.35, 0.3, 0.27, 0.24, 0.22, 0.2, 0.18, 0.17, 0.16, 0.15,
+  1.0,
+  0.75,
+  0.62,
+  0.52,
+  0.45,
+  0.4,
+  0.35,
+  0.3,
+  0.27,
+  0.24,
+  0.22,
+  0.2,
+  0.18,
+  0.17,
+  0.16,
+  0.15,
 ]
 
 const ENERGY_MULTIPLIER: Record<Energy, number> = {
@@ -45,7 +60,8 @@ export function relativeResidualFactor(
   category: VehicleCategory,
 ): number {
   const baseFactor = residualFactor(priorYears, energy, category)
-  if (baseFactor === 0) return 0
+  if (baseFactor === 0)
+    return 0
   const currentFactor = residualFactor(priorYears + yearsOwned, energy, category)
   return currentFactor / baseFactor
 }

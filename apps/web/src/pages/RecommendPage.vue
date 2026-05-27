@@ -35,7 +35,7 @@ const form = reactive({
   durationYears: 5,
 })
 
-type RankedVehicle = {
+interface RankedVehicle {
   vehicle: Vehicle
   totalCost: number
   monthlyEquivalent: number

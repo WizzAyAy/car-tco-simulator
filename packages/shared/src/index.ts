@@ -1,4 +1,4 @@
-export { buildDefaultInput, DEFAULT_PROFILE, estimateUsedPrice } from './defaults'
+export { buildDefaultInput, DEFAULT_LEASING, DEFAULT_PROFILE, estimateUsedPrice } from './defaults'
 export * from './share'
 export * from './tco'
 export * from './types'

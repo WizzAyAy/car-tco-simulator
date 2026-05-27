@@ -14,8 +14,10 @@ const vehicleA = computed(() => slugToPreset(String(route.query.a ?? '')))
 const vehicleB = computed(() => slugToPreset(String(route.query.b ?? '')))
 
 watchEffect(() => {
-  if (vehicleA.value) store.selectPresetA(vehicleA.value.id)
-  if (vehicleB.value) store.selectPresetB(vehicleB.value.id)
+  if (vehicleA.value)
+    store.selectPresetA(vehicleA.value.id)
+  if (vehicleB.value)
+    store.selectPresetB(vehicleB.value.id)
 })
 
 usePageMeta('Comparatif coût total · Car TCO Simulator')

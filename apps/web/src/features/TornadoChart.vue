@@ -2,9 +2,9 @@
 import type { SensitivityFactor, SensitivityRow, TCOInput } from '@cts/shared'
 import type { EChartsOption } from 'echarts'
 import { computeSensitivity } from '@cts/shared'
-import { use } from 'echarts/core'
 import { BarChart } from 'echarts/charts'
 import { GridComponent, MarkLineComponent, TooltipComponent } from 'echarts/components'
+import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { computed } from 'vue'
 import VChart from 'vue-echarts'
@@ -134,7 +134,9 @@ const option = computed<EChartsOption>(() => {
 
 <template>
   <div class="card card-pad">
-    <h3 class="text-base font-semibold mb-1">Sensibilité de l'économie</h3>
+    <h3 class="text-base font-semibold mb-1">
+      Sensibilité de l'économie
+    </h3>
     <p class="text-xs text-ink-subtle mb-4">
       Impact d'une variation de ±{{ DELTA_PERCENT }} % de chaque hypothèse sur l'économie finale.
       Plus la barre est longue, plus l'hypothèse est déterminante.

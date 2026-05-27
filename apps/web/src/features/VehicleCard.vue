@@ -4,17 +4,9 @@ import { CATEGORY_LABELS_FR, CATEGORY_ORDER, VEHICLE_PRESETS } from '@cts/shared
 import { computed } from 'vue'
 import ListingLinksDropdown from '~/features/ListingLinksDropdown.vue'
 
-const ENERGY_MARKERS: Record<Energy, string> = {
-  gasoline: '⛽',
-  diesel: '⛽',
-  hybrid: '🍃',
-  phev: '🔌',
-  electric: '⚡',
-}
-
 const props = defineProps<{
   vehicle: Vehicle
-  slot: 'A' | 'B'
+  side: 'A' | 'B'
   condition: PurchaseCondition
   totalCost: number
   perMonth: number
@@ -28,15 +20,23 @@ const emit = defineEmits<{
   (e: 'setCondition', c: PurchaseCondition): void
 }>()
 
-const energyLabel = computed(() => {
-  switch (props.vehicle.energy) {
-    case 'gasoline': return 'Essence'
-    case 'diesel': return 'Diesel'
-    case 'hybrid': return 'Hybride'
-    case 'phev': return 'Hybride rechargeable'
-    case 'electric': return 'Électrique'
-  }
-})
+const ENERGY_MARKERS: Record<Energy, string> = {
+  gasoline: '⛽',
+  diesel: '⛽',
+  hybrid: '🍃',
+  phev: '🔌',
+  electric: '⚡',
+}
+
+const ENERGY_LABELS: Record<Energy, string> = {
+  gasoline: 'Essence',
+  diesel: 'Diesel',
+  hybrid: 'Hybride',
+  phev: 'Hybride rechargeable',
+  electric: 'Électrique',
+}
+
+const energyLabel = computed(() => ENERGY_LABELS[props.vehicle.energy])
 
 const consumptionUnit = computed(() => (props.vehicle.energy === 'electric' ? 'kWh/100km' : 'L/100km'))
 
@@ -69,7 +69,7 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
     <div class="flex items-start justify-between gap-4 mb-4">
       <div>
         <div class="flex items-center gap-2 mb-1 flex-wrap">
-          <span class="badge" :class="accentClass">Voiture {{ slot }}</span>
+          <span class="badge" :class="accentClass">Voiture {{ side }}</span>
           <span class="text-xs text-ink-subtle uppercase tracking-wide">{{ energyLabel }}</span>
           <span
             v-if="vehicle.wltpRangeKm && (vehicle.energy === 'electric' || vehicle.energy === 'phev')"
@@ -131,8 +131,12 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
           : 'border-line bg-canvas hover:border-ink/40'"
         @click="emit('setCondition', opt.value)"
       >
-        <div class="text-xs font-medium leading-tight">{{ opt.label }}</div>
-        <div class="text-[10px] opacity-70 mt-0.5 font-num">{{ opt.sub }}</div>
+        <div class="text-xs font-medium leading-tight">
+          {{ opt.label }}
+        </div>
+        <div class="text-[10px] opacity-70 mt-0.5 font-num">
+          {{ opt.sub }}
+        </div>
       </button>
     </div>
 
@@ -143,35 +147,43 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
       </summary>
       <div class="mt-3 grid grid-cols-2 gap-3">
         <div>
-          <div class="label">Prix d'achat (€)</div>
+          <div class="label">
+            Prix d'achat (€)
+          </div>
           <input
             type="number"
             class="input-base font-num"
             :value="vehicle.purchasePrice"
             @input="update('purchasePrice', Number(($event.target as HTMLInputElement).value))"
-          />
+          >
         </div>
         <div>
-          <div class="label">Conso ({{ consumptionUnit }})</div>
+          <div class="label">
+            Conso ({{ consumptionUnit }})
+          </div>
           <input
             type="number"
             step="0.1"
             class="input-base font-num"
             :value="vehicle.consumption"
             @input="update('consumption', Number(($event.target as HTMLInputElement).value))"
-          />
+          >
         </div>
         <div>
-          <div class="label">Entretien (€/an)</div>
+          <div class="label">
+            Entretien (€/an)
+          </div>
           <input
             type="number"
             class="input-base font-num"
             :value="vehicle.maintenanceAnnual"
             @input="update('maintenanceAnnual', Number(($event.target as HTMLInputElement).value))"
-          />
+          >
         </div>
         <div>
-          <div class="label">Cat. assurance</div>
+          <div class="label">
+            Cat. assurance
+          </div>
           <input
             type="number"
             min="1"
@@ -179,25 +191,29 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
             class="input-base font-num"
             :value="vehicle.insuranceCategory"
             @input="update('insuranceCategory', Number(($event.target as HTMLInputElement).value))"
-          />
+          >
         </div>
         <div>
-          <div class="label">Malus écologique (€)</div>
+          <div class="label">
+            Malus écologique (€)
+          </div>
           <input
             type="number"
             class="input-base font-num"
             :value="vehicle.malus"
             @input="update('malus', Number(($event.target as HTMLInputElement).value))"
-          />
+          >
         </div>
         <div>
-          <div class="label">Bonus écologique (€)</div>
+          <div class="label">
+            Bonus écologique (€)
+          </div>
           <input
             type="number"
             class="input-base font-num"
             :value="vehicle.bonus"
             @input="update('bonus', Number(($event.target as HTMLInputElement).value))"
-          />
+          >
         </div>
       </div>
       <p v-if="condition !== 'new'" class="text-xs text-ink-subtle mt-3">

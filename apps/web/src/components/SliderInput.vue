@@ -18,12 +18,14 @@ const emit = defineEmits<{
 
 const pct = computed(() => {
   const range = props.max - props.min
-  if (range === 0) return 0
+  if (range === 0)
+    return 0
   return ((props.modelValue - props.min) / range) * 100
 })
 
 const displayValue = computed(() => {
-  if (props.display) return props.display(props.modelValue)
+  if (props.display)
+    return props.display(props.modelValue)
   return `${props.modelValue}${props.unit ?? ''}`
 })
 
@@ -49,7 +51,7 @@ function onInput(event: Event) {
         :value="modelValue"
         :style="{ '--pct': `${pct}%` } as Record<string, string>"
         @input="onInput"
-      />
+      >
       <span class="font-num text-sm font-medium tabular-nums min-w-[80px] text-right">
         {{ displayValue }}
       </span>

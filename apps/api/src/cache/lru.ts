@@ -1,6 +1,6 @@
 import { LRUCache } from 'lru-cache'
 
-export type CachedFetcher<T> = {
+export interface CachedFetcher<T> {
   get: () => Promise<T>
   invalidate: () => void
 }

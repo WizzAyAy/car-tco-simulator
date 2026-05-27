@@ -1,6 +1,6 @@
 import type { PurchaseCondition, Vehicle } from '@cts/shared'
 
-export type ListingProvider = {
+export interface ListingProvider {
   id: string
   label: string
   hint: string
@@ -12,22 +12,26 @@ function slugify(s: string): string {
   return s
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036F]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
 }
 
 function maxYearFromCondition(condition: PurchaseCondition): number {
   const now = new Date().getFullYear()
-  if (condition === 'new') return now
-  if (condition === 'usedRecent') return now - 1
+  if (condition === 'new')
+    return now
+  if (condition === 'usedRecent')
+    return now - 1
   return now - 3
 }
 
 function minYearFromCondition(condition: PurchaseCondition): number {
   const now = new Date().getFullYear()
-  if (condition === 'new') return now - 1
-  if (condition === 'usedRecent') return now - 5
+  if (condition === 'new')
+    return now - 1
+  if (condition === 'usedRecent')
+    return now - 5
   return now - 10
 }
 
@@ -79,7 +83,7 @@ export const LISTING_PROVIDERS: ListingProvider[] = [
   },
   {
     id: 'largus',
-    label: "L'Argus",
+    label: 'L\'Argus',
     hint: 'Cote + annonces',
     brandColor: '#0067b1',
     urlFor: (v) => {

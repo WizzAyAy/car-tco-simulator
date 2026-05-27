@@ -1,12 +1,12 @@
-import fallback from '../data/fuel-prices-fallback.json' with { type: 'json' }
 import { memoizeWithTTL } from '../cache/lru'
+import fallback from '../data/fuel-prices-fallback.json' with { type: 'json' }
 
 const DATA_GOUV_ENDPOINT
   = 'https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records'
 
 type FuelType = 'gasoline' | 'diesel' | 'e85' | 'lpg'
 
-export type FuelPrices = {
+export interface FuelPrices {
   source: 'live' | 'static-fallback'
   updated: string
   prices: Record<FuelType, { min: number, max: number, average: number }>

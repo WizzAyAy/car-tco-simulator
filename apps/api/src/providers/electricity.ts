@@ -1,5 +1,5 @@
-import fallback from '../data/electricity-fallback.json' with { type: 'json' }
 import { memoizeWithTTL } from '../cache/lru'
+import fallback from '../data/electricity-fallback.json' with { type: 'json' }
 
 export type ElectricityTariffs = typeof fallback
 

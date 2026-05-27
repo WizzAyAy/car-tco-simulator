@@ -16,17 +16,20 @@ const percentFormatter = new Intl.NumberFormat('fr-FR', {
 })
 
 export function formatEuro(value: number, precise = false): string {
-  if (!Number.isFinite(value)) return '—'
+  if (!Number.isFinite(value))
+    return '—'
   return (precise ? eurPreciseFormatter : eurFormatter).format(value)
 }
 
 export function formatNumber(value: number): string {
-  if (!Number.isFinite(value)) return '—'
+  if (!Number.isFinite(value))
+    return '—'
   return numberFormatter.format(value)
 }
 
 export function formatPercent(value: number): string {
-  if (!Number.isFinite(value)) return '—'
+  if (!Number.isFinite(value))
+    return '—'
   return percentFormatter.format(value / 100)
 }
 

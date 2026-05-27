@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { EChartsOption } from 'echarts'
-import { use } from 'echarts/core'
 import { LineChart } from 'echarts/charts'
 import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/components'
+import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { computed } from 'vue'
 import VChart from 'vue-echarts'
@@ -70,7 +70,9 @@ const option = computed<EChartsOption>(() => {
 
 <template>
   <div class="card card-pad">
-    <h3 class="text-base font-semibold mb-1">Coût cumulé année par année</h3>
+    <h3 class="text-base font-semibold mb-1">
+      Coût cumulé année par année
+    </h3>
     <p class="text-xs text-ink-subtle mb-4">
       Plus la courbe monte vite, plus la voiture coûte cher. L'intersection éventuelle marque le point d'équilibre.
     </p>

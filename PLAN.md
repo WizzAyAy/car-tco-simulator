@@ -9,6 +9,7 @@
 **Cible** : particulier qui hésite entre 2 voitures (souvent essence/diesel vs électrique, ou citadine vs break/SUV).
 
 **Non-objectifs (MVP)** :
+
 - Pas de catalogue exhaustif de modèles — on s'appuie sur des **presets** + customisation libre
 - Pas d'estimation de revente fine par modèle/millésime — on utilise des courbes de dépréciation par catégorie
 - Pas de comptes utilisateurs (l'état reste local + URL partageable)
@@ -18,11 +19,13 @@
 Le TCO se décompose en **postes** sur une durée N années :
 
 ### Coûts d'acquisition
+
 - Prix d'achat (neuf ou occasion)
 - Bonus écologique / prime à la conversion (auto-calculé pour les VE)
 - Coût de financement (taux + durée, optionnel — sinon cash)
 
 ### Coûts d'usage variables
+
 - **Carburant / électricité** : `km_an × conso / 100 × prix_unitaire`
   - VE : split charge maison vs station rapide (% configurable)
   - Tarif maison : heures pleines / creuses (Tempo en option)
@@ -31,6 +34,7 @@ Le TCO se décompose en **postes** sur une durée N années :
 - **Consommables divers** : essuie-glaces, lave-glace, ampoules…
 
 ### Coûts fixes annuels
+
 - Assurance (tiers / tous risques, bonus, profil conducteur)
 - Contrôle technique (tous les 2 ans après 4 ans)
 - Stationnement résidentiel (optionnel)
@@ -38,20 +42,24 @@ Le TCO se décompose en **postes** sur une durée N années :
 - Malus écologique (CO₂ / poids)
 
 ### Coûts de réparation
+
 - Provision annuelle basée sur l'âge du véhicule (courbe croissante)
 - Risque de panne majeure (VE : batterie ; thermique : boîte/moteur)
 
 ### Dépréciation
+
 - Valeur résiduelle estimée à N années via courbe de dépréciation par catégorie/énergie
 - **Coût réel** = prix d'achat − valeur de revente
 
 ### Externalités optionnelles (toggle)
+
 - CO₂ émis cumulé (kg)
 - Coût social du carbone (€ équivalent, base ADEME)
 
 ## 3. Profil conducteur
 
 Inputs qui influent les calculs :
+
 - **Kilométrage annuel** (slider 5 000 – 50 000 km)
 - **Répartition urbain / route / autoroute** (3 sliders qui se complètent à 100 %)
 - **Région** (impacte assurance + tarif élec local)
@@ -65,17 +73,17 @@ Inputs qui influent les calculs :
 
 Catalogue initial (10–15 entrées) couvrant les archétypes :
 
-| Catégorie | Exemples |
-|---|---|
-| Citadine essence | Clio, 208, Polo |
-| Citadine électrique | Zoé, e-208, MG4 |
-| Compacte hybride | Yaris Cross, Niro HEV |
-| Berline diesel | 308 BlueHDi, Golf TDI |
-| Break essence | Octavia Combi, Megane SW |
-| Break diesel | Passat SW, V60 |
-| SUV électrique | Tesla Model Y, ID.4, Ariya |
-| SUV thermique | 3008, Tiguan, RAV4 |
-| Utilitaire familial | Berlingo, Rifter |
+| Catégorie           | Exemples                   |
+| ------------------- | -------------------------- |
+| Citadine essence    | Clio, 208, Polo            |
+| Citadine électrique | Zoé, e-208, MG4            |
+| Compacte hybride    | Yaris Cross, Niro HEV      |
+| Berline diesel      | 308 BlueHDi, Golf TDI      |
+| Break essence       | Octavia Combi, Megane SW   |
+| Break diesel        | Passat SW, V60             |
+| SUV électrique      | Tesla Model Y, ID.4, Ariya |
+| SUV thermique       | 3008, Tiguan, RAV4         |
+| Utilitaire familial | Berlingo, Rifter           |
 
 Chaque preset porte : prix neuf indicatif, conso L/100 ou kWh/100, émissions CO₂, catégorie d'assurance, courbe de dépréciation, intervalles d'entretien.
 
@@ -84,6 +92,7 @@ L'utilisateur peut **dupliquer un preset et tweaker** chaque paramètre.
 ## 5. Architecture technique
 
 ### Stack
+
 - **Frontend** : Vue 3 + TypeScript + Vite + Pinia + Vue Router + VueUse + Tailwind CSS
 - **Charts** : ECharts (riche, performant, accessible) — ou Chart.js si plus simple suffit
 - **Backend proxy/API** : Hono (TS, edge-ready, ultra léger) sur Node 22 — endpoint REST minimal
@@ -95,6 +104,7 @@ L'utilisateur peut **dupliquer un preset et tweaker** chaque paramètre.
 - **Déploiement** : Fly.io (1 service combiné : Hono sert le build statique + endpoints `/api/*`)
 
 ### Arborescence
+
 ```
 car-tco-simulator/
 ├── apps/
@@ -132,34 +142,39 @@ car-tco-simulator/
 ```
 
 ### Séparation domaine pur
+
 Le moteur de calcul TCO vit dans `apps/web/src/domain/tco/` (ou dans `packages/shared` si on veut le partager côté back).
 **Fonctions pures, testables en isolation** : `computeTCO(input: TCOInput): TCOResult`.
 Aucune dépendance Vue, aucun fetch — uniquement de l'arithmétique.
 
 ## 6. Open APIs intégrées
 
-| Source | Donnée | Endpoint | Cache TTL |
-|---|---|---|---|
-| data.economie.gouv.fr | Prix carburants par station | `prix-des-carburants-en-france-flux-instantane-v2` | 1 h |
-| data.gouv.fr / ADEME | Conso/CO₂ par modèle homologué | dataset "véhicules commercialisés" | 7 j |
-| commission régulation énergie | Tarif réglementé électricité | scraping ou dataset CRE | 1 j |
-| api.gouv.fr (SIV) | Catégorie véhicule par immatriculation (stretch goal) | — | — |
-| OpenStreetMap Overpass | Bornes de recharge proches (stretch) | overpass-api | 1 j |
+| Source                        | Donnée                                                | Endpoint                                           | Cache TTL |
+| ----------------------------- | ----------------------------------------------------- | -------------------------------------------------- | --------- |
+| data.economie.gouv.fr         | Prix carburants par station                           | `prix-des-carburants-en-france-flux-instantane-v2` | 1 h       |
+| data.gouv.fr / ADEME          | Conso/CO₂ par modèle homologué                        | dataset "véhicules commercialisés"                 | 7 j       |
+| commission régulation énergie | Tarif réglementé électricité                          | scraping ou dataset CRE                            | 1 j       |
+| api.gouv.fr (SIV)             | Catégorie véhicule par immatriculation (stretch goal) | —                                                  | —         |
+| OpenStreetMap Overpass        | Bornes de recharge proches (stretch)                  | overpass-api                                       | 1 j       |
 
 **Stratégie de résilience** : chaque provider a un **fallback statique** snapshoté dans le repo, utilisé si l'API est down.
 
 ## 7. Pages / flow utilisateur
 
 ### 1. Landing
+
 Brève accroche, exemple chiffré frappant ("Saviez-vous qu'un SUV électrique peut coûter 4 000 € de moins qu'un break essence sur 5 ans pour un commuter ?"), bouton "Comparer 2 voitures".
 
 ### 2. Setup
+
 3 étapes guidées (wizard léger, pas obligatoire) :
+
 1. **Votre profil** (km/an, type de trajet, région, charge maison)
 2. **Voiture A** (preset → ajustements)
 3. **Voiture B** (preset → ajustements)
 
 ### 3. Comparison (la page reine)
+
 - Hero : "Sur 5 ans, **Voiture B coûte 3 240 € de moins** que Voiture A" — gros chiffre, couleur sémantique
 - Graphique cumulé année par année (2 courbes qui se croisent ou non)
 - Stacked bar par poste de coût (carburant, entretien, assurance, dépréciation, etc.)
@@ -169,6 +184,7 @@ Brève accroche, exemple chiffré frappant ("Saviez-vous qu'un SUV électrique p
 - Bouton "Exporter en PDF"
 
 ### 4. Détails par voiture (drilldown)
+
 Page dédiée à chaque voiture avec breakdown complet de chaque poste.
 
 ## 8. Direction visuelle proposée (à reviewer)
@@ -178,6 +194,7 @@ Page dédiée à chaque voiture avec breakdown complet de chaque poste.
 **Aesthetic** : data-driven, moderne, premium-mais-accessible.
 
 **Palette préliminaire** :
+
 - Fond : off-white `#FAFAF9` (clair) / `#0A0A0B` (dark)
 - Texte : `#0A0A0B` / `#FAFAF9`
 - Accent primaire : un vert profond pour l'économie / le positif (`#10B981` env.)
@@ -185,17 +202,20 @@ Page dédiée à chaque voiture avec breakdown complet de chaque poste.
 - Neutres : 9 niveaux de gris
 
 **Typographie** :
+
 - Display : **Geist** (ou Inter Display) pour les gros chiffres
 - Body : **Inter** ou **Geist**
 - Mono : **JetBrains Mono** pour les data tables et tooltips chiffrés
 
 **Composants signature** :
+
 - "Big number" card avec animation de compteur quand la valeur change
 - Sliders custom avec rail dégradé et bulle de valeur
 - Graphiques ECharts thémés (pas le style par défaut)
 - Cards avec fine bordure et hover subtil
 
 **Motion** :
+
 - Transitions de valeurs (compteurs qui s'animent en 400 ms quand un slider bouge)
 - Reveal des charts au scroll
 - Pas d'animations gadget — tout doit servir la lisibilité des chiffres
@@ -203,35 +223,41 @@ Page dédiée à chaque voiture avec breakdown complet de chaque poste.
 ## 9. Découpage des livraisons
 
 ### Phase 0 — Setup (jour 1)
+
 - Scaffolding pnpm workspace, Vite, Vue 3, Hono, Tailwind, Pinia
 - ESLint Antfu, Prettier, Vitest config
 - CI minimale (type-check + lint + test)
 - README + CLAUDE.md
 
 ### Phase 1 — Moteur de calcul (jour 2)
+
 - Types `TCOInput` / `TCOResult` dans `packages/shared`
 - `computeTCO()` fonction pure, **testée à 100 %** avec scénarios connus
 - Presets de véhicules en dur (10 entrées)
 - Courbes de dépréciation par catégorie
 
 ### Phase 2 — Backend & APIs (jour 3)
+
 - Hono routes : `/api/fuel-prices`, `/api/electricity-tariffs`, `/api/vehicle-catalog`
 - Providers + cache LRU + fallbacks statiques
 - Tests d'intégration des providers (mocked)
 
 ### Phase 3 — UI Setup & Profile (jour 4-5)
+
 - Layout général, dark mode toggle
 - Wizard / formulaire profile conducteur
 - Sélecteur de preset + édition fine voiture A et B
 - Store Pinia + URL sync
 
 ### Phase 4 — Page Comparison (jour 6-7)
+
 - Hero verdict
 - Charts ECharts (cumul + stacked bar)
 - Tableau détaillé
 - Réactivité temps réel des sliders
 
 ### Phase 5 — Polish (jour 8)
+
 - Animations / motion
 - Export PDF
 - Partage URL
@@ -239,6 +265,7 @@ Page dédiée à chaque voiture avec breakdown complet de chaque poste.
 - Accessibilité (lighthouse a11y > 95)
 
 ### Phase 6 — Déploiement (jour 9)
+
 - Dockerfile production
 - Fly.io setup, domaine, HTTPS
 - Monitoring basique (logs structurés)

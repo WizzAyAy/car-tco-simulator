@@ -62,6 +62,7 @@ pnpm build
 Fonctions pures, aucune dépendance Vue ou réseau. Entrée : un `TCOInput` (véhicule + profil + paramètres). Sortie : un `TCOResult` avec breakdown année-par-année et par poste de coût.
 
 Postes couverts :
+
 - Carburant / électricité (mix charge maison + borne rapide pour VE)
 - Entretien périodique (modulé par âge du véhicule)
 - Pneus (proratisé sur durée de vie + km)
@@ -79,6 +80,7 @@ Postes couverts :
 ### Backend (`apps/api`)
 
 Routes minimales :
+
 - `GET /api/health`
 - `GET /api/fuel-prices` — proxy data.gouv.fr (prix carburants instantané), TTL 1 h
 - `GET /api/electricity-tariffs` — tarifs réglementés + bornes publiques, TTL 24 h
@@ -113,7 +115,7 @@ Les deux véhicules se choisissent par slug via les query params `a` et `b` (le 
   src="https://car-tco-simulator.fly.dev/embed?a=clio-essence&b=e208-electric"
   width="100%"
   height="560"
-  style="border: 0; border-radius: 12px; overflow: hidden;"
+  style="border: 0; border-radius: 12px; overflow: hidden"
   loading="lazy"
   title="Comparatif coût total : Clio essence vs e-208 électrique"
 ></iframe>

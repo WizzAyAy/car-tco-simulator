@@ -1,4 +1,4 @@
-export type FinancingPlan = {
+export interface FinancingPlan {
   monthlyPayment: number
   totalPaid: number
   totalInterest: number

@@ -1,9 +1,11 @@
 # Car TCO Simulator — Instructions projet
 
 ## Vue d'ensemble
+
 Web app de simulation et comparaison du coût total d'usage (TCO) de 2 voitures. Voir `PLAN.md` pour le plan d'exécution complet et `DESIGN.md` (à venir) pour le système de design.
 
 ## Stack
+
 - **Frontend** : Vue 3 + TypeScript + Vite + Pinia + Vue Router + VueUse + Tailwind CSS
 - **Charts** : ECharts
 - **Backend** : Hono (TS) sur Node 22 — proxy open APIs avec cache
@@ -14,6 +16,7 @@ Web app de simulation et comparaison du coût total d'usage (TCO) de 2 voitures.
 - **Déploiement** : Fly.io
 
 ## Architecture monorepo
+
 ```
 apps/web/      — SPA Vue 3
 apps/api/      — Backend Hono (proxy APIs externes)
@@ -21,6 +24,7 @@ packages/shared/ — Types et moteur TCO partagés
 ```
 
 ## Conventions de code
+
 - Code, commits, branches, comments → **English**
 - Communication avec l'utilisateur → **français**
 - Conventional commits (`feat:`, `fix:`, `chore:`, `refactor:`, `test:`, `docs:`)
@@ -30,19 +34,31 @@ packages/shared/ — Types et moteur TCO partagés
 - Fonctions pures pour le domaine TCO (testables sans Vue ni fetch)
 
 ## Workflow
+
 - Toujours lire le code existant avant de modifier
 - Tests sur demande uniquement (sauf pour le moteur TCO qui doit rester couvert)
 - Garder ce CLAUDE.md à jour : tout changement d'archi, commande, service, type ou constante doit être reflété ici
 - Toute modification de l'UI passe par le système de design `DESIGN.md`
 
 ## Domaine TCO
+
 Le moteur de calcul vit dans `packages/shared/src/tco/`. Fonctions pures uniquement.
 Voir `PLAN.md` section 2 pour la liste exhaustive des postes de coûts.
 
+### Mode d'acquisition
+
+`TCOInput.acquisitionMode: 'cash' | 'credit' | 'leasing'` (optionnel — fallback dérivé de `financing.enabled`).
+
+- `cash` / `credit` : achat, dépréciation = prix − valeur résiduelle. Le crédit ajoute les intérêts via `financing` (`tco/financing.ts`).
+- `leasing` (LOA/LLD) : config `TCOInput.leasing` (`tco/leasing.ts`). Loyers + apport + dépassement km dans la catégorie `leasing` ; dépréciation = 0 (pas de propriété) ; carte grise/malus = 0 par défaut. Avec option d'achat (LOA), le prix d'option est payé en fin de bail et la valeur résiduelle lui est égale (option supposée correctement tarifée → impact net nul, hypothèse conservatrice). `credit` et `leasing` sont mutuellement exclusifs.
+- Catégories de coût : voir l'enum `CostCategory` dans `types/index.ts`. Toute nouvelle catégorie doit être ajoutée à `EMPTY_COSTS` (compute.ts), `CATEGORY_LABELS`/`CATEGORY_COLORS` (`apps/web/src/composables/useChartTheme.ts`) et `CATEGORIES_ORDER` (`BreakdownChart.vue`).
+
 ## Open APIs intégrées
+
 Voir `PLAN.md` section 6. Toutes les intégrations passent par `apps/api` avec cache + fallback statique snapshoté.
 
 ## Commandes (à mettre à jour après le setup)
+
 ```bash
 # Dev
 pnpm dev              # lance web + api en parallèle

@@ -23,7 +23,7 @@ export function isValidSlug(slug: string): boolean {
  * Curated, SEO-relevant comparison pairs for the `/compare` index page.
  * Each pair contrasts a meaningful buying decision (energy or category).
  */
-export type ComparisonPair = {
+export interface ComparisonPair {
   slugA: string
   slugB: string
 }
@@ -51,6 +51,7 @@ export function resolveComparisonPair(pair: ComparisonPair): {
 } | null {
   const vehicleA = slugToPreset(pair.slugA)
   const vehicleB = slugToPreset(pair.slugB)
-  if (!vehicleA || !vehicleB) return null
+  if (!vehicleA || !vehicleB)
+    return null
   return { slugA: pair.slugA, slugB: pair.slugB, vehicleA, vehicleB }
 }

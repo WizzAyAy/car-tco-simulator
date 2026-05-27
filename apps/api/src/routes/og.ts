@@ -1,3 +1,4 @@
+import type { Buffer } from 'node:buffer'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -46,7 +47,7 @@ function durationLabel(years: number): string {
   return years <= 1 ? '1 an' : `${years} ans`
 }
 
-type OgParams = {
+interface OgParams {
   winner: string
   loser: string
   savings: number

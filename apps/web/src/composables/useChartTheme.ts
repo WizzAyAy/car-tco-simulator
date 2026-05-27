@@ -19,6 +19,7 @@ export const CATEGORY_LABELS: Record<CostCategory, string> = {
   malus: 'Bonus / Malus',
   repairs: 'Réparations',
   financing: 'Intérêts du crédit',
+  leasing: 'Loyers LOA',
   depreciation: 'Dépréciation',
   carbon: 'Coût carbone',
 }
@@ -35,6 +36,7 @@ export const CATEGORY_COLORS: Record<CostCategory, string> = {
   malus: '#dc2626',
   repairs: '#ea580c',
   financing: '#0891b2',
+  leasing: '#0d9488',
   depreciation: '#0a0a0b',
   carbon: '#16a34a',
 }

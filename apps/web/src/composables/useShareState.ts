@@ -2,7 +2,7 @@ import type { PurchaseCondition } from '@cts/shared'
 import { watch } from 'vue'
 import { useSimulationStore } from '~/stores/simulation'
 
-type ShareableState = {
+interface ShareableState {
   a: string
   b: string
   ca?: PurchaseCondition
@@ -45,16 +45,22 @@ export function useShareState() {
   function applyFromQuery() {
     const url = new URL(window.location.href)
     const param = url.searchParams.get(QUERY_KEY)
-    if (!param) return
+    if (!param)
+      return
     const state = decode(param)
-    if (!state) return
+    if (!state)
+      return
 
-    if (state.ca) store.setConditionA(state.ca)
-    if (state.cb) store.setConditionB(state.cb)
+    if (state.ca)
+      store.setConditionA(state.ca)
+    if (state.cb)
+      store.setConditionB(state.cb)
     store.selectPresetA(state.a)
     store.selectPresetB(state.b)
-    if (Number.isFinite(state.km)) store.profile.annualKm = state.km
-    if (Number.isFinite(state.years)) store.durationYears = state.years
+    if (Number.isFinite(state.km))
+      store.profile.annualKm = state.km
+    if (Number.isFinite(state.years))
+      store.durationYears = state.years
     if (typeof state.charge === 'number' && state.charge >= 0) {
       store.profile.hasHomeCharging = true
       store.profile.homeChargingMix = { home: state.charge, fastStation: 1 - state.charge }

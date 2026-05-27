@@ -5,7 +5,7 @@ export type EcoPriority = 'top' | 'important' | 'neutral'
 export type DominantTrip = 'urban' | 'mixed' | 'highway'
 export type ChargingAccess = 'wallbox' | 'standardPlug' | 'none'
 
-export type LifestyleProfile = {
+export interface LifestyleProfile {
   annualKm: number
   dominantTrip: DominantTrip
   /** One-way distance home ↔ work in km — we multiply by 2 internally for daily commute */
@@ -16,7 +16,7 @@ export type LifestyleProfile = {
   ecoPriority: EcoPriority
 }
 
-export type ScoredVehicle = {
+export interface ScoredVehicle {
   vehicle: Vehicle
   score: number
   reasons: string[]
@@ -67,8 +67,10 @@ export function scoreVehicle(vehicle: Vehicle, profile: LifestyleProfile): Score
   // 2) Family fit
   const familyFit = CATEGORY_FAMILY_FIT[vehicle.category][profile.family]
   score += familyFit
-  if (familyFit >= 8) reasons.push(`Format adapté (${profile.family === 'largeFamily' ? 'grande famille' : profile.family === 'family' ? 'famille' : profile.family === 'couple' ? 'couple' : 'usage solo'})`)
-  else if (familyFit <= 3) warnings.push(`Format un peu juste pour ce profil`)
+  if (familyFit >= 8)
+    reasons.push(`Format adapté (${profile.family === 'largeFamily' ? 'grande famille' : profile.family === 'family' ? 'famille' : profile.family === 'couple' ? 'couple' : 'usage solo'})`)
+  else if (familyFit <= 3)
+    warnings.push(`Format un peu juste pour ce profil`)
 
   // 3) Energy fit based on trips and mileage
   const isEV = vehicle.energy === 'electric'

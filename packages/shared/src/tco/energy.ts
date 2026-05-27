@@ -2,7 +2,7 @@ import type { DriverProfile, Vehicle } from '../types'
 
 const FRENCH_GRID_CO2_G_PER_KWH = 56
 
-export type EnergyYear = {
+export interface EnergyYear {
   cost: number
   co2Kg: number
 }

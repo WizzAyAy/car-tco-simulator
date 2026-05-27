@@ -13,8 +13,10 @@ const vehicleA = computed(() => slugToPreset(String(route.params.slugA)))
 const vehicleB = computed(() => slugToPreset(String(route.params.slugB)))
 
 watchEffect(() => {
-  if (vehicleA.value) store.selectPresetA(vehicleA.value.id)
-  if (vehicleB.value) store.selectPresetB(vehicleB.value.id)
+  if (vehicleA.value)
+    store.selectPresetA(vehicleA.value.id)
+  if (vehicleB.value)
+    store.selectPresetB(vehicleB.value.id)
 })
 
 const title = computed(() => {
@@ -34,5 +36,5 @@ usePageMeta(title, description)
 </script>
 
 <template>
-  <ComparisonPage />
+  <ComparisonPage :managed-meta="false" />
 </template>

@@ -45,7 +45,9 @@ const isCurrentlyAbove = computed(() =>
 
 <template>
   <div class="card card-pad">
-    <h3 class="text-base font-semibold mb-1">Point de bascule</h3>
+    <h3 class="text-base font-semibold mb-1">
+      Point de bascule
+    </h3>
     <p class="text-xs text-ink-subtle mb-4">
       Le kilométrage annuel à partir duquel la voiture la moins chère change.
     </p>

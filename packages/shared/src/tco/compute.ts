@@ -1,4 +1,5 @@
 import type {
+  AcquisitionMode,
   CostCategory,
   DriverProfile,
   TCOInput,
@@ -11,6 +12,7 @@ import { relativeResidualFactor } from './depreciation'
 import { energyCostPerYear } from './energy'
 import { computeFinancing } from './financing'
 import { insurancePerYear } from './insurance'
+import { computeLeasing, mileageOveragePerYear, rentMonthsInYear } from './leasing'
 
 const EMPTY_COSTS: Record<CostCategory, number> = {
   energy: 0,
@@ -24,8 +26,15 @@ const EMPTY_COSTS: Record<CostCategory, number> = {
   malus: 0,
   repairs: 0,
   financing: 0,
+  leasing: 0,
   depreciation: 0,
   carbon: 0,
+}
+
+function resolveAcquisitionMode(input: TCOInput): AcquisitionMode {
+  if (input.acquisitionMode)
+    return input.acquisitionMode
+  return input.financing.enabled ? 'credit' : 'cash'
 }
 
 function ageMaintenanceMultiplier(carAge: number): number {
@@ -67,7 +76,8 @@ function parkingPerYear(profile: DriverProfile): number {
 }
 
 function registrationFirstYear(vehicle: Vehicle, isUsed: boolean): number {
-  if (isUsed) return 75
+  if (isUsed)
+    return 75
   if (vehicle.energy === 'electric')
     return 13.76
   const fiscalHorsepower = Math.max(3, Math.round(vehicle.curbWeight / 250))
@@ -80,13 +90,15 @@ function tiresPerYear(vehicle: Vehicle, profile: DriverProfile): number {
 }
 
 export function computeTCO(input: TCOInput): TCOResult {
-  const { vehicle, profile, durationYears, financing, includeCarbonExternality, carbonPricePerTon } = input
+  const { vehicle, profile, durationYears, financing, leasing, includeCarbonExternality, carbonPricePerTon } = input
+  const mode = resolveAcquisitionMode(input)
+  const isLeasing = mode === 'leasing'
   const priorYears = PRIOR_YEARS_BY_CONDITION[input.purchaseCondition]
   const isUsed = priorYears > 0
   const inflation = 1 + input.inflationPercent / 100
   const energyInflation = 1 + input.energyInflationPercent / 100
 
-  const financingPlan = financing.enabled
+  const financingPlan = mode === 'credit' && financing.enabled
     ? computeFinancing({
         purchasePrice: vehicle.purchasePrice,
         downPayment: financing.downPayment,
@@ -94,6 +106,8 @@ export function computeTCO(input: TCOInput): TCOResult {
         termYears: financing.termYears,
       })
     : null
+
+  const leasingPlan = isLeasing && leasing ? computeLeasing(leasing) : null
 
   let cumulative = 0
   let totalCo2Kg = 0
@@ -116,8 +130,9 @@ export function computeTCO(input: TCOInput): TCOResult {
     const consumables = consumablesPerYear() * inflationFactor
     const controlTechnique = controlTechniquePerYear(carAge) * inflationFactor
     const parking = parkingPerYear(profile) * inflationFactor
-    const registration = year === 1 ? registrationFirstYear(vehicle, isUsed) : 0
-    const malus = year === 1 ? vehicle.malus - vehicle.bonus : 0
+    // Leasing rents typically bundle registration and any malus, so default them to 0.
+    const registration = !isLeasing && year === 1 ? registrationFirstYear(vehicle, isUsed) : 0
+    const malus = !isLeasing && year === 1 ? vehicle.malus - vehicle.bonus : 0
     const repairs = repairProvision(carAge, vehicle.energy === 'electric') * inflationFactor
 
     const financingTermYears = financingPlan ? Math.ceil(financingPlan.termMonths / 12) : 0
@@ -125,9 +140,24 @@ export function computeTCO(input: TCOInput): TCOResult {
       ? financingPlan.totalInterest / financingTermYears
       : 0
 
+    let leasingThisYear = 0
+    if (leasingPlan) {
+      const rents = rentMonthsInYear(year, leasingPlan.termMonths) * leasingPlan.monthlyRent
+      const deposit = year === 1 ? leasingPlan.initialDeposit : 0
+      const overage = mileageOveragePerYear(
+        profile.annualKm,
+        leasing!.mileageCapPerYear,
+        leasing!.overageCostPerKm,
+      )
+      const isLastLeaseYear = year === Math.min(durationYears, leasingPlan.termYears)
+      const buyback = leasingPlan.buyOption && isLastLeaseYear ? leasingPlan.buyOptionPrice : 0
+      leasingThisYear = deposit + rents + overage + buyback
+    }
+
+    // Owned vehicles depreciate; leased vehicles do not (the user never owns the asset).
     const relativeFactor = relativeResidualFactor(year, priorYears, vehicle.energy, vehicle.category)
-    const currentResidual = effectivePurchase * relativeFactor
-    const depreciation = Math.max(0, prevResidual - currentResidual)
+    const currentResidual = isLeasing ? prevResidual : effectivePurchase * relativeFactor
+    const depreciation = isLeasing ? 0 : Math.max(0, prevResidual - currentResidual)
     prevResidual = currentResidual
 
     const carbonKg = energy.co2Kg
@@ -146,6 +176,7 @@ export function computeTCO(input: TCOInput): TCOResult {
       malus,
       repairs,
       financing: financingThisYear,
+      leasing: leasingThisYear,
       depreciation,
       carbon: carbonCost,
     }
@@ -168,7 +199,15 @@ export function computeTCO(input: TCOInput): TCOResult {
   }
 
   const totalCost = cumulative
-  byCategory.depreciation = effectivePurchase - prevResidual
+  // Cash/credit: depreciation is the true loss (purchase − final residual).
+  // Leasing: the user never owned the car. With a buyback option exercised, the
+  // residual equals the option price already paid (the option is assumed fairly
+  // priced), so the net depreciation impact is zero — conservative, no equity windfall.
+  if (!isLeasing)
+    byCategory.depreciation = effectivePurchase - prevResidual
+  const residualValue = isLeasing
+    ? (leasingPlan?.buyOption ? leasingPlan.buyOptionPrice : 0)
+    : prevResidual
 
   const totalMonths = durationYears * 12
   const monthlyEquivalent = totalCost / totalMonths
@@ -181,7 +220,7 @@ export function computeTCO(input: TCOInput): TCOResult {
     totalCost,
     monthlyEquivalent,
     perKilometer,
-    residualValue: prevResidual,
+    residualValue,
     byCategory,
     byYear,
     co2EmittedKg: totalCo2Kg,

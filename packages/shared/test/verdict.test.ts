@@ -23,6 +23,7 @@ function makeResult(label: string, totalCost: number): TCOResult {
       malus: 0,
       repairs: 0,
       financing: 0,
+      leasing: 0,
       depreciation: 0,
       carbon: 0,
     },

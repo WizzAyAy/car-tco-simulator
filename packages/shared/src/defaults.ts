@@ -1,6 +1,16 @@
-import type { DriverProfile, PurchaseCondition, TCOInput, Vehicle } from './types'
-import { PRIOR_YEARS_BY_CONDITION } from './types'
+import type { DriverProfile, LeasingConfig, PurchaseCondition, TCOInput, Vehicle } from './types'
 import { residualValue } from './tco/depreciation'
+import { PRIOR_YEARS_BY_CONDITION } from './types'
+
+export const DEFAULT_LEASING: LeasingConfig = {
+  initialDeposit: 3000,
+  monthlyRent: 350,
+  termMonths: 48,
+  mileageCapPerYear: 15000,
+  overageCostPerKm: 0.15,
+  buyOption: true,
+  buyOptionPrice: 8000,
+}
 
 export const DEFAULT_PROFILE: DriverProfile = {
   annualKm: 15000,
@@ -32,6 +42,7 @@ export function buildDefaultInput(vehicle: Vehicle, overrides?: Partial<TCOInput
       aprPercent: 4.5,
       termYears: 5,
     },
+    leasing: DEFAULT_LEASING,
     includeCarbonExternality: false,
     carbonPricePerTon: 90,
     inflationPercent: 2.0,
@@ -42,6 +53,7 @@ export function buildDefaultInput(vehicle: Vehicle, overrides?: Partial<TCOInput
 
 export function estimateUsedPrice(vehicle: Vehicle, condition: PurchaseCondition): number {
   const priorYears = PRIOR_YEARS_BY_CONDITION[condition]
-  if (priorYears === 0) return vehicle.purchasePrice
+  if (priorYears === 0)
+    return vehicle.purchasePrice
   return residualValue(vehicle.purchasePrice, priorYears, vehicle.energy, vehicle.category)
 }

@@ -11,12 +11,18 @@ defineProps<{
 const open = ref(false)
 const root = ref<HTMLElement | null>(null)
 
-function toggle() { open.value = !open.value }
-function close() { open.value = false }
+function toggle() {
+  open.value = !open.value
+}
+function close() {
+  open.value = false
+}
 
 function onDocClick(e: MouseEvent) {
-  if (!root.value) return
-  if (!root.value.contains(e.target as Node)) open.value = false
+  if (!root.value)
+    return
+  if (!root.value.contains(e.target as Node))
+    open.value = false
 }
 
 onMounted(() => document.addEventListener('click', onDocClick))
@@ -41,8 +47,12 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
         class="absolute right-0 mt-1 z-30 w-72 rounded-lg border border-line bg-canvas-elevated shadow-elevated overflow-hidden"
       >
         <div class="px-3 py-2 border-b border-line">
-          <div class="text-[11px] uppercase tracking-wide text-ink-subtle">Cherche un prix réel pour</div>
-          <div class="text-sm font-medium leading-tight">{{ vehicle.brand }} {{ vehicle.searchModel }}</div>
+          <div class="text-[11px] uppercase tracking-wide text-ink-subtle">
+            Cherche un prix réel pour
+          </div>
+          <div class="text-sm font-medium leading-tight">
+            {{ vehicle.brand }} {{ vehicle.searchModel }}
+          </div>
           <div class="text-[11px] text-ink-subtle mt-0.5">
             {{ condition === 'new' ? 'Sortie de concession' : condition === 'usedRecent' ? 'Occasion ~3 ans' : 'Occasion ~6 ans' }}
           </div>
@@ -87,7 +97,9 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
 <style scoped>
 .dropdown-enter-active,
 .dropdown-leave-active {
-  transition: opacity 140ms ease, transform 140ms ease;
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease;
 }
 .dropdown-enter-from,
 .dropdown-leave-to {

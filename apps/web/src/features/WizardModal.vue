@@ -24,7 +24,8 @@ watch(() => props.open, (isOpen) => {
 })
 
 const results = computed<ScoredVehicle[]>(() => {
-  if (step.value < totalSteps) return []
+  if (step.value < totalSteps)
+    return []
   return rankVehicles(VEHICLE_PRESETS, profile.value, 6)
 })
 
@@ -37,8 +38,10 @@ const comparator = computed<Vehicle | null>(() =>
 )
 
 function suggestCondition(vehicle: Vehicle, budget: number): PurchaseCondition {
-  if (vehicle.purchasePrice <= budget) return 'new'
-  if (estimateUsedPrice(vehicle, 'usedRecent') <= budget) return 'usedRecent'
+  if (vehicle.purchasePrice <= budget)
+    return 'new'
+  if (estimateUsedPrice(vehicle, 'usedRecent') <= budget)
+    return 'usedRecent'
   return 'usedOld'
 }
 
@@ -95,8 +98,14 @@ function applyAndClose() {
   emit('close')
 }
 
-function next() { if (step.value < totalSteps) step.value++ }
-function prev() { if (step.value > 0) step.value-- }
+function next() {
+  if (step.value < totalSteps)
+    step.value++
+}
+function prev() {
+  if (step.value > 0)
+    step.value--
+}
 
 const familyOptions: { value: FamilySize, label: string, hint: string }[] = [
   { value: 'solo', label: 'Solo', hint: '1 personne' },
@@ -134,12 +143,16 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
       <div class="card max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div class="card-pad border-b border-line flex items-center justify-between">
           <div>
-            <h2 class="text-lg font-semibold">Trouve la voiture qui te correspond</h2>
+            <h2 class="text-lg font-semibold">
+              Trouve la voiture qui te correspond
+            </h2>
             <p class="text-xs text-ink-subtle">
               {{ step < totalSteps ? `Étape ${step + 1} sur ${totalSteps}` : 'Recommandations personnalisées' }}
             </p>
           </div>
-          <button class="text-ink-subtle hover:text-ink text-xl leading-none" @click="emit('close')">×</button>
+          <button class="text-ink-subtle hover:text-ink text-xl leading-none" @click="emit('close')">
+            ×
+          </button>
         </div>
 
         <!-- Progress bar -->
@@ -153,7 +166,9 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
         <div class="card-pad">
           <!-- Step 0: km/year -->
           <div v-if="step === 0">
-            <h3 class="text-base font-semibold mb-2">Combien tu roules par an ?</h3>
+            <h3 class="text-base font-semibold mb-2">
+              Combien tu roules par an ?
+            </h3>
             <p class="text-sm text-ink-muted mb-4">
               C'est le levier numéro 1 : à fort kilométrage, l'électrique et le diesel deviennent intéressants ;
               à faible km, une essence neuve ou occasion bien choisie peut suffire.
@@ -170,7 +185,9 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
 
           <!-- Step 1: dominant trip + commute -->
           <div v-else-if="step === 1">
-            <h3 class="text-base font-semibold mb-2">Quel type de trajets domine ?</h3>
+            <h3 class="text-base font-semibold mb-2">
+              Quel type de trajets domine ?
+            </h3>
             <p class="text-sm text-ink-muted mb-4">
               L'urbain favorise hybride/EV, l'autoroute pénalise l'EV (surconsommation à 130 km/h)
               et favorise le diesel ou l'hybride essence.
@@ -186,8 +203,12 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
                   : 'border-line bg-canvas hover:border-ink/40'"
                 @click="profile.dominantTrip = opt.value"
               >
-                <div class="font-medium text-sm">{{ opt.label }}</div>
-                <div class="text-xs opacity-80 mt-0.5">{{ opt.hint }}</div>
+                <div class="font-medium text-sm">
+                  {{ opt.label }}
+                </div>
+                <div class="text-xs opacity-80 mt-0.5">
+                  {{ opt.hint }}
+                </div>
               </button>
             </div>
 
@@ -206,7 +227,9 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
 
           <!-- Step 2: family -->
           <div v-else-if="step === 2">
-            <h3 class="text-base font-semibold mb-2">Tu transportes qui ?</h3>
+            <h3 class="text-base font-semibold mb-2">
+              Tu transportes qui ?
+            </h3>
             <p class="text-sm text-ink-muted mb-4">
               Détermine le format minimum acceptable (citadine, compacte, break, SUV…).
             </p>
@@ -221,15 +244,21 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
                   : 'border-line bg-canvas hover:border-ink/40'"
                 @click="profile.family = opt.value"
               >
-                <div class="font-medium text-sm">{{ opt.label }}</div>
-                <div class="text-xs opacity-80 mt-0.5">{{ opt.hint }}</div>
+                <div class="font-medium text-sm">
+                  {{ opt.label }}
+                </div>
+                <div class="text-xs opacity-80 mt-0.5">
+                  {{ opt.hint }}
+                </div>
               </button>
             </div>
           </div>
 
           <!-- Step 3: charging -->
           <div v-else-if="step === 3">
-            <h3 class="text-base font-semibold mb-2">Tu peux recharger chez toi ?</h3>
+            <h3 class="text-base font-semibold mb-2">
+              Tu peux recharger chez toi ?
+            </h3>
             <p class="text-sm text-ink-muted mb-4">
               Sans recharge maison, un EV devient nettement moins attractif (recharge en borne publique = +50 % à +100 % du tarif).
             </p>
@@ -244,15 +273,21 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
                   : 'border-line bg-canvas hover:border-ink/40'"
                 @click="profile.charging = opt.value"
               >
-                <div class="font-medium text-sm">{{ opt.label }}</div>
-                <div class="text-xs opacity-80 mt-0.5">{{ opt.hint }}</div>
+                <div class="font-medium text-sm">
+                  {{ opt.label }}
+                </div>
+                <div class="text-xs opacity-80 mt-0.5">
+                  {{ opt.hint }}
+                </div>
               </button>
             </div>
           </div>
 
           <!-- Step 4: budget -->
           <div v-else-if="step === 4">
-            <h3 class="text-base font-semibold mb-2">Quel est ton budget d'achat ?</h3>
+            <h3 class="text-base font-semibold mb-2">
+              Quel est ton budget d'achat ?
+            </h3>
             <p class="text-sm text-ink-muted mb-4">
               Montant maximum que tu es prêt à mettre pour l'achat. On te proposera des modèles
               qui tiennent ce budget en neuf, mais aussi des modèles plus chers accessibles en occasion.
@@ -269,7 +304,9 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
 
           <!-- Step 5: eco priority -->
           <div v-else-if="step === 5">
-            <h3 class="text-base font-semibold mb-2">L'écologie pèse combien dans ta décision ?</h3>
+            <h3 class="text-base font-semibold mb-2">
+              L'écologie pèse combien dans ta décision ?
+            </h3>
             <p class="text-sm text-ink-muted mb-4">
               Ça module le scoring entre énergies. Au-delà du critère, garde en tête qu'une EV n'est
               "verte" que si tu peux la garder longtemps.
@@ -285,15 +322,21 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
                   : 'border-line bg-canvas hover:border-ink/40'"
                 @click="profile.ecoPriority = opt.value"
               >
-                <div class="font-medium text-sm">{{ opt.label }}</div>
-                <div class="text-xs opacity-80 mt-0.5">{{ opt.hint }}</div>
+                <div class="font-medium text-sm">
+                  {{ opt.label }}
+                </div>
+                <div class="text-xs opacity-80 mt-0.5">
+                  {{ opt.hint }}
+                </div>
               </button>
             </div>
           </div>
 
           <!-- Final: results -->
           <div v-else-if="step === totalSteps">
-            <h3 class="text-base font-semibold mb-2">Top {{ results.length }} pour ton profil</h3>
+            <h3 class="text-base font-semibold mb-2">
+              Top {{ results.length }} pour ton profil
+            </h3>
             <p class="text-sm text-ink-muted mb-4">
               Choisis <strong>la voiture qui te plaît</strong>. On la comparera automatiquement à son équivalent thermique dans la même catégorie.
             </p>
@@ -350,8 +393,12 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
                     </ul>
                   </div>
                   <div class="text-right">
-                    <div class="text-xl font-num font-semibold">{{ r.score }}</div>
-                    <div class="text-[10px] text-ink-subtle uppercase">score</div>
+                    <div class="text-xl font-num font-semibold">
+                      {{ r.score }}
+                    </div>
+                    <div class="text-[10px] text-ink-subtle uppercase">
+                      score
+                    </div>
                   </div>
                 </div>
               </button>
@@ -359,11 +406,17 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
 
             <!-- Preview du duel -->
             <div v-if="pickedVehicle && comparator && pickedCondition && comparatorCondition" class="mt-5 p-4 rounded-md border border-line bg-canvas">
-              <div class="text-xs text-ink-subtle uppercase tracking-wide mb-2">Aperçu de la comparaison</div>
+              <div class="text-xs text-ink-subtle uppercase tracking-wide mb-2">
+                Aperçu de la comparaison
+              </div>
               <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] gap-3 items-center text-sm">
                 <div>
-                  <div class="text-[11px] text-ink-subtle">Voiture A — ton choix</div>
-                  <div class="font-medium leading-tight">{{ pickedVehicle.label }}</div>
+                  <div class="text-[11px] text-ink-subtle">
+                    Voiture A — ton choix
+                  </div>
+                  <div class="font-medium leading-tight">
+                    {{ pickedVehicle.label }}
+                  </div>
                   <div class="text-xs text-ink-muted font-num">
                     {{ formatEuro(effectivePrice(pickedVehicle, pickedCondition)) }}
                     · {{ energyLabelShort(pickedVehicle.energy) }}
@@ -373,10 +426,16 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
                     prix neuf de référence : {{ formatEuro(pickedVehicle.purchasePrice) }}
                   </div>
                 </div>
-                <div class="text-center text-ink-subtle">vs</div>
+                <div class="text-center text-ink-subtle">
+                  vs
+                </div>
                 <div>
-                  <div class="text-[11px] text-ink-subtle">Voiture B — équivalent thermique</div>
-                  <div class="font-medium leading-tight">{{ comparator.label }}</div>
+                  <div class="text-[11px] text-ink-subtle">
+                    Voiture B — équivalent thermique
+                  </div>
+                  <div class="font-medium leading-tight">
+                    {{ comparator.label }}
+                  </div>
                   <div class="text-xs text-ink-muted font-num">
                     {{ formatEuro(effectivePrice(comparator, comparatorCondition)) }}
                     · {{ energyLabelShort(comparator.energy) }}

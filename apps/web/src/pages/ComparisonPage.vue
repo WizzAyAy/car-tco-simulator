@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { Vehicle } from '@cts/shared'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
+import { useLiveVerdict } from '~/composables/useOgImage'
+import { usePageMeta, useSocialImage } from '~/composables/usePageMeta'
 import BreakdownChart from '~/features/BreakdownChart.vue'
 import BreakEvenCard from '~/features/BreakEvenCard.vue'
 import CumulativeChart from '~/features/CumulativeChart.vue'
@@ -14,8 +16,36 @@ import WizardModal from '~/features/WizardModal.vue'
 import YearlyTable from '~/features/YearlyTable.vue'
 import { useSimulationStore } from '~/stores/simulation'
 
+const props = withDefaults(defineProps<{
+  /**
+   * When `true` (default, e.g. the `/` route), this page owns the full social
+   * metadata derived from the live verdict. SEO wrappers like `CompareSeoPage`
+   * pass `false` to keep ownership of the slug-tuned title/description, while
+   * this page still drives the reactive `og:image` as the single source of truth.
+   */
+  managedMeta?: boolean
+}>(), {
+  managedMeta: true,
+})
+
 const store = useSimulationStore()
 const wizardOpen = ref(false)
+
+const verdict = useLiveVerdict()
+const ogImage = computed(() => verdict.value.ogImageUrl)
+
+const verdictTitle = computed(() => `${verdict.value.headline} · Car TCO Simulator`)
+const verdictDescription = computed(() =>
+  `${verdict.value.headline} — ${verdict.value.sub}. Coût total d'usage tout inclus : `
+  + `carburant ou électricité, entretien, assurance, dépréciation, malus et financement.`,
+)
+
+// og:image is always driven from the live store (single source of truth),
+// even when an SEO wrapper owns the title/description.
+useSocialImage(ogImage)
+
+if (props.managedMeta)
+  usePageMeta(verdictTitle, verdictDescription)
 
 function updateVehicleA(v: Vehicle) {
   store.vehicleA = v
@@ -56,7 +86,7 @@ function updateVehicleB(v: Vehicle) {
       <!-- Vehicle cards side-by-side -->
       <section class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
         <VehicleCard
-          slot="A"
+          side="A"
           :vehicle="store.vehicleA"
           :condition="store.conditionA"
           :total-cost="store.resultA.totalCost"
@@ -68,7 +98,7 @@ function updateVehicleB(v: Vehicle) {
           @set-condition="store.setConditionA"
         />
         <VehicleCard
-          slot="B"
+          side="B"
           :vehicle="store.vehicleB"
           :condition="store.conditionB"
           :total-cost="store.resultB.totalCost"
@@ -106,7 +136,9 @@ function updateVehicleB(v: Vehicle) {
 
       <!-- Methodology -->
       <section class="card card-pad text-sm text-ink-muted">
-        <h3 class="font-semibold text-ink mb-2">Méthodologie en 1 minute</h3>
+        <h3 class="font-semibold text-ink mb-2">
+          Méthodologie en 1 minute
+        </h3>
         <ul class="list-disc list-inside space-y-1">
           <li>
             <span class="font-medium text-ink">Dépréciation</span> : valeur résiduelle estimée

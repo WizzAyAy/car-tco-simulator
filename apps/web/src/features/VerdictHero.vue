@@ -8,7 +8,8 @@ const store = useSimulationStore()
 
 const winnerLabel = computed(() => {
   const w = store.comparison.winner
-  if (w === 'tie') return 'Match nul'
+  if (w === 'tie')
+    return 'Match nul'
   return w === 'a' ? store.vehicleA.label : store.vehicleB.label
 })
 
@@ -16,7 +17,8 @@ const savingsAbs = computed(() => Math.round(store.comparison.savings))
 const monthlyEq = computed(() => store.comparison.savings / (store.durationYears * 12))
 
 const breakEvenLabel = computed(() => {
-  if (store.comparison.breakEvenYear === null) return null
+  if (store.comparison.breakEvenYear === null)
+    return null
   return `Point d'équilibre atteint après ${formatYears(store.comparison.breakEvenYear)}`
 })
 </script>
@@ -24,8 +26,12 @@ const breakEvenLabel = computed(() => {
 <template>
   <div class="card card-pad" style="background: linear-gradient(180deg, #ffffff 0%, #fafaf9 100%);">
     <div v-if="store.comparison.winner === 'tie'" class="text-center py-6">
-      <div class="text-sm text-ink-subtle uppercase tracking-wide mb-2">Verdict</div>
-      <div class="text-3xl font-semibold">Coût quasi identique</div>
+      <div class="text-sm text-ink-subtle uppercase tracking-wide mb-2">
+        Verdict
+      </div>
+      <div class="text-3xl font-semibold">
+        Coût quasi identique
+      </div>
       <p class="text-ink-muted text-sm mt-2">
         Les deux voitures coûtent à peu près la même chose sur {{ formatYears(store.durationYears) }}.
       </p>

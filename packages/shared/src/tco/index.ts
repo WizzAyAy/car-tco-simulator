@@ -3,6 +3,8 @@ export { relativeResidualFactor, residualFactor, residualValue } from './depreci
 export { energyCostPerYear } from './energy'
 export { computeFinancing } from './financing'
 export { insurancePerYear } from './insurance'
+export type { LeasingPlan } from './leasing'
+export { computeLeasing, mileageOveragePerYear, rentMonthsInYear } from './leasing'
 export type {
   BreakEvenParams,
   BreakEvenResult,

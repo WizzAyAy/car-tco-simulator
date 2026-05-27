@@ -18,7 +18,7 @@ function withAnnualKm(input: TCOInput, annualKm: number): TCOInput {
   }
 }
 
-export type BreakEvenResult = {
+export interface BreakEvenResult {
   /** Annual km at which the cheaper option flips, or null if no flip in range. */
   annualKm: number
   /** The option that becomes cheaper at and beyond `annualKm`. */
@@ -27,7 +27,7 @@ export type BreakEvenResult = {
   winnerBelow: 'a' | 'b'
 }
 
-export type BreakEvenParams = {
+export interface BreakEvenParams {
   minKm?: number
   maxKm?: number
   stepKm?: number
@@ -105,7 +105,7 @@ export type SensitivityFactor
     | 'duration'
     | 'apr'
 
-export type SensitivityRow = {
+export interface SensitivityRow {
   factor: SensitivityFactor
   /** Signed savings (B point of view) when the factor is lowered by `deltaPercent`. */
   lowSavings: number
@@ -115,7 +115,7 @@ export type SensitivityRow = {
   baseline: number
 }
 
-export type SensitivityParams = {
+export interface SensitivityParams {
   /** Relative variation applied to each factor, in percent. Defaults to 15. */
   deltaPercent?: number
   /** Restrict the analysis to a subset of factors (defaults to all relevant). */
