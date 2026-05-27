@@ -57,6 +57,7 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
           >
             {{ vehicle.energy === 'phev' ? '🔌' : '⚡' }} {{ vehicle.wltpRangeKm }} km
           </span>
+          <span v-if="vehicle.isArchetype" class="badge text-[11px] uppercase tracking-wide">Archétype</span>
         </div>
         <h2 class="text-lg font-semibold leading-tight">
           {{ vehicle.label }}
@@ -73,9 +74,12 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
       </div>
     </div>
 
-    <div class="flex items-center justify-between mb-3">
+    <div v-if="!vehicle.isArchetype" class="flex items-center justify-between mb-3">
       <ListingLinksDropdown :vehicle="vehicle" :condition="condition" />
     </div>
+    <p v-else class="text-xs text-ink-subtle mb-3">
+      Archétype de segment — specs et prix médians des modèles réels de la catégorie.
+    </p>
 
     <VehiclePicker :model-value="vehicle.id" @update:model-value="(id) => emit('selectPreset', id)" />
 

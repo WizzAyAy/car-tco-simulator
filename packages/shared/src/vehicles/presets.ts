@@ -1943,7 +1943,3 @@ export const VEHICLE_PRESETS: readonly Vehicle[] = [
     wltpRangeKm: 400,
   },
 ] as const
-
-export function findPresetById(id: string): Vehicle | undefined {
-  return VEHICLE_PRESETS.find(v => v.id === id)
-}

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Energy, VehicleCategory } from '@cts/shared'
 import type { VehiclePreset } from '~/composables/useVehicleSearch'
-import { CATEGORY_LABELS_FR, CATEGORY_ORDER, VEHICLE_PRESETS } from '@cts/shared'
+import { ALL_VEHICLES, CATEGORY_LABELS_FR, CATEGORY_ORDER } from '@cts/shared'
 import { onClickOutside, refDebounced, useEventListener } from '@vueuse/core'
 import { computed, nextTick, ref, watch } from 'vue'
 import { formatEuro } from '~/composables/useFormatters'
@@ -42,7 +42,7 @@ const energy = ref<Energy | null>(null)
 
 const { results } = useVehicleSearch({ query: debouncedQuery, category, energy })
 
-const current = computed(() => VEHICLE_PRESETS.find(p => p.id === props.modelValue))
+const current = computed(() => ALL_VEHICLES.find(p => p.id === props.modelValue))
 
 function hasRange(preset: VehiclePreset): boolean {
   return preset.wltpRangeKm != null && (preset.energy === 'electric' || preset.energy === 'phev')
@@ -110,7 +110,7 @@ watch(panel, (el) => {
                   Choisir un modèle
                 </h2>
                 <p class="text-xs text-ink-subtle mt-0.5">
-                  Recherche et filtre parmi {{ VEHICLE_PRESETS.length }} véhicules
+                  Recherche parmi {{ ALL_VEHICLES.length }} véhicules — modèles réels et archétypes de segment
                 </p>
               </div>
               <button
@@ -196,12 +196,21 @@ watch(panel, (el) => {
                   >
                     <span class="text-base leading-none shrink-0">{{ ENERGY_MARKERS[preset.energy] }}</span>
                     <span class="flex-1 min-w-0">
-                      <span class="block text-sm font-medium leading-tight truncate">{{ preset.label }}</span>
+                      <span class="flex items-center gap-1.5 min-w-0">
+                        <span class="text-sm font-medium leading-tight truncate">{{ preset.label }}</span>
+                        <span
+                          v-if="preset.isArchetype"
+                          class="badge text-[10px] uppercase tracking-wide shrink-0"
+                          :class="preset.id === modelValue ? '!bg-canvas-elevated/15 !border-transparent !text-canvas-elevated' : ''"
+                        >
+                          Archétype
+                        </span>
+                      </span>
                       <span
                         class="block text-xs mt-0.5 font-num"
                         :class="preset.id === modelValue ? 'opacity-70' : 'text-ink-subtle'"
                       >
-                        {{ formatEuro(preset.purchasePrice) }}
+                        {{ preset.isArchetype ? 'Prix médian du segment · ' : '' }}{{ formatEuro(preset.purchasePrice) }}
                       </span>
                     </span>
                     <span

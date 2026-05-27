@@ -1,9 +1,9 @@
-import type { Energy, VehicleCategory } from '@cts/shared'
+import type { Energy, Vehicle, VehicleCategory } from '@cts/shared'
 import type { Ref } from 'vue'
-import { VEHICLE_PRESETS } from '@cts/shared'
+import { ALL_VEHICLES } from '@cts/shared'
 import { computed } from 'vue'
 
-export type VehiclePreset = typeof VEHICLE_PRESETS[number]
+export type VehiclePreset = Vehicle
 
 const DIACRITICS = /[\u0300-\u036F]/g
 
@@ -27,7 +27,7 @@ export function useVehicleSearch(filters: VehicleSearchFilters) {
     const category = filters.category.value
     const energy = filters.energy.value
 
-    return VEHICLE_PRESETS.filter((preset) => {
+    const matched = ALL_VEHICLES.filter((preset) => {
       if (category && preset.category !== category)
         return false
       if (energy && preset.energy !== energy)
@@ -38,6 +38,9 @@ export function useVehicleSearch(filters: VehicleSearchFilters) {
       const haystack = normalize(`${preset.label} ${preset.brand} ${preset.searchModel}`)
       return haystack.includes(needle)
     })
+
+    // Surface archetypes first — they are the model-independent entry point.
+    return [...matched].sort((a, b) => Number(b.isArchetype ?? false) - Number(a.isArchetype ?? false))
   })
 
   return { results }

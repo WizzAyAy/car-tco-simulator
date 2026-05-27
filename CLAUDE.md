@@ -45,6 +45,12 @@ packages/shared/ — Types et moteur TCO partagés
 Le moteur de calcul vit dans `packages/shared/src/tco/`. Fonctions pures uniquement.
 Voir `PLAN.md` section 2 pour la liste exhaustive des postes de coûts.
 
+### Catalogue véhicules
+
+- `VEHICLE_PRESETS` (`vehicles/presets.ts`) : modèles réels du marché France.
+- `VEHICLE_ARCHETYPES` (`vehicles/archetypes.ts`) : « méta-voitures » fictives, une par couple (catégorie × énergie) ayant ≥ 3 modèles réels. Chaque spec = **médiane** du segment (`buildArchetypes()`, pure). Marquées `isArchetype: true`. Servent à comparer des usages sans dépendre d'un modèle ; l'âge reste géré par `purchaseCondition`.
+- `ALL_VEHICLES` = presets + archétypes. `findPresetById()` (dans `vehicles/index.ts`) résout les deux — l'utiliser pour toute résolution d'id.
+
 ### Mode d'acquisition
 
 `TCOInput.acquisitionMode: 'cash' | 'credit' | 'leasing'` (optionnel — fallback dérivé de `financing.enabled`).

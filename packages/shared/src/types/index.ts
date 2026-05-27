@@ -43,6 +43,8 @@ export interface Vehicle {
   releaseYear: number
   /** WLTP range in km — for electric/PHEV only (electric-only range for PHEVs) */
   wltpRangeKm?: number
+  /** True for fictional segment representatives derived from the real catalog (see archetypes.ts) */
+  isArchetype?: boolean
 }
 
 export interface DriverProfile {
