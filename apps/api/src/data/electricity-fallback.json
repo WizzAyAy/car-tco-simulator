@@ -1,0 +1,27 @@
+{
+  "source": "static-fallback",
+  "updated": "2026-05-01",
+  "tariffs": {
+    "regulated": {
+      "name": "Tarif Bleu EDF (option base)",
+      "pricePerKwh": 0.2516
+    },
+    "regulatedOffPeak": {
+      "name": "Heures creuses",
+      "fullPricePerKwh": 0.2700,
+      "offPeakPricePerKwh": 0.2068
+    },
+    "tempo": {
+      "name": "Tempo (EDF)",
+      "bluePricePerKwh": 0.1609,
+      "whitePricePerKwh": 0.1894,
+      "redPricePerKwh": 0.7562
+    },
+    "publicCharging": {
+      "slowAC": 0.39,
+      "fastDC50": 0.49,
+      "ultraFastDC150": 0.59,
+      "ionity": 0.69
+    }
+  }
+}

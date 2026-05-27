@@ -1,0 +1,30 @@
+{
+  "name": "car-tco-simulator",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@10.33.2",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel --filter='./apps/*' run dev",
+    "dev:web": "pnpm --filter @cts/web run dev",
+    "dev:api": "pnpm --filter @cts/api run dev",
+    "build": "pnpm -r --filter='./packages/*' run build && pnpm -r --filter='./apps/*' run build",
+    "start": "pnpm --filter @cts/api run start",
+    "typecheck": "pnpm -r run typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "pnpm -r run test",
+    "test:run": "pnpm -r run test:run",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.12.0",
+    "eslint": "^9.18.0",
+    "eslint-plugin-vue": "^9.32.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3"
+  }
+}
