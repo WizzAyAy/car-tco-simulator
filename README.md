@@ -94,6 +94,33 @@ En production, Hono sert aussi le build statique du web depuis `apps/web/dist/`.
 - **URL state sync** : l'état est encodé en query param `?s=…` à chaque modification → partageable.
 - **Live prices** : au chargement, fetch des prix carburants + élec et écrasement des valeurs par défaut.
 
+### Routes
+
+- `/` — comparateur interactif (page reine), état partageable via `?s=…`.
+- `/compare` — index SEO listant les comparatifs populaires (maillage interne).
+- `/compare/:slugA-vs-:slugB` — comparatif pré-rempli par slug (le slug est l'`id` du preset, ex. `clio-essence-vs-e208-electric`). Met à jour `<title>` et `<meta name="description">` par comparaison.
+- `/recommend` — recommandation inversée : un profil léger (km/an, type de trajet, budget, charge maison) classe **tous** les presets par TCO et met en avant le moins cher.
+- `/embed` — version compacte sans chrome (verdict + courbe cumulée), à intégrer en `<iframe>`.
+
+## Embed
+
+La route `/embed` rend une version compacte et sans habillage (pas de header ni footer) du verdict et du graphique de coût cumulé, prévue pour une intégration `<iframe>` sur un site tiers.
+
+Les deux véhicules se choisissent par slug via les query params `a` et `b` (le slug est l'`id` du preset, ex. `clio-essence`, `e208-electric`, `model3-electric`).
+
+```html
+<iframe
+  src="https://car-tco-simulator.fly.dev/embed?a=clio-essence&b=e208-electric"
+  width="100%"
+  height="560"
+  style="border: 0; border-radius: 12px; overflow: hidden;"
+  loading="lazy"
+  title="Comparatif coût total : Clio essence vs e-208 électrique"
+></iframe>
+```
+
+Sans query params, l'`iframe` retombe sur le couple de véhicules par défaut du store. Le widget inclut un lien vers le comparatif détaillé (`/compare/:slugA-vs-:slugB`).
+
 ## Open Data
 
 - **data.economie.gouv.fr** — prix carburants instantanés par station
