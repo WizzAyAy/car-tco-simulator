@@ -10,7 +10,7 @@ Web app pour simuler et comparer le **coût total d'usage (TCO)** de 2 voitures 
 ## Fonctionnalités
 
 - **Moteur TCO pur** — calcul année-par-année, poste-par-poste, testé en isolation.
-- **Catalogue large + recherche** — ~100 modèles réels (marché France) dans un sélecteur recherchable (filtres catégorie/énergie), plus des **archétypes de segment** ("SUV électrique", "Citadine hybride"…) aux specs/prix médians pour comparer des usages sans dépendre d'un modèle.
+- **Catalogue large + recherche** — ~150 modèles réels (marché France) dans un sélecteur recherchable (filtres catégorie/énergie), plus une vingtaine d'**archétypes de segment** ("SUV électrique", "Compacte diesel", "Citadine hybride"…) aux specs/prix médians (modèles grand public) pour comparer des usages sans dépendre d'un modèle.
 - **3 modes d'acquisition** — achat cash, crédit auto, ou **LOA/LLD** (loyers, apport, forfait km, option d'achat).
 - **Point de bascule** — le seuil de km/an à partir duquel la voiture gagnante s'inverse.
 - **Analyse de sensibilité (tornado)** — quelle hypothèse pèse le plus sur l'écart (km, prix énergie, dépréciation, durée, taux).
@@ -147,7 +147,7 @@ Sans query params, l'`iframe` retombe sur le couple de véhicules par défaut du
 
 ## Limites connues / Roadmap
 
-- Pas de catalogue exhaustif de modèles — ~100 presets réels, des archétypes de segment, et la duplication/édition d'un preset pour le reste.
+- Pas de catalogue exhaustif de modèles — ~150 presets réels, des archétypes de segment, et la duplication/édition d'un preset pour le reste.
 - Tempo / heures creuses simplifié (un seul tarif moyen) — version avancée en v2.
 - Pas de géocodage des prix locaux par adresse — moyenne nationale.
 - Lecture par plaque (SIV) — envisagée, en attente (API tierce + donnée personnelle).
