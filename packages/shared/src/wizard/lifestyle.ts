@@ -4,6 +4,9 @@ export type FamilySize = 'solo' | 'couple' | 'family' | 'largeFamily'
 export type EcoPriority = 'top' | 'important' | 'neutral'
 export type DominantTrip = 'urban' | 'mixed' | 'highway'
 export type ChargingAccess = 'wallbox' | 'standardPlug' | 'none'
+export type ParkingConstraint = 'tight' | 'normal' | 'easy'
+export type CargoNeeds = 'minimal' | 'occasional' | 'frequent'
+export type LongTripFrequency = 'rarely' | 'sometimes' | 'often'
 
 export interface LifestyleProfile {
   annualKm: number
@@ -14,6 +17,14 @@ export interface LifestyleProfile {
   charging: ChargingAccess
   budgetMaxEur: number
   ecoPriority: EcoPriority
+  /** How tight is everyday parking — penalises bulky cars when 'tight'. Neutral at 'normal'. */
+  parkingConstraint: ParkingConstraint
+  /** Boot / load needs — favours estates/SUVs/utilities when 'frequent'. Neutral at 'occasional'. */
+  cargoNeeds: CargoNeeds
+  /** Planned ownership horizon in years — long holds reward EV durability. Neutral around 5. */
+  keepYears: number
+  /** Frequency of long (>200 km) trips — penalises EV charging stops when 'often'. Neutral at 'sometimes'. */
+  longTrips: LongTripFrequency
 }
 
 export interface ScoredVehicle {
@@ -225,6 +236,91 @@ export function scoreVehicle(vehicle: Vehicle, profile: LifestyleProfile): Score
     warnings.push(`Gros gabarit peu pratique en ville`)
   }
 
+  // 7) Parking constraint (neutral at 'normal')
+  if (profile.parkingConstraint === 'tight') {
+    if (vehicle.category === 'cityCar') {
+      score += 6
+      reasons.push(`Gabarit compact = parfait pour un stationnement serré`)
+    }
+    else if (vehicle.category === 'compact') {
+      score += 2
+    }
+    else if (vehicle.category === 'utility') {
+      score -= 8
+      warnings.push(`Encombrant pour un stationnement serré`)
+    }
+    else if (vehicle.category === 'suv' || vehicle.category === 'estate') {
+      score -= 5
+      warnings.push(`Gabarit imposant à caser dans une place serrée`)
+    }
+  }
+  else if (profile.parkingConstraint === 'easy' && (vehicle.category === 'suv' || vehicle.category === 'utility')) {
+    score += 2
+  }
+
+  // 8) Cargo / load needs (neutral at 'occasional')
+  if (profile.cargoNeeds === 'frequent') {
+    if (vehicle.category === 'estate' || vehicle.category === 'utility') {
+      score += 8
+      reasons.push(`Grand volume de chargement pour tes besoins fréquents`)
+    }
+    else if (vehicle.category === 'suv') {
+      score += 6
+      reasons.push(`Coffre et modularité adaptés au transport régulier`)
+    }
+    else if (vehicle.category === 'cityCar') {
+      score -= 8
+      warnings.push(`Coffre trop juste pour transporter du volume souvent`)
+    }
+    else if (vehicle.category === 'compact') {
+      score -= 2
+    }
+  }
+  else if (profile.cargoNeeds === 'minimal') {
+    if (vehicle.category === 'cityCar')
+      score += 3
+    else if (vehicle.category === 'utility') {
+      score -= 4
+      warnings.push(`Surdimensionné si tu ne transportes presque rien`)
+    }
+  }
+
+  // 9) Ownership horizon (neutral around 4–7 years)
+  if (profile.keepYears >= 8) {
+    if (isEV) {
+      score += 6
+      reasons.push(`Détention longue = la décote initiale de l'EV est amortie`)
+    }
+    else if (vehicle.energy === 'diesel' && profile.annualKm > 18000) {
+      score += 3
+    }
+  }
+  else if (profile.keepYears <= 2) {
+    if (isEV) {
+      score -= 5
+      warnings.push(`Revente rapide d'un EV = forte décote sur 2 ans`)
+    }
+    if (isPHEV) {
+      score -= 3
+    }
+  }
+
+  // 10) Long-trip frequency (neutral at 'sometimes')
+  if (profile.longTrips === 'often') {
+    if (isEV) {
+      score -= 7
+      warnings.push(`Longs trajets fréquents = arrêts de recharge réguliers`)
+    }
+    else if (isHybrid || isThermal) {
+      score += 4
+      reasons.push(`À l'aise sur les longs trajets sans contrainte de recharge`)
+    }
+  }
+  else if (profile.longTrips === 'rarely' && isEV) {
+    score += 4
+    reasons.push(`Peu de longs trajets = l'autonomie n'est jamais un souci`)
+  }
+
   return { vehicle, score, reasons, warnings }
 }
 
@@ -293,4 +389,8 @@ export const DEFAULT_LIFESTYLE: LifestyleProfile = {
   charging: 'standardPlug',
   budgetMaxEur: 30000,
   ecoPriority: 'important',
+  parkingConstraint: 'normal',
+  cargoNeeds: 'occasional',
+  keepYears: 5,
+  longTrips: 'sometimes',
 }

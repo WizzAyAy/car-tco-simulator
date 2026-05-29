@@ -167,11 +167,13 @@ Brève accroche, exemple chiffré frappant ("Saviez-vous qu'un SUV électrique p
 
 ### 2. Setup
 
-3 étapes guidées (wizard léger, pas obligatoire) :
+Wizard « profil de vie » optionnel (`WizardModal`) — questionnaire guidé en 10 étapes à inputs variés (sliders, cartes à icônes, stepper) qui alimentent le scoring `rankVehicles` :
 
-1. **Votre profil** (km/an, type de trajet, région, charge maison)
-2. **Voiture A** (preset → ajustements)
-3. **Voiture B** (preset → ajustements)
+1. Kilométrage annuel · 2. Type de trajet + commute · 3. Fréquence des longs trajets · 4. Composition du foyer · 5. Besoins de volume/chargement · 6. Contrainte de stationnement · 7. Recharge à domicile · 8. Budget d'achat · 9. Durée de détention · 10. Priorité écologique.
+
+Le wizard classe les modèles, laisse choisir la **Voiture A** parmi le top, puis sélectionne automatiquement un **équivalent thermique** (Voiture B) dans la même catégorie. Sinon, sélection manuelle des deux véhicules via le `VehiclePicker`.
+
+Dimensions de scoring dans `packages/shared/src/wizard/lifestyle.ts` (`LifestyleProfile`). Les dimensions stationnement / volume / durée / longs trajets sont neutres à leur valeur par défaut.
 
 ### 3. Comparison (la page reine)
 

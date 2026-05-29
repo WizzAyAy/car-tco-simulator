@@ -77,7 +77,7 @@ function updateVehicleB(v: Vehicle) {
           class="btn btn-primary"
           @click="wizardOpen = true"
         >
-          ✨ Aide-moi à choisir en 6 questions
+          ✨ Aide-moi à choisir en 2 minutes
         </button>
       </section>
 

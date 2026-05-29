@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import type { ChargingAccess, DominantTrip, EcoPriority, FamilySize, LifestyleProfile, PurchaseCondition, ScoredVehicle, Vehicle } from '@cts/shared'
+import type { CargoNeeds, ChargingAccess, DominantTrip, EcoPriority, FamilySize, LifestyleProfile, LongTripFrequency, ParkingConstraint, PurchaseCondition, ScoredVehicle, Vehicle } from '@cts/shared'
 import { DEFAULT_LIFESTYLE, estimateUsedPrice, findPresetById, findTraditionalComparator, rankVehicles, VEHICLE_PRESETS } from '@cts/shared'
 import { computed, ref, watch } from 'vue'
 import SliderInput from '~/components/SliderInput.vue'
 import { formatEuro, formatKm } from '~/composables/useFormatters'
+import WizardChoiceCards from '~/features/wizard/WizardChoiceCards.vue'
+import WizardStepper from '~/features/wizard/WizardStepper.vue'
 import { useSimulationStore } from '~/stores/simulation'
 
 const props = defineProps<{ open: boolean }>()
@@ -14,12 +16,13 @@ const step = ref(0)
 const profile = ref<LifestyleProfile>({ ...DEFAULT_LIFESTYLE })
 const pickedId = ref<string | null>(null)
 
-const totalSteps = 6
+const totalSteps = 10
 
 watch(() => props.open, (isOpen) => {
   if (isOpen) {
     step.value = 0
     pickedId.value = null
+    profile.value = { ...DEFAULT_LIFESTYLE }
   }
 })
 
@@ -84,6 +87,7 @@ function applyAndClose() {
     store.setConditionB(comparatorCondition.value)
   }
   store.profile.annualKm = profile.value.annualKm
+  store.durationYears = profile.value.keepYears
   if (profile.value.charging === 'wallbox' || profile.value.charging === 'standardPlug') {
     store.profile.hasHomeCharging = true
     store.profile.homeChargingMix = {
@@ -98,38 +102,85 @@ function applyAndClose() {
   emit('close')
 }
 
+const navDir = ref(1)
 function next() {
-  if (step.value < totalSteps)
+  if (step.value < totalSteps) {
+    navDir.value = 1
     step.value++
+  }
 }
 function prev() {
-  if (step.value > 0)
+  if (step.value > 0) {
+    navDir.value = -1
     step.value--
+  }
 }
 
-const familyOptions: { value: FamilySize, label: string, hint: string }[] = [
-  { value: 'solo', label: 'Solo', hint: '1 personne' },
-  { value: 'couple', label: 'Couple', hint: '2 adultes' },
-  { value: 'family', label: 'Famille', hint: '1-2 enfants' },
-  { value: 'largeFamily', label: 'Grande famille', hint: '3+ enfants ou besoin de coffre' },
+const kmDescriptor = computed(() => {
+  const k = profile.value.annualKm
+  if (k < 8000)
+    return { label: 'Petit rouleur', icon: '🐢' }
+  if (k < 16000)
+    return { label: 'Usage modéré', icon: '🚗' }
+  if (k < 25000)
+    return { label: 'Gros rouleur', icon: '🏁' }
+  return { label: 'Très gros rouleur', icon: '🚀' }
+})
+
+const stepTitles = [
+  'Combien tu roules par an ?',
+  'Quel type de trajets domine ?',
+  'Tu pars loin souvent ?',
+  'Tu transportes qui ?',
+  'Tu transportes quoi ?',
+  'Ton stationnement au quotidien ?',
+  'Tu peux recharger chez toi ?',
+  'Quel est ton budget d\'achat ?',
+  'Tu comptes la garder combien de temps ?',
+  'L\'écologie pèse combien ?',
 ]
 
-const tripOptions: { value: DominantTrip, label: string, hint: string }[] = [
-  { value: 'urban', label: 'Urbain', hint: 'Ville, petits trajets, bouchons' },
-  { value: 'mixed', label: 'Mixte', hint: 'Ville + route, polyvalent' },
-  { value: 'highway', label: 'Autoroute', hint: 'Beaucoup de longs trajets rapides' },
+const tripOptions: { value: DominantTrip, label: string, hint: string, icon: string }[] = [
+  { value: 'urban', label: 'Urbain', hint: 'Ville, petits trajets, bouchons', icon: '🏙️' },
+  { value: 'mixed', label: 'Mixte', hint: 'Ville + route, polyvalent', icon: '🛣️' },
+  { value: 'highway', label: 'Autoroute', hint: 'Beaucoup de longs trajets rapides', icon: '🏎️' },
 ]
 
-const chargingOptions: { value: ChargingAccess, label: string, hint: string }[] = [
-  { value: 'wallbox', label: 'Wallbox', hint: 'Borne dédiée installée à domicile' },
-  { value: 'standardPlug', label: 'Prise standard', hint: 'Prise normale 230V au garage / parking' },
-  { value: 'none', label: 'Aucune', hint: 'Pas de recharge possible chez moi' },
+const longTripOptions: { value: LongTripFrequency, label: string, hint: string, icon: string }[] = [
+  { value: 'rarely', label: 'Rarement', hint: 'Quasi jamais > 200 km', icon: '🏘️' },
+  { value: 'sometimes', label: 'Parfois', hint: 'Quelques fois par an', icon: '🗺️' },
+  { value: 'often', label: 'Souvent', hint: 'Longs trajets réguliers', icon: '🧳' },
 ]
 
-const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
-  { value: 'top', label: 'Priorité', hint: 'Je veux minimiser mon empreinte' },
-  { value: 'important', label: 'Importante', hint: 'Ça compte, sans être bloquant' },
-  { value: 'neutral', label: 'Neutre', hint: 'Pas un critère décisif' },
+const familyOptions: { value: FamilySize, label: string, hint: string, icon: string }[] = [
+  { value: 'solo', label: 'Solo', hint: '1 personne', icon: '🧍' },
+  { value: 'couple', label: 'Couple', hint: '2 adultes', icon: '👫' },
+  { value: 'family', label: 'Famille', hint: '1-2 enfants', icon: '👨‍👩‍👧' },
+  { value: 'largeFamily', label: 'Grande famille', hint: '3+ enfants ou gros coffre', icon: '👨‍👩‍👧‍👦' },
+]
+
+const cargoOptions: { value: CargoNeeds, label: string, hint: string, icon: string }[] = [
+  { value: 'minimal', label: 'Le minimum', hint: 'Courses, un sac', icon: '🎒' },
+  { value: 'occasional', label: 'Parfois du volume', hint: 'Valises, meubles à l\'occasion', icon: '📦' },
+  { value: 'frequent', label: 'Souvent chargé', hint: 'Matériel, vélos, remorque', icon: '🚚' },
+]
+
+const parkingOptions: { value: ParkingConstraint, label: string, hint: string, icon: string }[] = [
+  { value: 'tight', label: 'Serré', hint: 'Rue étroite, places difficiles', icon: '😬' },
+  { value: 'normal', label: 'Normal', hint: 'Places standard sans souci', icon: '🅿️' },
+  { value: 'easy', label: 'Large', hint: 'Garage ou parking spacieux', icon: '🏡' },
+]
+
+const chargingOptions: { value: ChargingAccess, label: string, hint: string, icon: string }[] = [
+  { value: 'wallbox', label: 'Wallbox', hint: 'Borne dédiée à domicile', icon: '⚡' },
+  { value: 'standardPlug', label: 'Prise standard', hint: 'Prise 230V au garage', icon: '🔌' },
+  { value: 'none', label: 'Aucune', hint: 'Pas de recharge chez moi', icon: '🚫' },
+]
+
+const ecoOptions: { value: EcoPriority, label: string, hint: string, icon: string }[] = [
+  { value: 'top', label: 'Priorité', hint: 'Minimiser mon empreinte', icon: '🌳' },
+  { value: 'important', label: 'Importante', hint: 'Ça compte, sans bloquer', icon: '🌱' },
+  { value: 'neutral', label: 'Neutre', hint: 'Pas un critère décisif', icon: '⚖️' },
 ]
 </script>
 
@@ -143,7 +194,7 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
       <div class="card max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div class="card-pad border-b border-line flex items-center justify-between">
           <div>
-            <h2 class="text-lg font-semibold">
+            <h2 class="text-lg font-semibold tracking-tight">
               Trouve la voiture qui te correspond
             </h2>
             <p class="text-xs text-ink-subtle">
@@ -164,296 +215,276 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
           />
         </div>
 
-        <div class="card-pad">
-          <!-- Step 0: km/year -->
-          <div v-if="step === 0">
-            <h3 class="text-base font-semibold mb-2">
-              Combien tu roules par an ?
-            </h3>
-            <p class="text-sm text-ink-muted mb-4">
-              C'est le levier numéro 1 : à fort kilométrage, l'électrique et le diesel deviennent intéressants ;
-              à faible km, une essence neuve ou occasion bien choisie peut suffire.
-            </p>
-            <SliderInput
-              v-model="profile.annualKm"
-              :min="3000"
-              :max="50000"
-              :step="500"
-              label="Kilométrage annuel"
-              :display="(v) => formatKm(v)"
-            />
-          </div>
+        <div class="card-pad min-h-[280px]">
+          <Transition :name="navDir === 1 ? 'slide-next' : 'slide-prev'" mode="out-in">
+            <div :key="step">
+              <h3 v-if="step < totalSteps" class="text-base font-semibold mb-2">
+                {{ stepTitles[step] }}
+              </h3>
 
-          <!-- Step 1: dominant trip + commute -->
-          <div v-else-if="step === 1">
-            <h3 class="text-base font-semibold mb-2">
-              Quel type de trajets domine ?
-            </h3>
-            <p class="text-sm text-ink-muted mb-4">
-              L'urbain favorise hybride/EV, l'autoroute pénalise l'EV (surconsommation à 130 km/h)
-              et favorise le diesel ou l'hybride essence.
-            </p>
-            <div class="grid grid-cols-1 gap-2">
-              <button
-                v-for="opt in tripOptions"
-                :key="opt.value"
-                type="button"
-                class="text-left p-3 rounded-md border transition-colors"
-                :class="profile.dominantTrip === opt.value
-                  ? 'border-accent/60 bg-accent-soft text-accent shadow-[0_0_22px_-8px_rgba(52,232,158,0.6)]'
-                  : 'border-line bg-canvas-inset text-ink-muted hover:border-line-strong hover:text-ink'"
-                @click="profile.dominantTrip = opt.value"
-              >
-                <div class="font-medium text-sm">
-                  {{ opt.label }}
+              <!-- Step 0: km/year -->
+              <div v-if="step === 0">
+                <p class="text-sm text-ink-muted mb-5">
+                  C'est le levier numéro 1 : à fort kilométrage, l'électrique et le diesel deviennent intéressants ;
+                  à faible km, une essence neuve ou occasion bien choisie peut suffire.
+                </p>
+                <div class="flex items-center justify-center gap-2 mb-4">
+                  <span class="text-2xl">{{ kmDescriptor.icon }}</span>
+                  <span class="badge badge-accent text-sm">{{ kmDescriptor.label }}</span>
                 </div>
-                <div class="text-xs opacity-80 mt-0.5">
-                  {{ opt.hint }}
-                </div>
-              </button>
-            </div>
-
-            <div class="mt-5">
-              <SliderInput
-                v-model="profile.commuteOneWayKm"
-                :min="0"
-                :max="120"
-                :step="1"
-                label="Distance maison ↔ travail (sens unique)"
-                :display="(v) => formatKm(v)"
-                :hint="`Aller-retour quotidien : ${formatKm(profile.commuteOneWayKm * 2)}`"
-              />
-            </div>
-          </div>
-
-          <!-- Step 2: family -->
-          <div v-else-if="step === 2">
-            <h3 class="text-base font-semibold mb-2">
-              Tu transportes qui ?
-            </h3>
-            <p class="text-sm text-ink-muted mb-4">
-              Détermine le format minimum acceptable (citadine, compacte, break, SUV…).
-            </p>
-            <div class="grid grid-cols-2 gap-2">
-              <button
-                v-for="opt in familyOptions"
-                :key="opt.value"
-                type="button"
-                class="text-left p-3 rounded-md border transition-colors"
-                :class="profile.family === opt.value
-                  ? 'border-accent/60 bg-accent-soft text-accent shadow-[0_0_22px_-8px_rgba(52,232,158,0.6)]'
-                  : 'border-line bg-canvas-inset text-ink-muted hover:border-line-strong hover:text-ink'"
-                @click="profile.family = opt.value"
-              >
-                <div class="font-medium text-sm">
-                  {{ opt.label }}
-                </div>
-                <div class="text-xs opacity-80 mt-0.5">
-                  {{ opt.hint }}
-                </div>
-              </button>
-            </div>
-          </div>
-
-          <!-- Step 3: charging -->
-          <div v-else-if="step === 3">
-            <h3 class="text-base font-semibold mb-2">
-              Tu peux recharger chez toi ?
-            </h3>
-            <p class="text-sm text-ink-muted mb-4">
-              Sans recharge maison, un EV devient nettement moins attractif (recharge en borne publique = +50 % à +100 % du tarif).
-            </p>
-            <div class="grid grid-cols-1 gap-2">
-              <button
-                v-for="opt in chargingOptions"
-                :key="opt.value"
-                type="button"
-                class="text-left p-3 rounded-md border transition-colors"
-                :class="profile.charging === opt.value
-                  ? 'border-accent/60 bg-accent-soft text-accent shadow-[0_0_22px_-8px_rgba(52,232,158,0.6)]'
-                  : 'border-line bg-canvas-inset text-ink-muted hover:border-line-strong hover:text-ink'"
-                @click="profile.charging = opt.value"
-              >
-                <div class="font-medium text-sm">
-                  {{ opt.label }}
-                </div>
-                <div class="text-xs opacity-80 mt-0.5">
-                  {{ opt.hint }}
-                </div>
-              </button>
-            </div>
-          </div>
-
-          <!-- Step 4: budget -->
-          <div v-else-if="step === 4">
-            <h3 class="text-base font-semibold mb-2">
-              Quel est ton budget d'achat ?
-            </h3>
-            <p class="text-sm text-ink-muted mb-4">
-              Montant maximum que tu es prêt à mettre pour l'achat. On te proposera des modèles
-              qui tiennent ce budget en neuf, mais aussi des modèles plus chers accessibles en occasion.
-            </p>
-            <SliderInput
-              v-model="profile.budgetMaxEur"
-              :min="8000"
-              :max="80000"
-              :step="500"
-              label="Budget plafond"
-              :display="(v) => formatEuro(v)"
-            />
-          </div>
-
-          <!-- Step 5: eco priority -->
-          <div v-else-if="step === 5">
-            <h3 class="text-base font-semibold mb-2">
-              L'écologie pèse combien dans ta décision ?
-            </h3>
-            <p class="text-sm text-ink-muted mb-4">
-              Ça module le scoring entre énergies. Au-delà du critère, garde en tête qu'une EV n'est
-              "verte" que si tu peux la garder longtemps.
-            </p>
-            <div class="grid grid-cols-1 gap-2">
-              <button
-                v-for="opt in ecoOptions"
-                :key="opt.value"
-                type="button"
-                class="text-left p-3 rounded-md border transition-colors"
-                :class="profile.ecoPriority === opt.value
-                  ? 'border-accent/60 bg-accent-soft text-accent shadow-[0_0_22px_-8px_rgba(52,232,158,0.6)]'
-                  : 'border-line bg-canvas-inset text-ink-muted hover:border-line-strong hover:text-ink'"
-                @click="profile.ecoPriority = opt.value"
-              >
-                <div class="font-medium text-sm">
-                  {{ opt.label }}
-                </div>
-                <div class="text-xs opacity-80 mt-0.5">
-                  {{ opt.hint }}
-                </div>
-              </button>
-            </div>
-          </div>
-
-          <!-- Final: results -->
-          <div v-else-if="step === totalSteps">
-            <h3 class="text-base font-semibold mb-2">
-              Top {{ results.length }} pour ton profil
-            </h3>
-            <p class="text-sm text-ink-muted mb-4">
-              Choisis <strong>la voiture qui te plaît</strong>. On la comparera automatiquement à son équivalent thermique dans la même catégorie.
-            </p>
-
-            <div v-if="results.length === 0" class="text-sm text-ink-subtle">
-              Aucun véhicule ne correspond à ce profil. Augmente le budget.
-            </div>
-
-            <div class="space-y-2">
-              <button
-                v-for="(r, idx) in results"
-                :key="r.vehicle.id"
-                type="button"
-                class="w-full text-left p-3 rounded-md border transition-colors"
-                :class="pickedId === r.vehicle.id
-                  ? 'border-accent/60 bg-accent-soft shadow-[0_0_22px_-8px_rgba(52,232,158,0.6)]'
-                  : 'border-line hover:border-line-strong bg-canvas-inset'"
-                @click="pickedId = pickedId === r.vehicle.id ? null : r.vehicle.id"
-              >
-                <div class="flex items-start justify-between gap-3">
-                  <div class="flex-1">
-                    <div class="flex items-center gap-2 mb-1 flex-wrap">
-                      <span class="text-[11px] font-num font-medium text-ink-subtle">#{{ idx + 1 }}</span>
-                      <span class="font-medium text-sm">{{ r.vehicle.label }}</span>
-                      <span
-                        v-if="pickedId === r.vehicle.id"
-                        class="badge badge-accent text-[10px]"
-                      >Sélectionnée</span>
-                    </div>
-                    <div class="text-xs text-ink-muted font-num">
-                      <template v-if="r.vehicle.purchasePrice > profile.budgetMaxEur">
-                        <span class="line-through text-ink-subtle">{{ formatEuro(r.vehicle.purchasePrice) }} neuf</span>
-                        →
-                        <span class="font-medium text-ink">{{ formatEuro(effectivePrice(r.vehicle, suggestCondition(r.vehicle, profile.budgetMaxEur))) }} en occasion</span>
-                      </template>
-                      <template v-else>
-                        {{ formatEuro(r.vehicle.purchasePrice) }}
-                      </template>
-                      ·
-                      {{ r.vehicle.energy === 'electric' ? '⚡' : r.vehicle.energy === 'phev' ? '🔌' : r.vehicle.energy === 'hybrid' ? '🍃' : '⛽' }}
-                      {{ r.vehicle.wltpRangeKm ? `· ${r.vehicle.wltpRangeKm} km` : '' }}
-                    </div>
-                    <ul v-if="r.reasons.length" class="mt-2 text-[12px] text-ink-muted space-y-0.5">
-                      <li v-for="reason in r.reasons.slice(0, 3)" :key="reason" class="flex items-start gap-1.5">
-                        <span class="text-accent leading-none mt-0.5">+</span>
-                        <span>{{ reason }}</span>
-                      </li>
-                    </ul>
-                    <ul v-if="r.warnings.length" class="mt-1 text-[12px] text-warn space-y-0.5">
-                      <li v-for="w in r.warnings.slice(0, 2)" :key="w" class="flex items-start gap-1.5">
-                        <span class="leading-none mt-0.5">!</span>
-                        <span>{{ w }}</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="text-right">
-                    <div class="text-xl font-num font-semibold">
-                      {{ r.score }}
-                    </div>
-                    <div class="text-[10px] text-ink-subtle uppercase">
-                      score
-                    </div>
-                  </div>
-                </div>
-              </button>
-            </div>
-
-            <!-- Preview du duel -->
-            <div v-if="pickedVehicle && comparator && pickedCondition && comparatorCondition" class="mt-5 p-4 rounded-md border border-line bg-canvas">
-              <div class="text-xs text-ink-subtle uppercase tracking-wide mb-2">
-                Aperçu de la comparaison
+                <SliderInput
+                  v-model="profile.annualKm"
+                  :min="3000"
+                  :max="50000"
+                  :step="500"
+                  label="Kilométrage annuel"
+                  :display="(v) => formatKm(v)"
+                />
               </div>
-              <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] gap-3 items-center text-sm">
-                <div>
-                  <div class="text-[11px] text-ink-subtle">
-                    Voiture A — ton choix
-                  </div>
-                  <div class="font-medium leading-tight">
-                    {{ pickedVehicle.label }}
-                  </div>
-                  <div class="text-xs text-ink-muted font-num">
-                    {{ formatEuro(effectivePrice(pickedVehicle, pickedCondition)) }}
-                    · {{ energyLabelShort(pickedVehicle.energy) }}
-                    · <span class="font-medium text-ink">{{ conditionLabel(pickedCondition) }}</span>
-                  </div>
-                  <div v-if="pickedCondition !== 'new'" class="text-[11px] text-ink-subtle mt-0.5">
-                    prix neuf de référence : {{ formatEuro(pickedVehicle.purchasePrice) }}
-                  </div>
-                </div>
-                <div class="text-center text-ink-subtle">
-                  vs
-                </div>
-                <div>
-                  <div class="text-[11px] text-ink-subtle">
-                    Voiture B — équivalent thermique
-                  </div>
-                  <div class="font-medium leading-tight">
-                    {{ comparator.label }}
-                  </div>
-                  <div class="text-xs text-ink-muted font-num">
-                    {{ formatEuro(effectivePrice(comparator, comparatorCondition)) }}
-                    · {{ energyLabelShort(comparator.energy) }}
-                    · <span class="font-medium text-ink">{{ conditionLabel(comparatorCondition) }}</span>
-                  </div>
-                  <div v-if="comparatorCondition !== 'new'" class="text-[11px] text-ink-subtle mt-0.5">
-                    prix neuf de référence : {{ formatEuro(comparator.purchasePrice) }}
-                  </div>
+
+              <!-- Step 1: dominant trip + commute -->
+              <div v-else-if="step === 1">
+                <p class="text-sm text-ink-muted mb-4">
+                  L'urbain favorise hybride/EV, l'autoroute pénalise l'EV (surconsommation à 130 km/h).
+                </p>
+                <WizardChoiceCards
+                  v-model="profile.dominantTrip"
+                  :options="tripOptions"
+                  :columns="3"
+                />
+                <div class="mt-5">
+                  <SliderInput
+                    v-model="profile.commuteOneWayKm"
+                    :min="0"
+                    :max="120"
+                    :step="1"
+                    label="Distance maison ↔ travail (sens unique)"
+                    :display="(v) => formatKm(v)"
+                    :hint="`Aller-retour quotidien : ${formatKm(profile.commuteOneWayKm * 2)}`"
+                  />
                 </div>
               </div>
-              <p class="text-[11px] text-ink-subtle mt-3 leading-relaxed">
-                On part en {{ conditionLabel(pickedCondition) }} / {{ conditionLabel(comparatorCondition) }}
-                pour que le prix d'achat corresponde à ton budget de {{ formatEuro(profile.budgetMaxEur) }}.
-                Tu pourras toujours rebasculer en neuf depuis la page de comparaison.
-              </p>
+
+              <!-- Step 2: long trips -->
+              <div v-else-if="step === 2">
+                <p class="text-sm text-ink-muted mb-4">
+                  Les longs trajets fréquents pénalisent l'EV (arrêts de recharge) et avantagent thermique/hybride.
+                </p>
+                <WizardChoiceCards
+                  v-model="profile.longTrips"
+                  :options="longTripOptions"
+                  :columns="3"
+                />
+              </div>
+
+              <!-- Step 3: family -->
+              <div v-else-if="step === 3">
+                <p class="text-sm text-ink-muted mb-4">
+                  Détermine le format minimum acceptable (citadine, compacte, break, SUV…).
+                </p>
+                <WizardChoiceCards
+                  v-model="profile.family"
+                  :options="familyOptions"
+                  :columns="2"
+                />
+              </div>
+
+              <!-- Step 4: cargo -->
+              <div v-else-if="step === 4">
+                <p class="text-sm text-ink-muted mb-4">
+                  Un besoin de volume régulier oriente vers break, SUV ou utilitaire.
+                </p>
+                <WizardChoiceCards
+                  v-model="profile.cargoNeeds"
+                  :options="cargoOptions"
+                  :columns="3"
+                />
+              </div>
+
+              <!-- Step 5: parking -->
+              <div v-else-if="step === 5">
+                <p class="text-sm text-ink-muted mb-4">
+                  Un stationnement serré pénalise les gros gabarits et avantage les citadines.
+                </p>
+                <WizardChoiceCards
+                  v-model="profile.parkingConstraint"
+                  :options="parkingOptions"
+                  :columns="3"
+                />
+              </div>
+
+              <!-- Step 6: charging -->
+              <div v-else-if="step === 6">
+                <p class="text-sm text-ink-muted mb-4">
+                  Sans recharge maison, un EV devient nettement moins attractif (borne publique = +50 % à +100 %).
+                </p>
+                <WizardChoiceCards
+                  v-model="profile.charging"
+                  :options="chargingOptions"
+                  :columns="3"
+                />
+              </div>
+
+              <!-- Step 7: budget -->
+              <div v-else-if="step === 7">
+                <p class="text-sm text-ink-muted mb-5">
+                  Montant maximum pour l'achat. On proposera des modèles qui tiennent ce budget en neuf,
+                  et des modèles plus chers accessibles en occasion.
+                </p>
+                <SliderInput
+                  v-model="profile.budgetMaxEur"
+                  :min="8000"
+                  :max="80000"
+                  :step="500"
+                  label="Budget plafond"
+                  :display="(v) => formatEuro(v)"
+                />
+              </div>
+
+              <!-- Step 8: keep duration (stepper) -->
+              <div v-else-if="step === 8">
+                <p class="text-sm text-ink-muted mb-3">
+                  Une détention longue amortit la décote initiale (utile pour l'électrique) ;
+                  une revente rapide la pénalise.
+                </p>
+                <WizardStepper
+                  v-model="profile.keepYears"
+                  :min="1"
+                  :max="15"
+                  :step="1"
+                  :unit="profile.keepYears > 1 ? 'ans' : 'an'"
+                />
+              </div>
+
+              <!-- Step 9: eco priority -->
+              <div v-else-if="step === 9">
+                <p class="text-sm text-ink-muted mb-4">
+                  Ça module le scoring entre énergies. Une EV n'est « verte » que si tu la gardes longtemps.
+                </p>
+                <WizardChoiceCards
+                  v-model="profile.ecoPriority"
+                  :options="ecoOptions"
+                  :columns="3"
+                />
+              </div>
+
+              <!-- Final: results -->
+              <div v-else-if="step === totalSteps">
+                <h3 class="text-base font-semibold mb-2">
+                  Top {{ results.length }} pour ton profil
+                </h3>
+                <p class="text-sm text-ink-muted mb-4">
+                  Choisis <strong>la voiture qui te plaît</strong>. On la comparera automatiquement à son équivalent thermique dans la même catégorie.
+                </p>
+
+                <div v-if="results.length === 0" class="text-sm text-ink-subtle">
+                  Aucun véhicule ne correspond à ce profil. Augmente le budget.
+                </div>
+
+                <div class="space-y-2">
+                  <button
+                    v-for="(r, idx) in results"
+                    :key="r.vehicle.id"
+                    type="button"
+                    class="w-full text-left p-3 rounded-md border transition-all duration-200"
+                    :class="pickedId === r.vehicle.id
+                      ? 'border-accent/60 bg-accent-soft shadow-[0_0_22px_-8px_rgba(52,232,158,0.6)]'
+                      : 'border-line hover:border-line-strong bg-canvas-inset'"
+                    @click="pickedId = pickedId === r.vehicle.id ? null : r.vehicle.id"
+                  >
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-1 flex-wrap">
+                          <span class="text-[11px] font-num font-medium text-ink-subtle">#{{ idx + 1 }}</span>
+                          <span class="font-medium text-sm">{{ r.vehicle.label }}</span>
+                          <span
+                            v-if="pickedId === r.vehicle.id"
+                            class="badge badge-accent text-[10px]"
+                          >Sélectionnée</span>
+                        </div>
+                        <div class="text-xs text-ink-muted font-num">
+                          <template v-if="r.vehicle.purchasePrice > profile.budgetMaxEur">
+                            <span class="line-through text-ink-subtle">{{ formatEuro(r.vehicle.purchasePrice) }} neuf</span>
+                            →
+                            <span class="font-medium text-ink">{{ formatEuro(effectivePrice(r.vehicle, suggestCondition(r.vehicle, profile.budgetMaxEur))) }} en occasion</span>
+                          </template>
+                          <template v-else>
+                            {{ formatEuro(r.vehicle.purchasePrice) }}
+                          </template>
+                          ·
+                          {{ r.vehicle.energy === 'electric' ? '⚡' : r.vehicle.energy === 'phev' ? '🔌' : r.vehicle.energy === 'hybrid' ? '🍃' : '⛽' }}
+                          {{ r.vehicle.wltpRangeKm ? `· ${r.vehicle.wltpRangeKm} km` : '' }}
+                        </div>
+                        <ul v-if="r.reasons.length" class="mt-2 text-[12px] text-ink-muted space-y-0.5">
+                          <li v-for="reason in r.reasons.slice(0, 3)" :key="reason" class="flex items-start gap-1.5">
+                            <span class="text-accent leading-none mt-0.5">+</span>
+                            <span>{{ reason }}</span>
+                          </li>
+                        </ul>
+                        <ul v-if="r.warnings.length" class="mt-1 text-[12px] text-warn space-y-0.5">
+                          <li v-for="w in r.warnings.slice(0, 2)" :key="w" class="flex items-start gap-1.5">
+                            <span class="leading-none mt-0.5">!</span>
+                            <span>{{ w }}</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="text-right">
+                        <div class="text-xl font-num font-semibold">
+                          {{ r.score }}
+                        </div>
+                        <div class="text-[10px] text-ink-subtle uppercase">
+                          score
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+
+                <!-- Preview du duel -->
+                <div v-if="pickedVehicle && comparator && pickedCondition && comparatorCondition" class="mt-5 p-4 rounded-md border border-line bg-canvas-inset">
+                  <div class="eyebrow mb-2">
+                    Aperçu de la comparaison
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] gap-3 items-center text-sm">
+                    <div>
+                      <div class="text-[11px] text-ink-subtle">
+                        Voiture A — ton choix
+                      </div>
+                      <div class="font-medium leading-tight">
+                        {{ pickedVehicle.label }}
+                      </div>
+                      <div class="text-xs text-ink-muted font-num">
+                        {{ formatEuro(effectivePrice(pickedVehicle, pickedCondition)) }}
+                        · {{ energyLabelShort(pickedVehicle.energy) }}
+                        · <span class="font-medium text-ink">{{ conditionLabel(pickedCondition) }}</span>
+                      </div>
+                    </div>
+                    <div class="text-center text-ink-subtle">
+                      vs
+                    </div>
+                    <div>
+                      <div class="text-[11px] text-ink-subtle">
+                        Voiture B — équivalent thermique
+                      </div>
+                      <div class="font-medium leading-tight">
+                        {{ comparator.label }}
+                      </div>
+                      <div class="text-xs text-ink-muted font-num">
+                        {{ formatEuro(effectivePrice(comparator, comparatorCondition)) }}
+                        · {{ energyLabelShort(comparator.energy) }}
+                        · <span class="font-medium text-ink">{{ conditionLabel(comparatorCondition) }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-[11px] text-ink-subtle mt-3 leading-relaxed">
+                    On part en {{ conditionLabel(pickedCondition) }} / {{ conditionLabel(comparatorCondition) }}
+                    pour coller à ton budget de {{ formatEuro(profile.budgetMaxEur) }}.
+                    Tu pourras rebasculer en neuf depuis la page de comparaison.
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
+          </Transition>
         </div>
 
         <!-- Footer with navigation -->
@@ -504,5 +535,45 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.slide-next-enter-active,
+.slide-next-leave-active,
+.slide-prev-enter-active,
+.slide-prev-leave-active {
+  transition:
+    opacity 220ms var(--ease-out-expo),
+    transform 220ms var(--ease-out-expo);
+}
+.slide-next-enter-from {
+  opacity: 0;
+  transform: translateX(24px);
+}
+.slide-next-leave-to {
+  opacity: 0;
+  transform: translateX(-24px);
+}
+.slide-prev-enter-from {
+  opacity: 0;
+  transform: translateX(-24px);
+}
+.slide-prev-leave-to {
+  opacity: 0;
+  transform: translateX(24px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide-next-enter-active,
+  .slide-next-leave-active,
+  .slide-prev-enter-active,
+  .slide-prev-leave-active {
+    transition: none;
+  }
+  .slide-next-enter-from,
+  .slide-next-leave-to,
+  .slide-prev-enter-from,
+  .slide-prev-leave-to {
+    transform: none;
+  }
 }
 </style>
