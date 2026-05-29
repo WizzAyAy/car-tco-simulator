@@ -14,7 +14,7 @@ import ComparisonDeck from '~/features/deck/ComparisonDeck.vue'
 import SettingsDrawer from '~/features/deck/SettingsDrawer.vue'
 import TornadoChart from '~/features/TornadoChart.vue'
 import VehicleCard from '~/features/VehicleCard.vue'
-import VehicleSilhouette from '~/features/VehicleSilhouette.vue'
+import VehiclePreview from '~/features/VehiclePreview.vue'
 import VerdictHero from '~/features/VerdictHero.vue'
 import WizardModal from '~/features/WizardModal.vue'
 import YearlyTable from '~/features/YearlyTable.vue'
@@ -112,8 +112,8 @@ async function onShare() {
                   class="card card-pad !p-3 flex items-center gap-3 text-left transition-all duration-200 hover:border-line-strong hover:-translate-y-0.5"
                   @click="deckCurrent = 1"
                 >
-                  <div class="h-12 w-20 shrink-0">
-                    <VehicleSilhouette :vehicle="car" class="h-full" />
+                  <div class="h-14 w-24 shrink-0">
+                    <VehiclePreview :vehicle="car" credit="icon" class="h-full" />
                   </div>
                   <div class="min-w-0">
                     <div class="text-ink-subtle text-[11px]">

@@ -4,6 +4,7 @@ import { DEFAULT_LIFESTYLE, estimateUsedPrice, findPresetById, findTraditionalCo
 import { computed, ref, watch } from 'vue'
 import SliderInput from '~/components/SliderInput.vue'
 import { formatEuro, formatKm } from '~/composables/useFormatters'
+import VehiclePreview from '~/features/VehiclePreview.vue'
 import WizardChoiceCards from '~/features/wizard/WizardChoiceCards.vue'
 import WizardStepper from '~/features/wizard/WizardStepper.vue'
 import { useSimulationStore } from '~/stores/simulation'
@@ -393,8 +394,11 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string, icon: strin
                       : 'border-line hover:border-line-strong bg-canvas-inset'"
                     @click="pickedId = pickedId === r.vehicle.id ? null : r.vehicle.id"
                   >
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="flex-1">
+                    <div class="flex items-start gap-3">
+                      <div class="h-16 w-24 shrink-0 overflow-hidden rounded-md bg-white/5">
+                        <VehiclePreview :vehicle="r.vehicle" credit="icon" zoomable class="h-full" />
+                      </div>
+                      <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-2 mb-1 flex-wrap">
                           <span class="text-[11px] font-num font-medium text-ink-subtle">#{{ idx + 1 }}</span>
                           <span class="font-medium text-sm">{{ r.vehicle.label }}</span>

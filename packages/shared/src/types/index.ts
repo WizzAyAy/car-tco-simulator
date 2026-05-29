@@ -45,6 +45,19 @@ export interface Vehicle {
   wltpRangeKm?: number
   /** True for fictional segment representatives derived from the real catalog (see archetypes.ts) */
   isArchetype?: boolean
+  /** Self-hosted preview image path (generated, see scripts/fetch-vehicle-images.mjs) */
+  imageUrl?: string
+  /** Attribution for `imageUrl` — required for CC-licensed images (e.g. Wikimedia Commons) */
+  imageCredit?: VehicleImageCredit
+}
+
+/** Licensing/attribution metadata for a vehicle preview image. */
+export interface VehicleImageCredit {
+  author: string
+  license: string
+  licenseUrl: string
+  /** Link to the source file page (e.g. Wikimedia Commons). */
+  sourceUrl: string
 }
 
 export interface DriverProfile {

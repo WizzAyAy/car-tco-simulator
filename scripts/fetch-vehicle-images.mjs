@@ -1,0 +1,145 @@
+// Offline generator: pulls CC-licensed vehicle photos from Wikimedia Commons,
+// self-hosts the thumbnails under apps/web/public/vehicles/, and writes the
+// attribution map to packages/shared/src/vehicles/images.generated.ts.
+//
+// Run: node scripts/fetch-vehicle-images.mjs
+//
+// Compliance: only stores images whose license is Creative Commons / public
+// domain, and records author + license + source page for attribution (required
+// by CC BY / BY-SA). Review the generated map before committing — auto-matched
+// images can be wrong; fix the TITLES map and re-run.
+
+import { mkdir, writeFile } from 'node:fs/promises'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const ROOT = resolve(__dirname, '..')
+const IMG_DIR = resolve(ROOT, 'apps/web/public/vehicles')
+const OUT_TS = resolve(ROOT, 'packages/shared/src/vehicles/images.generated.ts')
+const UA = 'CarTCOSimulator/1.0 (contact: quentin.maignan@ignimission.com)'
+
+// preset id → French Wikipedia article title (trims of the same model share one image).
+const TITLES = {
+  'clio-essence': 'Renault Clio V',
+  'clio-diesel': 'Renault Clio V',
+  'zoe-electric': 'Renault Zoé',
+  'e208-electric': 'Peugeot 208 II',
+  '208-essence': 'Peugeot 208 II',
+  'mg4-electric': 'MG 4',
+  'yaris-hybrid': 'Toyota Yaris',
+  'megane-estate-essence': 'Renault Mégane IV',
+  'passat-sw-diesel': 'Volkswagen Passat B8',
+  '3008-hybrid': 'Peugeot 3008 II',
+  '3008-phev': 'Peugeot 3008 II',
+  'model3-electric': 'Tesla Model 3',
+  'modely-electric': 'Tesla Model Y',
+  'id4-electric': 'Volkswagen ID.4',
+  'tiguan-essence': 'Volkswagen Tiguan',
+  'berlingo-essence': 'Citroën Berlingo III',
+  'eberlingo-electric': 'Citroën Berlingo III',
+  'sandero-essence': 'Dacia Sandero',
+  'c3-essence': 'Citroën C3 III',
+  'polo-essence': 'Volkswagen Polo VI',
+  '308-essence': 'Peugeot 308 III',
+  '308-hybrid': 'Peugeot 308 III',
+  'e308-electric': 'Peugeot 308 III',
+  'megane-etech-electric': 'Renault Mégane E-Tech Electric',
+  'golf-essence': 'Volkswagen Golf VIII',
+  'captur-essence': 'Renault Captur II',
+  'captur-etech-hybrid': 'Renault Captur II',
+  '2008-essence': 'Peugeot 2008 II',
+}
+
+const CC_OK = /\b(?:cc|creative commons|public domain|cc0|pdm)\b/i
+
+function stripHtml(s) {
+  return (s ?? '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()
+}
+
+async function api(host, params) {
+  const url = `https://${host}/w/api.php?${new URLSearchParams({ format: 'json', ...params })}`
+  const res = await fetch(url, { headers: { 'User-Agent': UA } })
+  if (!res.ok)
+    throw new Error(`${host} ${res.status}`)
+  return res.json()
+}
+
+async function resolveTitle(title) {
+  const data = await api('fr.wikipedia.org', {
+    action: 'query',
+    prop: 'pageimages',
+    piprop: 'name|thumbnail',
+    pithumbsize: '720',
+    titles: title,
+    redirects: '1',
+  })
+  const page = Object.values(data.query?.pages ?? {})[0]
+  if (!page?.thumbnail?.source || !page?.pageimage)
+    return null
+
+  const info = await api('commons.wikimedia.org', {
+    action: 'query',
+    prop: 'imageinfo',
+    iiprop: 'extmetadata',
+    titles: `File:${page.pageimage}`,
+  })
+  const ip = Object.values(info.query?.pages ?? {})[0]
+  const meta = ip?.imageinfo?.[0]?.extmetadata ?? {}
+  const license = stripHtml(meta.LicenseShortName?.value) || 'Inconnue'
+  if (!CC_OK.test(license)) {
+    console.warn(`  ⚠ skip "${title}": non-CC license (${license})`)
+    return null
+  }
+  return {
+    thumb: page.thumbnail.source,
+    file: page.pageimage,
+    author: stripHtml(meta.Artist?.value) || 'Auteur inconnu',
+    license,
+    licenseUrl: stripHtml(meta.LicenseUrl?.value) || '',
+    sourceUrl: `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(page.pageimage)}`,
+  }
+}
+
+async function download(url, dest) {
+  const res = await fetch(url, { headers: { 'User-Agent': UA } })
+  if (!res.ok)
+    throw new Error(`download ${res.status}`)
+  await writeFile(dest, Buffer.from(await res.arrayBuffer()))
+}
+
+async function main() {
+  await mkdir(IMG_DIR, { recursive: true })
+  const cache = new Map()
+  const entries = {}
+
+  for (const [id, title] of Object.entries(TITLES)) {
+    try {
+      if (!cache.has(title))
+        cache.set(title, await resolveTitle(title))
+      const r = cache.get(title)
+      if (!r) {
+        console.warn(`  ✗ ${id} (${title}): no usable image`)
+        continue
+      }
+      await download(r.thumb, resolve(IMG_DIR, `${id}.jpg`))
+      entries[id] = {
+        imageUrl: `/vehicles/${id}.jpg`,
+        imageCredit: { author: r.author, license: r.license, licenseUrl: r.licenseUrl, sourceUrl: r.sourceUrl },
+      }
+      console.log(`  ✓ ${id} ← ${title} (${r.license})`)
+    }
+    catch (err) {
+      console.warn(`  ✗ ${id} (${title}): ${err.message}`)
+    }
+  }
+
+  const body = `// GENERATED by scripts/fetch-vehicle-images.mjs — do not edit by hand.\n`
+    + `// CC-licensed vehicle photos from Wikimedia Commons (self-hosted under apps/web/public/vehicles).\n`
+    + `import type { VehicleImageCredit } from '../types'\n\n`
+    + `export const VEHICLE_IMAGES: Record<string, { imageUrl: string, imageCredit: VehicleImageCredit }> = ${JSON.stringify(entries, null, 2)}\n`
+  await writeFile(OUT_TS, body)
+  console.log(`\nWrote ${Object.keys(entries).length} entries → ${OUT_TS}`)
+}
+
+main()
