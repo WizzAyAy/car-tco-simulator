@@ -45,6 +45,13 @@ const PREMIUM_BRANDS: ReadonlySet<string> = new Set([
 /** Minimum real models in a bucket to derive a representative archetype. */
 const MIN_BUCKET_SIZE = 3
 
+/**
+ * Archetypes must reflect the *current* market, so older catalog models (kept
+ * around to widen the used-car comparison) are excluded from the medians. Age
+ * is modelled by purchaseCondition, not by the archetype's specs.
+ */
+const ARCHETYPE_MIN_RELEASE_YEAR = 2022
+
 type NumericVehicleKey =
   | 'purchasePrice'
   | 'consumption'
@@ -87,7 +94,10 @@ export function buildArchetypes(presets: readonly Vehicle[] = VEHICLE_PRESETS): 
   for (const category of CATEGORY_ORDER) {
     for (const energy of ENERGY_ORDER) {
       const bucket = presets.filter(
-        v => v.category === category && v.energy === energy && !v.isArchetype,
+        v => v.category === category
+          && v.energy === energy
+          && !v.isArchetype
+          && v.releaseYear >= ARCHETYPE_MIN_RELEASE_YEAR,
       )
       if (bucket.length < MIN_BUCKET_SIZE)
         continue
