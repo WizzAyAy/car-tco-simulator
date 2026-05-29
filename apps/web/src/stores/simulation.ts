@@ -134,7 +134,10 @@ export const useSimulationStore = defineStore('simulation', () => {
       pricesUpdatedAt.value = fuel.updated
     }
     catch (err) {
+      // Live fetch failed (API down, network, 500…). The profile keeps its
+      // snapshot defaults, so reflect that instead of staying on "Chargement…".
       console.warn('[simulation] live price load failed, using defaults', err)
+      pricesSource.value = 'static-fallback'
     }
   }
 
