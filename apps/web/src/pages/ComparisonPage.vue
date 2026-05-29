@@ -12,6 +12,7 @@ import BreakEvenCard from '~/features/BreakEvenCard.vue'
 import CumulativeChart from '~/features/CumulativeChart.vue'
 import ComparisonDeck from '~/features/deck/ComparisonDeck.vue'
 import SettingsDrawer from '~/features/deck/SettingsDrawer.vue'
+import ListingLinksDropdown from '~/features/ListingLinksDropdown.vue'
 import TornadoChart from '~/features/TornadoChart.vue'
 import VehicleCard from '~/features/VehicleCard.vue'
 import VehiclePreview from '~/features/VehiclePreview.vue'
@@ -252,6 +253,23 @@ async function onShare() {
               <button type="button" class="btn btn-ghost" @click="drawerOpen = true">
                 ⚙︎ Ajuster les hypothèses
               </button>
+            </div>
+
+            <div
+              v-if="!store.vehicleA.isArchetype || !store.vehicleB.isArchetype"
+              class="card card-pad flex flex-wrap items-center gap-x-5 gap-y-3"
+            >
+              <span class="eyebrow">
+                Où acheter ?
+              </span>
+              <div v-if="!store.vehicleA.isArchetype" class="flex items-center gap-2 min-w-0">
+                <span class="text-sm text-ink-muted truncate max-w-[12rem]">{{ store.vehicleA.label }}</span>
+                <ListingLinksDropdown :vehicle="store.vehicleA" :condition="store.conditionA" />
+              </div>
+              <div v-if="!store.vehicleB.isArchetype" class="flex items-center gap-2 min-w-0">
+                <span class="text-sm text-ink-muted truncate max-w-[12rem]">{{ store.vehicleB.label }}</span>
+                <ListingLinksDropdown :vehicle="store.vehicleB" :condition="store.conditionB" />
+              </div>
             </div>
 
             <p class="text-xs text-ink-subtle leading-relaxed max-w-2xl">
