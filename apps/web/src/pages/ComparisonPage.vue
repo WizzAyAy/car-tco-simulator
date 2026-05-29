@@ -59,19 +59,22 @@ function updateVehicleB(v: Vehicle) {
   <div class="min-h-full flex flex-col bg-canvas">
     <AppHeader />
 
-    <main class="mx-auto max-w-[1400px] w-full px-6 py-8 flex-1">
+    <main class="mx-auto max-w-[1400px] w-full px-6 py-10 sm:py-14 flex-1 space-y-12 sm:space-y-16">
       <!-- Intro / framing -->
-      <section class="mb-8 max-w-3xl">
-        <h1 class="text-3xl sm:text-4xl font-semibold leading-tight mb-3">
-          Compare le coût réel<br>de 2 voitures, sans surprise.
+      <section class="max-w-3xl">
+        <div class="eyebrow mb-4">
+          Coût total d'usage · TCO
+        </div>
+        <h1 class="text-4xl sm:text-6xl font-extrabold leading-[1.02] tracking-tight mb-4">
+          Compare le <span class="text-gradient">coût réel</span><br>de 2 voitures, sans surprise.
         </h1>
-        <p class="text-ink-muted text-base mb-5">
+        <p class="text-ink-muted text-base sm:text-lg mb-6 max-w-2xl">
           Carburant ou électricité, entretien, assurance, dépréciation, malus, financement…
-          tout est inclus. Ajuste les sliders en bas pour explorer les scénarios.
+          tout est inclus. Ajuste les sliders pour explorer les scénarios.
         </p>
         <button
           type="button"
-          class="btn btn-primary text-sm"
+          class="btn btn-primary"
           @click="wizardOpen = true"
         >
           ✨ Aide-moi à choisir en 6 questions
@@ -79,12 +82,12 @@ function updateVehicleB(v: Vehicle) {
       </section>
 
       <!-- Verdict -->
-      <section class="mb-8">
+      <section v-reveal>
         <VerdictHero />
       </section>
 
       <!-- Vehicle cards side-by-side -->
-      <section class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
+      <section v-reveal class="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <VehicleCard
           side="A"
           :vehicle="store.vehicleA"
@@ -112,30 +115,30 @@ function updateVehicleB(v: Vehicle) {
       </section>
 
       <!-- Charts -->
-      <section class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
+      <section v-reveal class="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <CumulativeChart />
         <BreakdownChart />
       </section>
 
       <!-- Sensitivity analyses -->
-      <section class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
+      <section v-reveal class="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <BreakEvenCard />
         <TornadoChart />
       </section>
 
       <!-- Configuration sidebar / panels -->
-      <section class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
+      <section v-reveal class="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <ProfilePanel />
         <SettingsPanel />
       </section>
 
       <!-- Yearly table -->
-      <section class="mb-8">
+      <section v-reveal>
         <YearlyTable />
       </section>
 
       <!-- Methodology -->
-      <section class="card card-pad text-sm text-ink-muted">
+      <section v-reveal class="card card-pad text-sm text-ink-muted">
         <h3 class="font-semibold text-ink mb-2">
           Méthodologie en 1 minute
         </h3>

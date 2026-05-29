@@ -95,7 +95,7 @@ watch(panel, (el) => {
       <Transition name="fade">
         <div
           v-if="open"
-          class="fixed inset-0 z-50 flex items-start justify-center p-4 sm:pt-[8vh] bg-ink/40 backdrop-blur-sm"
+          class="fixed inset-0 z-50 flex items-start justify-center p-4 sm:pt-[8vh] bg-black/70 backdrop-blur-sm"
         >
           <div
             ref="panel"
@@ -136,7 +136,7 @@ watch(panel, (el) => {
                 <button
                   type="button"
                   class="btn btn-ghost text-xs px-2.5 py-1"
-                  :class="category === null ? '!bg-ink !text-canvas-elevated !border-ink' : ''"
+                  :class="category === null ? '!bg-accent !text-[#04150d] !border-transparent !font-semibold' : ''"
                   @click="category = null"
                 >
                   Toutes
@@ -146,7 +146,7 @@ watch(panel, (el) => {
                   :key="cat"
                   type="button"
                   class="btn btn-ghost text-xs px-2.5 py-1"
-                  :class="category === cat ? '!bg-ink !text-canvas-elevated !border-ink' : ''"
+                  :class="category === cat ? '!bg-accent !text-[#04150d] !border-transparent !font-semibold' : ''"
                   @click="category = cat"
                 >
                   {{ CATEGORY_LABELS_FR[cat] }}
@@ -157,7 +157,7 @@ watch(panel, (el) => {
                 <button
                   type="button"
                   class="btn btn-ghost text-xs px-2.5 py-1"
-                  :class="energy === null ? '!bg-ink !text-canvas-elevated !border-ink' : ''"
+                  :class="energy === null ? '!bg-accent !text-[#04150d] !border-transparent !font-semibold' : ''"
                   @click="energy = null"
                 >
                   Toutes
@@ -167,7 +167,7 @@ watch(panel, (el) => {
                   :key="opt.value"
                   type="button"
                   class="btn btn-ghost text-xs px-2.5 py-1 gap-1"
-                  :class="energy === opt.value ? '!bg-ink !text-canvas-elevated !border-ink' : ''"
+                  :class="energy === opt.value ? '!bg-accent !text-[#04150d] !border-transparent !font-semibold' : ''"
                   @click="energy = opt.value"
                 >
                   <span class="leading-none">{{ ENERGY_MARKERS[opt.value] }}</span>
@@ -190,8 +190,8 @@ watch(panel, (el) => {
                     type="button"
                     class="w-full flex items-center gap-3 px-3 py-2.5 rounded-md border text-left transition-colors"
                     :class="preset.id === modelValue
-                      ? 'border-ink bg-ink text-canvas-elevated'
-                      : 'border-transparent hover:bg-canvas hover:border-line'"
+                      ? 'border-accent/50 bg-accent-soft text-accent shadow-[0_0_22px_-8px_rgba(52,232,158,0.6)]'
+                      : 'border-transparent hover:bg-white/5 hover:border-line'"
                     @click="pick(preset.id)"
                   >
                     <span class="text-base leading-none shrink-0">{{ ENERGY_MARKERS[preset.energy] }}</span>
@@ -201,7 +201,7 @@ watch(panel, (el) => {
                         <span
                           v-if="preset.isArchetype"
                           class="badge text-[10px] uppercase tracking-wide shrink-0"
-                          :class="preset.id === modelValue ? '!bg-canvas-elevated/15 !border-transparent !text-canvas-elevated' : ''"
+                          :class="preset.id === modelValue ? '!bg-accent/15 !border-accent/30 !text-accent' : ''"
                         >
                           Archétype
                         </span>
@@ -216,7 +216,7 @@ watch(panel, (el) => {
                     <span
                       v-if="hasRange(preset)"
                       class="badge text-[11px] shrink-0"
-                      :class="preset.id === modelValue ? '!bg-canvas-elevated/15 !border-transparent !text-canvas-elevated' : 'badge-accent'"
+                      :class="preset.id === modelValue ? '!bg-accent/15 !border-accent/30 !text-accent' : 'badge-accent'"
                     >
                       ⚡ {{ preset.wltpRangeKm }} km
                     </span>

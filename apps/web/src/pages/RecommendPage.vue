@@ -149,11 +149,11 @@ const cheapest = computed(() => ranking.value[0] ?? null)
         </label>
       </section>
 
-      <section v-if="cheapest" class="card card-pad mb-6" style="background: linear-gradient(180deg, #ffffff 0%, #fafaf9 100%);">
-        <div class="text-sm text-ink-subtle uppercase tracking-wide mb-2">
+      <section v-if="cheapest" class="card card-glow card-pad mb-6">
+        <div class="eyebrow mb-2">
           Le moins cher pour ton profil
         </div>
-        <div class="text-2xl sm:text-3xl font-semibold mb-1">
+        <div class="text-2xl sm:text-3xl font-semibold mb-1 tracking-tight">
           {{ cheapest.vehicle.label }}
         </div>
         <div class="text-ink-muted">

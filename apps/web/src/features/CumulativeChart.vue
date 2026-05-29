@@ -6,7 +6,7 @@ import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { computed } from 'vue'
 import VChart from 'vue-echarts'
-import { BASE_CHART_OPTIONS, SERIES_COLORS } from '~/composables/useChartTheme'
+import { ACCENT_GLOW, AXIS_LABEL, AXIS_LINE, BASE_CHART_OPTIONS, LEGEND_TEXT, SERIES_COLORS, SPLIT_LINE } from '~/composables/useChartTheme'
 import { useSimulationStore } from '~/stores/simulation'
 
 use([CanvasRenderer, LineChart, GridComponent, TooltipComponent, LegendComponent])
@@ -20,22 +20,21 @@ const option = computed<EChartsOption>(() => {
 
   return {
     ...BASE_CHART_OPTIONS,
-    legend: { data: [store.vehicleA.label, store.vehicleB.label], top: 0, textStyle: { color: '#44403c' } },
+    legend: { data: [store.vehicleA.label, store.vehicleB.label], top: 0, textStyle: LEGEND_TEXT, icon: 'roundRect' },
     xAxis: {
       type: 'category',
       data: years,
-      axisLine: { lineStyle: { color: '#d6d3d1' } },
-      axisLabel: { color: '#78716c', fontSize: 12 },
+      axisLine: AXIS_LINE,
+      axisLabel: AXIS_LABEL,
     },
     yAxis: {
       type: 'value',
       axisLine: { show: false },
       axisLabel: {
-        color: '#78716c',
-        fontSize: 12,
+        ...AXIS_LABEL,
         formatter: (v: number) => `${(v / 1000).toFixed(0)}k €`,
       },
-      splitLine: { lineStyle: { color: '#e7e5e4', type: 'dashed' } },
+      splitLine: SPLIT_LINE,
     },
     tooltip: {
       ...BASE_CHART_OPTIONS.tooltip,
@@ -48,18 +47,31 @@ const option = computed<EChartsOption>(() => {
         type: 'line',
         data: dataA,
         smooth: true,
-        lineStyle: { width: 3, color: SERIES_COLORS.A },
+        lineStyle: { width: 2.5, color: SERIES_COLORS.A },
         itemStyle: { color: SERIES_COLORS.A },
         symbol: 'circle',
-        symbolSize: 7,
+        symbolSize: 6,
       },
       {
         name: store.vehicleB.label,
         type: 'line',
         data: dataB,
         smooth: true,
-        lineStyle: { width: 3, color: SERIES_COLORS.B },
+        lineStyle: { width: 3, color: SERIES_COLORS.B, ...ACCENT_GLOW },
         itemStyle: { color: SERIES_COLORS.B },
+        areaStyle: {
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              { offset: 0, color: 'rgba(52, 232, 158, 0.28)' },
+              { offset: 1, color: 'rgba(52, 232, 158, 0)' },
+            ],
+          },
+        },
         symbol: 'circle',
         symbolSize: 7,
       },

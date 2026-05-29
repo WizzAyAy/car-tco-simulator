@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-Web app de simulation et comparaison du coût total d'usage (TCO) de 2 voitures. Voir `PLAN.md` pour le plan d'exécution complet et `DESIGN.md` (à venir) pour le système de design.
+Web app de simulation et comparaison du coût total d'usage (TCO) de 2 voitures. Voir `PLAN.md` pour le plan d'exécution complet et `DESIGN.md` pour le système de design (cockpit premium dark : charbon + accent néon vert→cyan, surfaces glass, glow, motion).
 
 ## Stack
 

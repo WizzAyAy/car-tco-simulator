@@ -8,7 +8,7 @@ import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { computed } from 'vue'
 import VChart from 'vue-echarts'
-import { BASE_CHART_OPTIONS, SERIES_COLORS } from '~/composables/useChartTheme'
+import { ACCENT_GLOW, AXIS_LABEL, AXIS_LINE, BASE_CHART_OPTIONS, SERIES_COLORS, SPLIT_LINE } from '~/composables/useChartTheme'
 import { formatEuro } from '~/composables/useFormatters'
 import { useSimulationStore } from '~/stores/simulation'
 
@@ -65,22 +65,21 @@ const option = computed<EChartsOption>(() => {
 
   return {
     ...BASE_CHART_OPTIONS,
-    grid: { left: 150, right: 28, top: 16, bottom: 40 },
+    grid: { left: 184, right: 28, top: 16, bottom: 40 },
     xAxis: {
       type: 'value',
       axisLine: { show: false },
       axisLabel: {
-        color: '#78716c',
-        fontSize: 12,
+        ...AXIS_LABEL,
         formatter: (v: number) => `${(v / 1000).toFixed(0)}k €`,
       },
-      splitLine: { lineStyle: { color: '#e7e5e4', type: 'dashed' } },
+      splitLine: SPLIT_LINE,
     },
     yAxis: {
       type: 'category',
       data: labels,
-      axisLine: { lineStyle: { color: '#d6d3d1' } },
-      axisLabel: { color: '#44403c', fontSize: 12 },
+      axisLine: AXIS_LINE,
+      axisLabel: { ...AXIS_LABEL, color: '#c2c9d6' },
     },
     tooltip: {
       ...BASE_CHART_OPTIONS.tooltip,
@@ -113,14 +112,14 @@ const option = computed<EChartsOption>(() => {
         stack: 'tornado',
         data: spans,
         barWidth: '60%',
-        itemStyle: { color: SERIES_COLORS.B, borderRadius: 3 },
+        itemStyle: { color: SERIES_COLORS.B, borderRadius: 3, ...ACCENT_GLOW },
         markLine: {
           symbol: 'none',
           silent: true,
-          lineStyle: { color: '#a8a29e', type: 'dashed', width: 1.5 },
+          lineStyle: { color: 'rgba(255,255,255,0.35)', type: 'dashed', width: 1.5 },
           label: {
             formatter: 'Verdict actuel',
-            color: '#78716c',
+            color: '#a8b0bf',
             fontSize: 11,
             position: 'insideEndTop',
           },

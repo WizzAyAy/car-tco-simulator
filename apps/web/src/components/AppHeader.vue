@@ -17,17 +17,20 @@ async function onShare() {
 </script>
 
 <template>
-  <header class="border-b border-line bg-canvas-elevated">
-    <div class="mx-auto max-w-[1400px] flex items-center justify-between px-6 py-4">
+  <header class="sticky top-0 z-30 glass border-b border-line">
+    <div class="mx-auto max-w-[1400px] flex items-center justify-between px-6 py-3.5">
       <div class="flex items-center gap-3">
-        <div class="h-9 w-9 rounded-lg bg-ink flex items-center justify-center text-canvas-elevated text-base font-bold">
+        <div
+          class="h-9 w-9 rounded-xl flex items-center justify-center text-[15px] font-bold text-[#04150d] glow-soft"
+          style="background: var(--gradient-accent);"
+        >
           €
         </div>
         <div>
-          <div class="font-semibold text-[15px] leading-tight">
+          <div class="font-semibold text-[15px] leading-tight tracking-tight">
             Car TCO Simulator
           </div>
-          <div class="text-[12px] text-ink-subtle leading-tight">
+          <div class="hidden sm:block text-[12px] text-ink-subtle leading-tight">
             Quel coût réel pour ta voiture ?
           </div>
         </div>
@@ -36,19 +39,19 @@ async function onShare() {
       <div class="flex items-center gap-2">
         <span
           v-if="store.pricesSource === 'live'"
-          class="badge badge-accent"
+          class="badge badge-accent hidden sm:inline-flex"
           title="Prix carburants moyens France en temps réel via data.gouv.fr"
         >
-          <span class="h-1.5 w-1.5 rounded-full bg-accent" /> Prix carburants live
+          <span class="dot-pulse h-1.5 w-1.5 rounded-full bg-accent text-accent" /> Prix carburants live
         </span>
         <span
           v-else-if="store.pricesSource === 'static-fallback'"
-          class="badge"
+          class="badge hidden sm:inline-flex"
           title="Live fetch indisponible — utilisation d'un snapshot récent. Tu peux ajuster manuellement les prix dans le profil."
         >
           <span class="h-1.5 w-1.5 rounded-full bg-warn" /> Prix snapshot 2026
         </span>
-        <span v-else class="badge">
+        <span v-else class="badge hidden sm:inline-flex">
           <span class="h-1.5 w-1.5 rounded-full bg-ink-subtle" /> Chargement…
         </span>
         <button class="btn btn-ghost text-sm py-1.5" @click="onShare">

@@ -7,7 +7,7 @@ import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { computed } from 'vue'
 import VChart from 'vue-echarts'
-import { BASE_CHART_OPTIONS, CATEGORY_COLORS, CATEGORY_LABELS } from '~/composables/useChartTheme'
+import { AXIS_LABEL, AXIS_LINE, BASE_CHART_OPTIONS, CATEGORY_COLORS, CATEGORY_LABELS, LEGEND_TEXT, SPLIT_LINE } from '~/composables/useChartTheme'
 import { useSimulationStore } from '~/stores/simulation'
 
 use([CanvasRenderer, BarChart, GridComponent, TooltipComponent, LegendComponent])
@@ -46,7 +46,7 @@ const option = computed<EChartsOption>(() => {
       Math.round(store.resultA.byCategory[cat]),
       Math.round(store.resultB.byCategory[cat]),
     ],
-    itemStyle: { color: CATEGORY_COLORS[cat], borderRadius: [0, 0, 0, 0] },
+    itemStyle: { color: CATEGORY_COLORS[cat] },
     emphasis: { focus: 'series' as const },
   }))
 
@@ -55,16 +55,18 @@ const option = computed<EChartsOption>(() => {
     legend: {
       bottom: 0,
       type: 'scroll',
-      textStyle: { color: '#44403c', fontSize: 11 },
+      textStyle: { ...LEGEND_TEXT, fontSize: 11 },
+      pageTextStyle: LEGEND_TEXT,
+      pageIconColor: '#a8b0bf',
+      pageIconInactiveColor: '#4b5563',
     },
     grid: { ...BASE_CHART_OPTIONS.grid, bottom: 70 },
     xAxis: {
       type: 'category',
       data: [store.vehicleA.label, store.vehicleB.label],
-      axisLine: { lineStyle: { color: '#d6d3d1' } },
+      axisLine: AXIS_LINE,
       axisLabel: {
-        color: '#78716c',
-        fontSize: 12,
+        ...AXIS_LABEL,
         interval: 0,
         rotate: 0,
         formatter: (v: string) => (v.length > 22 ? `${v.slice(0, 22)}…` : v),
@@ -74,11 +76,10 @@ const option = computed<EChartsOption>(() => {
       type: 'value',
       axisLine: { show: false },
       axisLabel: {
-        color: '#78716c',
-        fontSize: 12,
+        ...AXIS_LABEL,
         formatter: (v: number) => `${(v / 1000).toFixed(0)}k €`,
       },
-      splitLine: { lineStyle: { color: '#e7e5e4', type: 'dashed' } },
+      splitLine: SPLIT_LINE,
     },
     tooltip: {
       ...BASE_CHART_OPTIONS.tooltip,

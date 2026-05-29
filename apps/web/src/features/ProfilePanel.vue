@@ -82,7 +82,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
             v-for="p in TRIP_PROFILES"
             :key="p.id"
             class="btn btn-ghost text-xs px-2 py-1.5"
-            :class="activeProfileId === p.id ? '!bg-ink !text-canvas-elevated !border-ink' : ''"
+            :class="activeProfileId === p.id ? '!bg-accent !text-[#04150d] !border-transparent !font-semibold' : ''"
             @click="setTripProfile(p.mix)"
           >
             {{ p.label }}
@@ -163,7 +163,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
             v-for="tier in (['thirdParty', 'thirdPartyPlus', 'comprehensive'] as const)"
             :key="tier"
             class="btn btn-ghost text-xs px-2 py-1.5"
-            :class="store.profile.insuranceTier === tier ? '!bg-ink !text-canvas-elevated !border-ink' : ''"
+            :class="store.profile.insuranceTier === tier ? '!bg-accent !text-[#04150d] !border-transparent !font-semibold' : ''"
             @click="store.profile.insuranceTier = tier"
           >
             {{ tier === 'thirdParty' ? 'Tiers' : tier === 'thirdPartyPlus' ? 'Tiers+' : 'Tous risques' }}
@@ -220,7 +220,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
           Recharge électrique
         </div>
         <label class="flex items-center gap-2 text-sm cursor-pointer">
-          <input v-model="store.profile.hasHomeCharging" type="checkbox" class="accent-ink">
+          <input v-model="store.profile.hasHomeCharging" type="checkbox" class="accent-[#34e89e]">
           Je peux recharger à domicile
         </label>
         <div v-if="store.profile.hasHomeCharging" class="mt-3">
@@ -246,7 +246,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
             v-for="t in (['garage', 'street', 'paidParking'] as const)"
             :key="t"
             class="btn btn-ghost text-xs px-2 py-1.5"
-            :class="store.profile.parkingType === t ? '!bg-ink !text-canvas-elevated !border-ink' : ''"
+            :class="store.profile.parkingType === t ? '!bg-accent !text-[#04150d] !border-transparent !font-semibold' : ''"
             @click="store.profile.parkingType = t"
           >
             {{ t === 'garage' ? 'Garage' : t === 'street' ? 'Rue' : 'Payant' }}

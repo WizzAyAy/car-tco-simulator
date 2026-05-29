@@ -137,7 +137,7 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
   <Transition name="fade">
     <div
       v-if="open"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/40 backdrop-blur-sm"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
       @click.self="emit('close')"
     >
       <div class="card max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -156,9 +156,10 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
         </div>
 
         <!-- Progress bar -->
-        <div class="h-1 bg-line">
+        <div class="h-1 bg-white/8">
           <div
-            class="h-full bg-ink transition-all duration-300"
+            class="h-full transition-all duration-300"
+            style="background: var(--gradient-accent);"
             :style="{ width: `${(step / totalSteps) * 100}%` }"
           />
         </div>
@@ -199,8 +200,8 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
                 type="button"
                 class="text-left p-3 rounded-md border transition-colors"
                 :class="profile.dominantTrip === opt.value
-                  ? 'border-ink bg-ink text-canvas-elevated'
-                  : 'border-line bg-canvas hover:border-ink/40'"
+                  ? 'border-accent/60 bg-accent-soft text-accent shadow-[0_0_22px_-8px_rgba(52,232,158,0.6)]'
+                  : 'border-line bg-canvas-inset text-ink-muted hover:border-line-strong hover:text-ink'"
                 @click="profile.dominantTrip = opt.value"
               >
                 <div class="font-medium text-sm">
@@ -240,8 +241,8 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
                 type="button"
                 class="text-left p-3 rounded-md border transition-colors"
                 :class="profile.family === opt.value
-                  ? 'border-ink bg-ink text-canvas-elevated'
-                  : 'border-line bg-canvas hover:border-ink/40'"
+                  ? 'border-accent/60 bg-accent-soft text-accent shadow-[0_0_22px_-8px_rgba(52,232,158,0.6)]'
+                  : 'border-line bg-canvas-inset text-ink-muted hover:border-line-strong hover:text-ink'"
                 @click="profile.family = opt.value"
               >
                 <div class="font-medium text-sm">
@@ -269,8 +270,8 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
                 type="button"
                 class="text-left p-3 rounded-md border transition-colors"
                 :class="profile.charging === opt.value
-                  ? 'border-ink bg-ink text-canvas-elevated'
-                  : 'border-line bg-canvas hover:border-ink/40'"
+                  ? 'border-accent/60 bg-accent-soft text-accent shadow-[0_0_22px_-8px_rgba(52,232,158,0.6)]'
+                  : 'border-line bg-canvas-inset text-ink-muted hover:border-line-strong hover:text-ink'"
                 @click="profile.charging = opt.value"
               >
                 <div class="font-medium text-sm">
@@ -318,8 +319,8 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
                 type="button"
                 class="text-left p-3 rounded-md border transition-colors"
                 :class="profile.ecoPriority === opt.value
-                  ? 'border-ink bg-ink text-canvas-elevated'
-                  : 'border-line bg-canvas hover:border-ink/40'"
+                  ? 'border-accent/60 bg-accent-soft text-accent shadow-[0_0_22px_-8px_rgba(52,232,158,0.6)]'
+                  : 'border-line bg-canvas-inset text-ink-muted hover:border-line-strong hover:text-ink'"
                 @click="profile.ecoPriority = opt.value"
               >
                 <div class="font-medium text-sm">
@@ -352,8 +353,8 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string }[] = [
                 type="button"
                 class="w-full text-left p-3 rounded-md border transition-colors"
                 :class="pickedId === r.vehicle.id
-                  ? 'border-accent bg-accent-soft'
-                  : 'border-line hover:border-ink/40 bg-canvas-elevated'"
+                  ? 'border-accent/60 bg-accent-soft shadow-[0_0_22px_-8px_rgba(52,232,158,0.6)]'
+                  : 'border-line hover:border-line-strong bg-canvas-inset'"
                 @click="pickedId = pickedId === r.vehicle.id ? null : r.vehicle.id"
               >
                 <div class="flex items-start justify-between gap-3">

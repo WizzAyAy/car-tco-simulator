@@ -44,7 +44,7 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
 </script>
 
 <template>
-  <div class="card card-pad">
+  <div class="card card-pad transition-shadow duration-300 hover:shadow-[var(--shadow-lift),0_0_50px_-20px_rgba(52,232,158,0.35)]">
     <div class="flex items-start justify-between gap-4 mb-4">
       <div>
         <div class="flex items-center gap-2 mb-1 flex-wrap">
@@ -89,10 +89,10 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
         v-for="opt in conditionOptions"
         :key="opt.value"
         type="button"
-        class="px-2 py-2 rounded-md border text-left transition-colors"
+        class="px-2 py-2 rounded-md border text-left transition-all duration-200"
         :class="condition === opt.value
-          ? 'border-ink bg-ink text-canvas-elevated'
-          : 'border-line bg-canvas hover:border-ink/40'"
+          ? 'border-accent/60 bg-accent-soft text-accent shadow-[0_0_18px_-6px_rgba(52,232,158,0.6)]'
+          : 'border-line bg-canvas-inset text-ink-muted hover:border-line-strong hover:text-ink'"
         @click="emit('setCondition', opt.value)"
       >
         <div class="text-xs font-medium leading-tight">

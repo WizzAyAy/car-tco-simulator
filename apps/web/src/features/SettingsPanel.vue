@@ -31,13 +31,15 @@ const ACQUISITION_MODES: { value: AcquisitionMode, label: string }[] = [
 
       <div>
         <label class="text-xs text-ink-subtle">Mode d'acquisition</label>
-        <div class="mt-1 grid grid-cols-3 gap-1 rounded-lg bg-canvas p-1">
+        <div class="mt-1 grid grid-cols-3 gap-1 rounded-lg bg-black/30 border border-line p-1">
           <button
             v-for="opt in ACQUISITION_MODES"
             :key="opt.value"
             type="button"
-            class="text-xs py-1.5 rounded-md transition-colors"
-            :class="store.acquisitionMode === opt.value ? 'bg-surface font-medium shadow-sm' : 'text-ink-subtle hover:text-ink'"
+            class="text-xs py-1.5 rounded-md transition-all duration-200"
+            :class="store.acquisitionMode === opt.value
+              ? 'bg-accent text-[#04150d] font-semibold shadow-[0_0_18px_-6px_rgba(52,232,158,0.7)]'
+              : 'text-ink-subtle hover:text-ink'"
             @click="store.acquisitionMode = opt.value"
           >
             {{ opt.label }}
@@ -118,7 +120,7 @@ const ACQUISITION_MODES: { value: AcquisitionMode, label: string }[] = [
           </div>
           <div class="flex items-end">
             <label class="flex items-center gap-2 text-sm cursor-pointer pb-2">
-              <input v-model="store.leasingBuyOption" type="checkbox" class="accent-ink">
+              <input v-model="store.leasingBuyOption" type="checkbox" class="accent-[#34e89e]">
               <span>Option d'achat (LOA)</span>
             </label>
           </div>
@@ -135,7 +137,7 @@ const ACQUISITION_MODES: { value: AcquisitionMode, label: string }[] = [
 
       <div>
         <label class="flex items-center gap-2 text-sm cursor-pointer">
-          <input v-model="store.includeCarbonExternality" type="checkbox" class="accent-ink">
+          <input v-model="store.includeCarbonExternality" type="checkbox" class="accent-[#34e89e]">
           <span>Inclure le coût social du carbone</span>
         </label>
         <div v-if="store.includeCarbonExternality" class="mt-2">

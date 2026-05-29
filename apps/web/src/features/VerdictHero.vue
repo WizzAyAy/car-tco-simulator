@@ -24,42 +24,50 @@ const breakEvenLabel = computed(() => {
 </script>
 
 <template>
-  <div class="card card-pad" style="background: linear-gradient(180deg, #ffffff 0%, #fafaf9 100%);">
-    <div v-if="store.comparison.winner === 'tie'" class="text-center py-6">
-      <div class="text-sm text-ink-subtle uppercase tracking-wide mb-2">
+  <div class="card card-glow card-pad relative overflow-hidden sm:px-8 sm:py-10">
+    <!-- Ambient glow blob -->
+    <div
+      class="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-40 blur-3xl"
+      style="background: var(--gradient-accent);"
+    />
+
+    <div v-if="store.comparison.winner === 'tie'" class="relative text-center py-6">
+      <div class="eyebrow mb-3">
         Verdict
       </div>
-      <div class="text-3xl font-semibold">
+      <div class="text-4xl font-bold tracking-tight">
         Coût quasi identique
       </div>
-      <p class="text-ink-muted text-sm mt-2">
+      <p class="text-ink-muted text-sm mt-3">
         Les deux voitures coûtent à peu près la même chose sur {{ formatYears(store.durationYears) }}.
       </p>
     </div>
 
-    <div v-else>
-      <div class="text-sm text-ink-subtle uppercase tracking-wide mb-2">
+    <div v-else class="relative">
+      <div class="eyebrow mb-4">
         Verdict sur {{ formatYears(store.durationYears) }}
       </div>
       <div class="flex items-baseline gap-3 flex-wrap">
         <AnimatedNumber
           :value="savingsAbs"
-          class="text-5xl sm:text-7xl font-semibold text-accent leading-none"
+          class="text-gradient font-num font-extrabold leading-[0.9] tracking-tight text-[clamp(3rem,8vw,6rem)]"
+          style="filter: drop-shadow(0 0 28px rgba(52, 232, 158, 0.45));"
           :format="(v) => formatEuro(v)"
         />
-        <span class="text-xl sm:text-2xl font-medium text-ink-muted">d'économie</span>
+        <span class="text-xl sm:text-2xl font-semibold text-ink-muted">d'économie</span>
       </div>
-      <p class="text-base text-ink mt-4 max-w-2xl">
+      <p class="text-base sm:text-lg text-ink mt-5 max-w-2xl">
         en choisissant
-        <span class="font-semibold">{{ winnerLabel }}</span>
+        <span class="font-semibold text-accent">{{ winnerLabel }}</span>
         plutôt que l'autre option — soit
-        <span class="font-num font-medium">{{ formatEuro(monthlyEq) }}/mois</span>
+        <span class="font-num font-semibold">{{ formatEuro(monthlyEq) }}/mois</span>
         sur la durée.
       </p>
       <p class="text-ink-subtle text-xs mt-2">
         Tous postes inclus : carburant ou électricité, entretien, assurance, dépréciation, malus, etc.
       </p>
-      <div v-if="breakEvenLabel" class="badge badge-accent mt-4">
+      <div v-if="breakEvenLabel" class="badge badge-accent mt-5">
+        <span class="dot-pulse h-1.5 w-1.5 rounded-full bg-accent text-accent" />
         {{ breakEvenLabel }}
       </div>
     </div>
