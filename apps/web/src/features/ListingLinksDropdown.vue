@@ -44,7 +44,7 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
     <Transition name="dropdown">
       <div
         v-if="open"
-        class="absolute right-0 mt-1 z-30 w-72 rounded-lg border border-line glass shadow-[var(--shadow-lift)] overflow-hidden"
+        class="absolute left-0 mt-1 z-30 w-72 max-w-[calc(100vw-2rem)] rounded-lg border border-line glass shadow-[var(--shadow-lift)] overflow-hidden"
       >
         <div class="px-3 py-2 border-b border-line">
           <div class="text-[11px] uppercase tracking-wide text-ink-subtle">

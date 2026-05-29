@@ -14,6 +14,8 @@ import { useSimulationStore } from '~/stores/simulation'
 
 use([CanvasRenderer, BarChart, GridComponent, TooltipComponent, MarkLineComponent])
 
+defineProps<{ fill?: boolean }>()
+
 const store = useSimulationStore()
 
 const DELTA_PERCENT = 15
@@ -132,7 +134,7 @@ const option = computed<EChartsOption>(() => {
 </script>
 
 <template>
-  <div class="card card-pad">
+  <div class="card card-pad" :class="{ 'h-full flex flex-col': fill }">
     <h3 class="text-base font-semibold mb-1">
       Sensibilité de l'économie
     </h3>
@@ -140,6 +142,6 @@ const option = computed<EChartsOption>(() => {
       Impact d'une variation de ±{{ DELTA_PERCENT }} % de chaque hypothèse sur l'économie finale.
       Plus la barre est longue, plus l'hypothèse est déterminante.
     </p>
-    <VChart :option="option" autoresize style="height: 280px;" />
+    <VChart class="w-full" :option="option" autoresize :style="fill ? 'flex:1 1 0;min-height:0' : 'height:280px'" />
   </div>
 </template>

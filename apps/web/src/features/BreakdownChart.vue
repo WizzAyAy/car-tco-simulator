@@ -12,6 +12,8 @@ import { useSimulationStore } from '~/stores/simulation'
 
 use([CanvasRenderer, BarChart, GridComponent, TooltipComponent, LegendComponent])
 
+defineProps<{ fill?: boolean }>()
+
 const store = useSimulationStore()
 
 const CATEGORIES_ORDER: CostCategory[] = [
@@ -93,13 +95,13 @@ const option = computed<EChartsOption>(() => {
 </script>
 
 <template>
-  <div class="card card-pad">
+  <div class="card card-pad" :class="{ 'h-full flex flex-col': fill }">
     <h3 class="text-base font-semibold mb-1">
       Décomposition par poste de coût
     </h3>
     <p class="text-xs text-ink-subtle mb-4">
       Chaque couleur représente un type de dépense sur toute la durée. Survole les barres pour les détails.
     </p>
-    <VChart :option="option" autoresize style="height: 360px;" />
+    <VChart class="w-full" :option="option" autoresize :style="fill ? 'flex:1 1 0;min-height:0' : 'height:360px'" />
   </div>
 </template>

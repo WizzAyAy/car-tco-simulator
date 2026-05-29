@@ -11,6 +11,8 @@ import { useSimulationStore } from '~/stores/simulation'
 
 use([CanvasRenderer, LineChart, GridComponent, TooltipComponent, LegendComponent])
 
+defineProps<{ fill?: boolean }>()
+
 const store = useSimulationStore()
 
 const option = computed<EChartsOption>(() => {
@@ -81,13 +83,13 @@ const option = computed<EChartsOption>(() => {
 </script>
 
 <template>
-  <div class="card card-pad">
+  <div class="card card-pad" :class="{ 'h-full flex flex-col': fill }">
     <h3 class="text-base font-semibold mb-1">
       Coût cumulé année par année
     </h3>
     <p class="text-xs text-ink-subtle mb-4">
       Plus la courbe monte vite, plus la voiture coûte cher. L'intersection éventuelle marque le point d'équilibre.
     </p>
-    <VChart :option="option" autoresize style="height: 320px;" />
+    <VChart class="w-full" :option="option" autoresize :style="fill ? 'flex:1 1 0;min-height:0' : 'height:320px'" />
   </div>
 </template>

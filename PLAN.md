@@ -175,14 +175,19 @@ Le wizard classe les modèles, laisse choisir la **Voiture A** parmi le top, pui
 
 Dimensions de scoring dans `packages/shared/src/wizard/lifestyle.ts` (`LifestyleProfile`). Les dimensions stationnement / volume / durée / longs trajets sont neutres à leur valeur par défaut.
 
-### 3. Comparison (la page reine)
+### 3. Comparison (la page reine) — deck horizontal
 
-- Hero : "Sur 5 ans, **Voiture B coûte 3 240 € de moins** que Voiture A" — gros chiffre, couleur sémantique
-- Graphique cumulé année par année (2 courbes qui se croisent ou non)
-- Stacked bar par poste de coût (carburant, entretien, assurance, dépréciation, etc.)
-- Tableau détaillé année par année
-- **Sliders ajustables en temps réel** (km/an, prix carburant, durée) qui rafraîchissent tout
-- Bouton "Partager" → URL avec état encodé (query params compressés ou base64)
+`ComparisonPage` = **deck de 7 slides plein écran** (`ComparisonDeck`), pas de scroll vertical (cf. `DESIGN.md` §7). Une thématique par slide, navigation flèches/clavier/swipe/points :
+
+1. **Verdict** — gros chiffre d'économie + qui gagne + résumé A/B + CTA wizard
+2. **Le duel** — les 2 `VehicleCard` côte à côte (preset + état + perso)
+3. **Coût cumulé** — courbe année par année (`fill`) + point de bascule
+4. **Postes de coût** — stacked bar par poste (`fill`)
+5. **Sensibilité** — tornado ±15 % (`fill`)
+6. **Année par année** — tableau détaillé
+7. **Récap & partage** — synthèse chiffrée + "Partager" (URL encodée) + méthodo
+
+Les **réglages** (km/an, durée, profil, mode d'acquisition, prix) vivent dans un `SettingsDrawer` latéral (bouton ⚙︎), accessible depuis toutes les slides, recalcul en temps réel.
 - Bouton "Exporter en PDF"
 
 ### 4. Détails par voiture (drilldown)

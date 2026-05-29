@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import type { Vehicle } from '@cts/shared'
 import { computed, ref } from 'vue'
+import AnimatedNumber from '~/components/AnimatedNumber.vue'
 import AppHeader from '~/components/AppHeader.vue'
+import { formatEuro, formatYears } from '~/composables/useFormatters'
 import { useLiveVerdict } from '~/composables/useOgImage'
 import { usePageMeta, useSocialImage } from '~/composables/usePageMeta'
+import { useShareState } from '~/composables/useShareState'
 import BreakdownChart from '~/features/BreakdownChart.vue'
 import BreakEvenCard from '~/features/BreakEvenCard.vue'
 import CumulativeChart from '~/features/CumulativeChart.vue'
-import ProfilePanel from '~/features/ProfilePanel.vue'
-import SettingsPanel from '~/features/SettingsPanel.vue'
+import ComparisonDeck from '~/features/deck/ComparisonDeck.vue'
+import SettingsDrawer from '~/features/deck/SettingsDrawer.vue'
 import TornadoChart from '~/features/TornadoChart.vue'
 import VehicleCard from '~/features/VehicleCard.vue'
+import VehicleSilhouette from '~/features/VehicleSilhouette.vue'
 import VerdictHero from '~/features/VerdictHero.vue'
 import WizardModal from '~/features/WizardModal.vue'
 import YearlyTable from '~/features/YearlyTable.vue'
@@ -29,7 +33,11 @@ const props = withDefaults(defineProps<{
 })
 
 const store = useSimulationStore()
+const share = useShareState()
 const wizardOpen = ref(false)
+const drawerOpen = ref(false)
+const copied = ref(false)
+const deckCurrent = ref(0)
 
 const verdict = useLiveVerdict()
 const ogImage = computed(() => verdict.value.ogImageUrl)
@@ -40,12 +48,34 @@ const verdictDescription = computed(() =>
   + `carburant ou électricité, entretien, assurance, dépréciation, malus et financement.`,
 )
 
-// og:image is always driven from the live store (single source of truth),
-// even when an SEO wrapper owns the title/description.
 useSocialImage(ogImage)
 
 if (props.managedMeta)
   usePageMeta(verdictTitle, verdictDescription)
+
+const SLIDES = [
+  { key: 'verdict', eyebrow: 'Comparatif', title: 'Le verdict' },
+  { key: 'duel', eyebrow: 'Les concurrentes', title: 'Le duel' },
+  { key: 'time', eyebrow: 'Dans le temps', title: 'Coût cumulé' },
+  { key: 'breakdown', eyebrow: 'Où part l\'argent', title: 'Postes de coût' },
+  { key: 'sensitivity', eyebrow: 'Et si…', title: 'Sensibilité' },
+  { key: 'yearly', eyebrow: 'Le détail', title: 'Année par année' },
+  { key: 'recap', eyebrow: 'Synthèse', title: 'Récap & partage' },
+] as const
+
+const winnerLabel = computed(() => {
+  const w = store.comparison.winner
+  if (w === 'tie')
+    return 'Match nul'
+  return w === 'a' ? store.vehicleA.label : store.vehicleB.label
+})
+const savingsAbs = computed(() => Math.round(store.comparison.savings))
+const monthlyEq = computed(() => store.comparison.savings / (store.durationYears * 12))
+const breakEvenLabel = computed(() =>
+  store.comparison.breakEvenYear === null
+    ? null
+    : `Équilibre après ${formatYears(store.comparison.breakEvenYear)}`,
+)
 
 function updateVehicleA(v: Vehicle) {
   store.vehicleA = v
@@ -53,128 +83,202 @@ function updateVehicleA(v: Vehicle) {
 function updateVehicleB(v: Vehicle) {
   store.vehicleB = v
 }
+
+async function onShare() {
+  const ok = await share.copyShareLink()
+  if (ok) {
+    copied.value = true
+    setTimeout(() => (copied.value = false), 2000)
+  }
+}
 </script>
 
 <template>
-  <div class="min-h-full flex flex-col bg-canvas">
+  <div class="h-[100dvh] flex flex-col bg-canvas overflow-hidden">
     <AppHeader />
 
-    <main class="mx-auto max-w-[1400px] w-full px-6 py-10 sm:py-14 flex-1 space-y-12 sm:space-y-16">
-      <!-- Intro / framing -->
-      <section class="max-w-3xl">
-        <div class="eyebrow mb-4">
-          Coût total d'usage · TCO
-        </div>
-        <h1 class="text-4xl sm:text-6xl font-extrabold leading-[1.02] tracking-tight mb-4">
-          Compare le <span class="text-gradient">coût réel</span><br>de 2 voitures, sans surprise.
-        </h1>
-        <p class="text-ink-muted text-base sm:text-lg mb-6 max-w-2xl">
-          Carburant ou électricité, entretien, assurance, dépréciation, malus, financement…
-          tout est inclus. Ajuste les sliders pour explorer les scénarios.
-        </p>
-        <button
-          type="button"
-          class="btn btn-primary"
-          @click="wizardOpen = true"
-        >
-          ✨ Aide-moi à choisir en 2 minutes
-        </button>
-      </section>
+    <main class="flex-1 min-h-0">
+      <ComparisonDeck v-model:current="deckCurrent" :slides="[...SLIDES]" :nav-locked="wizardOpen || drawerOpen">
+        <!-- 1 · Verdict -->
+        <template #verdict>
+          <div class="h-full flex flex-col justify-center gap-6 max-w-4xl mx-auto w-full">
+            <VerdictHero />
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              <div class="grid grid-cols-2 gap-3 flex-1 min-w-[18rem]">
+                <button
+                  v-for="(car, side) in { A: store.vehicleA, B: store.vehicleB }"
+                  :key="side"
+                  type="button"
+                  class="card card-pad !p-3 flex items-center gap-3 text-left transition-all duration-200 hover:border-line-strong hover:-translate-y-0.5"
+                  @click="deckCurrent = 1"
+                >
+                  <div class="h-12 w-20 shrink-0">
+                    <VehicleSilhouette :vehicle="car" class="h-full" />
+                  </div>
+                  <div class="min-w-0">
+                    <div class="text-ink-subtle text-[11px]">
+                      Voiture {{ side }}
+                    </div>
+                    <div class="font-medium text-sm leading-tight truncate">
+                      {{ car.label }}
+                    </div>
+                    <div class="font-num text-ink-muted text-xs">
+                      {{ formatEuro(side === 'A' ? store.resultA.totalCost : store.resultB.totalCost) }}
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <button type="button" class="btn btn-primary shrink-0" @click="wizardOpen = true">
+                ✨ Aide-moi à choisir en 2 minutes
+              </button>
+            </div>
+          </div>
+        </template>
 
-      <!-- Verdict -->
-      <section v-reveal>
-        <VerdictHero />
-      </section>
+        <!-- 2 · Duel -->
+        <template #duel>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 h-full content-start lg:content-stretch">
+            <VehicleCard
+              side="A"
+              :vehicle="store.vehicleA"
+              :condition="store.conditionA"
+              :total-cost="store.resultA.totalCost"
+              :per-month="store.resultA.monthlyEquivalent"
+              :per-km="store.resultA.perKilometer"
+              accent-class=""
+              @update:vehicle="updateVehicleA"
+              @select-preset="store.selectPresetA"
+              @set-condition="store.setConditionA"
+            />
+            <VehicleCard
+              side="B"
+              :vehicle="store.vehicleB"
+              :condition="store.conditionB"
+              :total-cost="store.resultB.totalCost"
+              :per-month="store.resultB.monthlyEquivalent"
+              :per-km="store.resultB.perKilometer"
+              accent-class="badge-accent"
+              @update:vehicle="updateVehicleB"
+              @select-preset="store.selectPresetB"
+              @set-condition="store.setConditionB"
+            />
+          </div>
+        </template>
 
-      <!-- Vehicle cards side-by-side -->
-      <section v-reveal class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <VehicleCard
-          side="A"
-          :vehicle="store.vehicleA"
-          :condition="store.conditionA"
-          :total-cost="store.resultA.totalCost"
-          :per-month="store.resultA.monthlyEquivalent"
-          :per-km="store.resultA.perKilometer"
-          accent-class=""
-          @update:vehicle="updateVehicleA"
-          @select-preset="store.selectPresetA"
-          @set-condition="store.setConditionA"
-        />
-        <VehicleCard
-          side="B"
-          :vehicle="store.vehicleB"
-          :condition="store.conditionB"
-          :total-cost="store.resultB.totalCost"
-          :per-month="store.resultB.monthlyEquivalent"
-          :per-km="store.resultB.perKilometer"
-          accent-class="badge-accent"
-          @update:vehicle="updateVehicleB"
-          @select-preset="store.selectPresetB"
-          @set-condition="store.setConditionB"
-        />
-      </section>
+        <!-- 3 · Coût cumulé -->
+        <template #time>
+          <div class="grid grid-cols-1 lg:grid-cols-[1.7fr_1fr] gap-5 h-full">
+            <CumulativeChart fill />
+            <BreakEvenCard class="h-full" />
+          </div>
+        </template>
 
-      <!-- Charts -->
-      <section v-reveal class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <CumulativeChart />
-        <BreakdownChart />
-      </section>
+        <!-- 4 · Postes de coût -->
+        <template #breakdown>
+          <BreakdownChart fill class="h-full" />
+        </template>
 
-      <!-- Sensitivity analyses -->
-      <section v-reveal class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <BreakEvenCard />
-        <TornadoChart />
-      </section>
+        <!-- 5 · Sensibilité -->
+        <template #sensitivity>
+          <TornadoChart fill class="h-full" />
+        </template>
 
-      <!-- Configuration sidebar / panels -->
-      <section v-reveal class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <ProfilePanel />
-        <SettingsPanel />
-      </section>
+        <!-- 6 · Année par année -->
+        <template #yearly>
+          <YearlyTable />
+        </template>
 
-      <!-- Yearly table -->
-      <section v-reveal>
-        <YearlyTable />
-      </section>
+        <!-- 7 · Récap & partage -->
+        <template #recap>
+          <div class="h-full flex flex-col justify-center gap-6 max-w-4xl mx-auto w-full">
+            <div class="card card-glow card-pad">
+              <div class="eyebrow mb-2">
+                Sur {{ formatYears(store.durationYears) }}, le moins cher est
+              </div>
+              <div class="text-3xl sm:text-4xl font-bold tracking-tight text-gradient inline-block">
+                {{ winnerLabel }}
+              </div>
+              <p v-if="store.comparison.winner !== 'tie'" class="text-ink-muted mt-2">
+                soit
+                <AnimatedNumber
+                  :value="savingsAbs"
+                  class="font-num font-semibold text-accent"
+                  :format="(v) => formatEuro(v)"
+                />
+                d'économie ·
+                <span class="font-num">{{ formatEuro(monthlyEq) }}/mois</span>
+              </p>
+            </div>
 
-      <!-- Methodology -->
-      <section v-reveal class="card card-pad text-sm text-ink-muted">
-        <h3 class="font-semibold text-ink mb-2">
-          Méthodologie en 1 minute
-        </h3>
-        <ul class="list-disc list-inside space-y-1">
-          <li>
-            <span class="font-medium text-ink">Dépréciation</span> : valeur résiduelle estimée
-            via courbes par catégorie et énergie (référence marché France 2024-2026).
-          </li>
-          <li>
-            <span class="font-medium text-ink">Carburant / électricité</span> : prix temps réel
-            depuis data.gouv.fr (mise à jour heure-par-heure) — ajustables manuellement.
-          </li>
-          <li>
-            <span class="font-medium text-ink">Entretien</span> : barème ADEME modulé par âge
-            (les voitures vieillissent plus cher).
-          </li>
-          <li>
-            <span class="font-medium text-ink">Assurance</span> : base par formule × catégorie ×
-            bonus-malus × coefficient âge.
-          </li>
-          <li>
-            <span class="font-medium text-ink">Inflation</span> : appliquée séparément sur les
-            postes énergétiques (souvent plus volatile).
-          </li>
-        </ul>
-        <p class="mt-3 text-xs">
-          Cette simulation est une estimation. Pour des chiffres précis,
-          consulte un concessionnaire et ton assureur.
-        </p>
-      </section>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div class="card card-pad text-center">
+                <div class="eyebrow mb-1">
+                  Total A
+                </div>
+                <div class="font-num font-semibold text-lg">
+                  {{ formatEuro(store.resultA.totalCost) }}
+                </div>
+              </div>
+              <div class="card card-pad text-center">
+                <div class="eyebrow mb-1">
+                  Total B
+                </div>
+                <div class="font-num font-semibold text-lg">
+                  {{ formatEuro(store.resultB.totalCost) }}
+                </div>
+              </div>
+              <div class="card card-pad text-center">
+                <div class="eyebrow mb-1">
+                  Économie
+                </div>
+                <div class="font-num font-semibold text-lg text-accent">
+                  {{ formatEuro(savingsAbs) }}
+                </div>
+              </div>
+              <div class="card card-pad text-center">
+                <div class="eyebrow mb-1">
+                  Bascule
+                </div>
+                <div class="font-num font-semibold text-lg">
+                  {{ breakEvenLabel ? breakEvenLabel.replace('Équilibre après ', '') : '—' }}
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3">
+              <button type="button" class="btn btn-primary" @click="onShare">
+                {{ copied ? '✓ Lien copié' : 'Partager ce comparatif' }}
+              </button>
+              <button type="button" class="btn btn-ghost" @click="drawerOpen = true">
+                ⚙︎ Ajuster les hypothèses
+              </button>
+            </div>
+
+            <p class="text-xs text-ink-subtle leading-relaxed max-w-2xl">
+              Estimation tous postes inclus (carburant/électricité, entretien, assurance, dépréciation,
+              malus, financement). Dépréciation via courbes par catégorie et énergie, prix carburants
+              temps réel data.gouv.fr, entretien barème ADEME. Pour des chiffres précis, consulte un
+              concessionnaire et ton assureur. · open data : data.gouv.fr · ADEME
+            </p>
+          </div>
+        </template>
+
+        <!-- Persistent settings access -->
+        <template #nav-actions>
+          <button
+            type="button"
+            class="btn btn-ghost text-sm py-1.5 gap-1.5"
+            aria-label="Ouvrir les réglages"
+            @click="drawerOpen = true"
+          >
+            <span class="text-base leading-none">⚙︎</span>
+            <span class="hidden sm:inline">Réglages</span>
+          </button>
+        </template>
+      </ComparisonDeck>
     </main>
 
-    <footer class="border-t border-line py-4 text-center text-xs text-ink-subtle">
-      Car TCO Simulator · open data : data.gouv.fr · ADEME
-    </footer>
-
-    <WizardModal :open="wizardOpen" @close="wizardOpen = false" />
+    <WizardModal :open="wizardOpen" @applied="deckCurrent = 1" @close="wizardOpen = false" />
+    <SettingsDrawer :open="drawerOpen" @close="drawerOpen = false" />
   </div>
 </template>

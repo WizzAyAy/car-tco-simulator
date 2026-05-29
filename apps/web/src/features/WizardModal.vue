@@ -9,7 +9,7 @@ import WizardStepper from '~/features/wizard/WizardStepper.vue'
 import { useSimulationStore } from '~/stores/simulation'
 
 const props = defineProps<{ open: boolean }>()
-const emit = defineEmits<{ (e: 'close'): void }>()
+const emit = defineEmits<{ (e: 'close'): void, (e: 'applied'): void }>()
 
 const store = useSimulationStore()
 const step = ref(0)
@@ -99,6 +99,7 @@ function applyAndClose() {
     store.profile.hasHomeCharging = false
     store.profile.homeChargingMix = { home: 0, fastStation: 1 }
   }
+  emit('applied')
   emit('close')
 }
 

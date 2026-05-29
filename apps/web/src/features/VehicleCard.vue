@@ -2,6 +2,7 @@
 import type { Energy, PurchaseCondition, Vehicle } from '@cts/shared'
 import { computed } from 'vue'
 import ListingLinksDropdown from '~/features/ListingLinksDropdown.vue'
+import VehicleSilhouette from '~/features/VehicleSilhouette.vue'
 import VehiclePicker from '~/features/VehiclePicker.vue'
 
 const props = defineProps<{
@@ -45,6 +46,10 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
 
 <template>
   <div class="card card-pad transition-shadow duration-300 hover:shadow-[var(--shadow-lift),0_0_50px_-20px_rgba(52,232,158,0.35)]">
+    <div class="-mx-6 -mt-6 mb-4 px-6 pt-5 pb-2 h-28 rounded-t-[var(--radius-lg)] bg-[radial-gradient(120%_120%_at_50%_0%,rgba(255,255,255,0.05),transparent)]">
+      <VehicleSilhouette :vehicle="vehicle" class="h-full" />
+    </div>
+
     <div class="flex items-start justify-between gap-4 mb-4">
       <div>
         <div class="flex items-center gap-2 mb-1 flex-wrap">

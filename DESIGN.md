@@ -99,13 +99,26 @@ Easing : `cubic-bezier(0.22, 1, 0.36, 1)` (ease-out expressif).
 - **Hover** : lift + glow sur cartes interactives, scale sur thumbs/boutons.
 - **`prefers-reduced-motion`** : toutes les animations non essentielles désactivées.
 
-## 7. Layout
+## 7. Layout — deck horizontal
 
-- Container max `1400px`, padding `1.5rem` (mobile) → `2rem`.
-- Rythme vertical entre sections : `4rem` desktop, `2.5rem` mobile.
+La comparaison (`ComparisonPage`) n'est **pas** une page qui scrolle : c'est un
+**deck de 7 slides plein écran** (`ComparisonDeck`), une par thématique, navigué
+horizontalement. Objectif : **zéro scroll vertical** sur desktop, tout tient dans
+la hauteur de l'écran (`100dvh` − header − barre de nav).
+
+- Slides : 1 Verdict · 2 Duel · 3 Coût cumulé · 4 Postes · 5 Sensibilité ·
+  6 Année par année · 7 Récap & partage. Toutes montées en permanence (SEO + état
+  + charts pré-rendus) ; translateX sur la piste, easing `--ease-out-expo`.
+- Navigation : flèches latérales (desktop), barre de nav (points + jauge `n/N` +
+  flèches mobile), clavier `←/→`, swipe tactile. `inert` sur les slides hors écran.
+- **Réglages** : un `SettingsDrawer` glisse depuis la droite (bouton ⚙︎ dans la
+  barre de nav), dispo sur toutes les slides — recalcul live de la slide affichée.
+- Charts : prop `fill` → la carte passe en `h-full flex-col` et le graphe remplit
+  la slide (immersif). Sinon hauteur fixe (usage hors deck).
+- Sur mobile, une slide trop dense scrolle en interne (`overflow-y-auto`).
 - Fond global : charbon + **deux halos radiaux** néon très diffus (ambient mesh)
-  fixés, derrière le contenu, pour la profondeur cockpit.
-- Grilles 2 colonnes (`lg:`) pour cartes véhicules, charts et panneaux.
+  fixés derrière le contenu, pour la profondeur cockpit.
+- Grilles 2 colonnes (`lg:`) pour cartes véhicules et panneaux du drawer.
 
 ## 8. Accessibilité
 
