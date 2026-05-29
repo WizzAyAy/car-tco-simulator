@@ -33,22 +33,52 @@ export const CATEGORY_LABELS: Record<CostCategory, string> = {
   carbon: 'Coût carbone',
 }
 
-/** Category palette tuned for a dark canvas — luminous, never pure black. */
+/**
+ * Display groups for the breakdown chart — the 14 fine categories collapse into
+ * 4 readable buckets. The engine keeps the fine categories (tooltips, other
+ * slides); only this chart merges them. Colors are spaced steps of the
+ * signature neon green→cyan so the stack stays cohesive with the nav/verdict.
+ */
+export interface BreakdownGroup {
+  id: string
+  label: string
+  color: string
+  categories: CostCategory[]
+}
+
+export const BREAKDOWN_GROUPS: BreakdownGroup[] = [
+  { id: 'depreciation', label: 'Dépréciation', color: '#34e89e', categories: ['depreciation'] },
+  { id: 'energy', label: 'Énergie', color: '#22d3ee', categories: ['energy'] },
+  { id: 'financing', label: 'Financement', color: '#15a58e', categories: ['financing', 'leasing'] },
+  {
+    id: 'usage',
+    label: 'Usage',
+    color: '#8df0cd',
+    categories: ['maintenance', 'repairs', 'tires', 'consumables', 'insurance', 'controlTechnique', 'parking', 'registration', 'malus', 'carbon'],
+  },
+]
+
+/**
+ * Fine per-category palette — a single monochrome ramp along the signature neon
+ * green→cyan (DESIGN.md §2). Every poste is a shade of the same glowy accent;
+ * only lightness/hue step between segments so the stack stays cohesive with the
+ * nav selector and verdict, never a rainbow.
+ */
 export const CATEGORY_COLORS: Record<CostCategory, string> = {
-  energy: '#38bdf8',
-  maintenance: '#a78bfa',
-  tires: '#94a3b8',
-  consumables: '#cbd5e1',
-  insurance: '#f472b6',
-  controlTechnique: '#fbbf24',
-  parking: '#c084fc',
-  registration: '#a3e635',
-  malus: '#fb6f6f',
-  repairs: '#fb923c',
-  financing: '#22d3ee',
+  depreciation: '#34e89e',
+  energy: '#22d3ee',
+  insurance: '#8df0cd',
+  maintenance: '#15a58e',
+  repairs: '#4ee3a8',
+  tires: '#43d9e6',
   leasing: '#2dd4bf',
-  depreciation: '#cdd3df',
-  carbon: '#34e89e',
+  financing: '#18b89a',
+  malus: '#6ff2c0',
+  parking: '#1aa0a8',
+  controlTechnique: '#46ddb0',
+  registration: '#5fe1ee',
+  consumables: '#2ec9a6',
+  carbon: '#b6f3d8',
 }
 
 /* Shared dark axis / legend / grid styling — consumed by every chart so no
