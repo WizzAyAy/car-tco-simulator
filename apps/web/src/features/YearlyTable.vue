@@ -31,7 +31,51 @@ const visible = computed(() => (showAll.value ? rows.value : rows.value.slice(0,
       Le delta cumulé négatif signifie que la voiture B coûte moins cher à ce moment-là.
     </p>
 
-    <div class="overflow-x-auto">
+    <!-- Mobile: one card per year -->
+    <div class="sm:hidden space-y-2">
+      <div
+        v-for="row in visible"
+        :key="row.year"
+        class="rounded-md border border-line bg-canvas-inset p-3"
+      >
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-medium text-sm">An {{ row.year }}</span>
+          <span
+            class="font-num tabular-nums text-sm font-medium"
+            :class="row.diff < 0 ? 'text-accent' : row.diff > 0 ? 'text-warn' : 'text-ink-subtle'"
+          >
+            Δ {{ row.diff > 0 ? '+' : '' }}{{ formatEuro(row.diff) }}
+          </span>
+        </div>
+        <div class="grid grid-cols-2 gap-3 text-xs">
+          <div>
+            <div class="eyebrow mb-1 truncate">
+              {{ store.vehicleA.label }}
+            </div>
+            <div class="font-num tabular-nums">
+              {{ formatEuro(row.a) }}
+            </div>
+            <div class="font-num tabular-nums text-ink-subtle">
+              cumul {{ formatEuro(row.aCum) }}
+            </div>
+          </div>
+          <div>
+            <div class="eyebrow mb-1 truncate">
+              {{ store.vehicleB.label }}
+            </div>
+            <div class="font-num tabular-nums">
+              {{ formatEuro(row.b) }}
+            </div>
+            <div class="font-num tabular-nums text-ink-subtle">
+              cumul {{ formatEuro(row.bCum) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop: full table -->
+    <div class="hidden sm:block overflow-x-auto">
       <table class="w-full text-sm font-num tabular-nums">
         <thead class="border-b border-line">
           <tr class="text-xs text-ink-subtle uppercase tracking-wide">

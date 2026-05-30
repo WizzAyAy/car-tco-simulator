@@ -9,8 +9,13 @@ import WizardChoiceCards from '~/features/wizard/WizardChoiceCards.vue'
 import WizardStepper from '~/features/wizard/WizardStepper.vue'
 import { useSimulationStore } from '~/stores/simulation'
 
-const props = defineProps<{ open: boolean }>()
+const props = withDefaults(defineProps<{ open: boolean, gate?: boolean }>(), { gate: false })
 const emit = defineEmits<{ (e: 'close'): void, (e: 'applied'): void }>()
+
+function onBackdrop() {
+  if (!props.gate)
+    emit('close')
+}
 
 const store = useSimulationStore()
 const step = ref(0)
@@ -190,11 +195,11 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string, icon: strin
   <Transition name="fade">
     <div
       v-if="open"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
-      @click.self="emit('close')"
+      class="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 bg-black/70 backdrop-blur-sm"
+      @click.self="onBackdrop"
     >
-      <div class="card max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div class="card-pad border-b border-line flex items-center justify-between">
+      <div class="card max-w-2xl w-full h-[100dvh] max-h-none rounded-none sm:h-auto sm:max-h-[90vh] sm:rounded-2xl flex flex-col overflow-hidden">
+        <div class="card-pad border-b border-line flex items-center justify-between shrink-0 pt-safe">
           <div>
             <h2 class="text-lg font-semibold tracking-tight">
               Trouve la voiture qui te correspond
@@ -203,13 +208,17 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string, icon: strin
               {{ step < totalSteps ? `Étape ${step + 1} sur ${totalSteps}` : 'Recommandations personnalisées' }}
             </p>
           </div>
-          <button class="text-ink-subtle hover:text-ink text-xl leading-none" @click="emit('close')">
+          <button
+            v-if="!gate"
+            class="text-ink-subtle hover:text-ink text-xl leading-none grid place-items-center min-h-11 min-w-11"
+            @click="emit('close')"
+          >
             ×
           </button>
         </div>
 
         <!-- Progress bar -->
-        <div class="h-1 bg-white/8">
+        <div class="h-1 bg-white/8 shrink-0">
           <div
             class="h-full transition-all duration-300"
             style="background: var(--gradient-accent);"
@@ -217,7 +226,7 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string, icon: strin
           />
         </div>
 
-        <div class="card-pad min-h-[280px]">
+        <div class="card-pad min-h-[280px] flex-1 overflow-y-auto">
           <Transition :name="navDir === 1 ? 'slide-next' : 'slide-prev'" mode="out-in">
             <div :key="step">
               <h3 v-if="step < totalSteps" class="text-base font-semibold mb-2">
@@ -493,17 +502,17 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string, icon: strin
         </div>
 
         <!-- Footer with navigation -->
-        <div class="card-pad border-t border-line flex items-center justify-between gap-2">
+        <div class="card-pad border-t border-line flex items-center justify-between gap-2 shrink-0 pb-safe">
           <button
             v-if="step > 0 && step < totalSteps"
-            class="btn btn-ghost text-sm"
+            class="btn btn-ghost text-sm min-h-11"
             @click="prev"
           >
             ← Précédent
           </button>
           <button
             v-else-if="step === totalSteps"
-            class="btn btn-ghost text-sm"
+            class="btn btn-ghost text-sm min-h-11"
             @click="step = 0"
           >
             Refaire le questionnaire
@@ -512,14 +521,14 @@ const ecoOptions: { value: EcoPriority, label: string, hint: string, icon: strin
 
           <button
             v-if="step < totalSteps"
-            class="btn btn-primary text-sm"
+            class="btn btn-primary text-sm min-h-11"
             @click="next"
           >
             {{ step === totalSteps - 1 ? 'Voir mes recommandations' : 'Suivant →' }}
           </button>
           <button
             v-else
-            class="btn btn-primary text-sm"
+            class="btn btn-primary text-sm min-h-11"
             :disabled="!pickedVehicle || !comparator"
             :class="(!pickedVehicle || !comparator) ? '!opacity-40 !cursor-not-allowed' : ''"
             @click="applyAndClose"

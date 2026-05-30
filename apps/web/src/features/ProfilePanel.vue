@@ -81,7 +81,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
           <button
             v-for="p in TRIP_PROFILES"
             :key="p.id"
-            class="btn btn-ghost text-xs px-2 py-1.5"
+            class="btn btn-ghost text-xs px-2 py-1.5 min-h-11"
             :class="activeProfileId === p.id ? '!bg-accent !text-[#04150d] !border-transparent !font-semibold' : ''"
             @click="setTripProfile(p.mix)"
           >
@@ -137,7 +137,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
               type="number"
               min="18"
               max="90"
-              class="input-base font-num mt-1"
+              class="input-base font-num mt-1 min-h-11"
             >
           </div>
           <div>
@@ -148,7 +148,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
               step="0.01"
               min="0.5"
               max="3.5"
-              class="input-base font-num mt-1"
+              class="input-base font-num mt-1 min-h-11"
             >
           </div>
         </div>
@@ -162,7 +162,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
           <button
             v-for="tier in (['thirdParty', 'thirdPartyPlus', 'comprehensive'] as const)"
             :key="tier"
-            class="btn btn-ghost text-xs px-2 py-1.5"
+            class="btn btn-ghost text-xs px-2 py-1.5 min-h-11"
             :class="store.profile.insuranceTier === tier ? '!bg-accent !text-[#04150d] !border-transparent !font-semibold' : ''"
             @click="store.profile.insuranceTier = tier"
           >
@@ -182,7 +182,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
               v-model.number="store.profile.gasolinePricePerLiter"
               type="number"
               step="0.01"
-              class="input-base font-num mt-1"
+              class="input-base font-num mt-1 min-h-11"
             >
           </div>
           <div>
@@ -191,7 +191,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
               v-model.number="store.profile.dieselPricePerLiter"
               type="number"
               step="0.01"
-              class="input-base font-num mt-1"
+              class="input-base font-num mt-1 min-h-11"
             >
           </div>
           <div>
@@ -200,7 +200,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
               v-model.number="store.profile.electricityHomePricePerKwh"
               type="number"
               step="0.0001"
-              class="input-base font-num mt-1"
+              class="input-base font-num mt-1 min-h-11"
             >
           </div>
           <div>
@@ -209,7 +209,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
               v-model.number="store.profile.electricityFastPricePerKwh"
               type="number"
               step="0.01"
-              class="input-base font-num mt-1"
+              class="input-base font-num mt-1 min-h-11"
             >
           </div>
         </div>
@@ -245,7 +245,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
           <button
             v-for="t in (['garage', 'street', 'paidParking'] as const)"
             :key="t"
-            class="btn btn-ghost text-xs px-2 py-1.5"
+            class="btn btn-ghost text-xs px-2 py-1.5 min-h-11"
             :class="store.profile.parkingType === t ? '!bg-accent !text-[#04150d] !border-transparent !font-semibold' : ''"
             @click="store.profile.parkingType = t"
           >
@@ -256,7 +256,7 @@ function normalizeTrips(field: 'urban' | 'road' | 'highway', newValue: number) {
           <input
             v-model.number="store.profile.paidParkingMonthly"
             type="number"
-            class="input-base font-num"
+            class="input-base font-num min-h-11"
             :placeholder="`${formatEuro(store.profile.paidParkingMonthly)}/mois`"
           >
         </div>

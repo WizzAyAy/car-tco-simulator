@@ -120,6 +120,16 @@ la hauteur de l'écran (`100dvh` − header − barre de nav).
   fixés derrière le contenu, pour la profondeur cockpit.
 - Grilles 2 colonnes (`lg:`) pour cartes véhicules et panneaux du drawer.
 
+### Mobile-first
+
+Le design est pensé **mobile d'abord**, enrichi vers le desktop (`sm:`/`md:`/`lg:`) — on ne dégrade pas, on ajoute.
+
+- **Cibles tactiles** ≥ 44 px (`min-h-11`) : flèches du deck, points de nav (zone de hit élargie, visuel fin conservé), boutons de réglages, inputs.
+- **Safe-area** : `viewport-fit=cover` + utilitaires `.pt-safe`/`.pb-safe`/`.pl-safe`/`.pr-safe` sur header, bottom-nav, footer du wizard, drawer (encoches/Dynamic Island).
+- **Wizard** = sheet plein écran sous `sm` (header/contenu scrollable/footer sticky) ; carte centrée à partir de `sm`. C'est la **première impression** (gate d'onboarding obligatoire à la 1ʳᵉ visite — voir `CLAUDE.md`).
+- **Année par année** : table sous `sm` → **cartes** par année en mobile (Δ cumulé coloré mis en avant).
+- **Charts** : `TornadoChart` raccourcit ses labels et réduit sa marge gauche en mobile (`useIsMobile`) ; légendes `scroll` ; `min-height` plancher pour ne pas écraser le graphe sur slide courte. Tout reste cockpit dark — aucune dérive chromatique.
+
 ## 8. Accessibilité
 
 - Contraste texte principal ≥ 7:1 sur canvas ; muted ≥ 4.5:1.

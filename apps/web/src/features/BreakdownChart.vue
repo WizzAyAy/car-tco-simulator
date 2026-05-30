@@ -58,7 +58,9 @@ const option = computed<EChartsOption>(() => {
         ...AXIS_LABEL,
         interval: 0,
         rotate: 0,
-        formatter: (v: string) => (v.length > 22 ? `${v.slice(0, 22)}…` : v),
+        width: 140,
+        overflow: 'truncate',
+        formatter: (v: string) => (v.length > 16 ? `${v.slice(0, 16)}…` : v),
       },
     },
     yAxis: {
@@ -106,6 +108,6 @@ const option = computed<EChartsOption>(() => {
     <p class="text-xs text-ink-subtle mb-4">
       Quatre grands postes sur toute la durée. Survole une barre pour le détail poste par poste.
     </p>
-    <VChart class="w-full" :option="option" autoresize :style="fill ? 'flex:1 1 0;min-height:0' : 'height:360px'" />
+    <VChart class="w-full" :option="option" autoresize :style="fill ? 'flex:1 1 0;min-height:240px' : 'height:360px'" />
   </div>
 </template>

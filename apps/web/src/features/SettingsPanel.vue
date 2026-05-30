@@ -36,7 +36,7 @@ const ACQUISITION_MODES: { value: AcquisitionMode, label: string }[] = [
             v-for="opt in ACQUISITION_MODES"
             :key="opt.value"
             type="button"
-            class="text-xs py-1.5 rounded-md transition-all duration-200"
+            class="text-xs py-1.5 min-h-11 rounded-md transition-all duration-200"
             :class="store.acquisitionMode === opt.value
               ? 'bg-accent text-[#04150d] font-semibold shadow-[0_0_18px_-6px_rgba(52,232,158,0.7)]'
               : 'text-ink-subtle hover:text-ink'"
@@ -52,7 +52,7 @@ const ACQUISITION_MODES: { value: AcquisitionMode, label: string }[] = [
             <input
               v-model.number="store.financingDownPayment"
               type="number"
-              class="input-base font-num mt-1"
+              class="input-base font-num mt-1 min-h-11"
             >
           </div>
           <div>
@@ -61,7 +61,7 @@ const ACQUISITION_MODES: { value: AcquisitionMode, label: string }[] = [
               v-model.number="store.financingApr"
               type="number"
               step="0.1"
-              class="input-base font-num mt-1"
+              class="input-base font-num mt-1 min-h-11"
             >
           </div>
           <div class="col-span-2">
@@ -82,7 +82,7 @@ const ACQUISITION_MODES: { value: AcquisitionMode, label: string }[] = [
             <input
               v-model.number="store.leasingInitialDeposit"
               type="number"
-              class="input-base font-num mt-1"
+              class="input-base font-num mt-1 min-h-11"
             >
           </div>
           <div>
@@ -90,7 +90,7 @@ const ACQUISITION_MODES: { value: AcquisitionMode, label: string }[] = [
             <input
               v-model.number="store.leasingMonthlyRent"
               type="number"
-              class="input-base font-num mt-1"
+              class="input-base font-num mt-1 min-h-11"
             >
           </div>
           <div>
@@ -98,7 +98,7 @@ const ACQUISITION_MODES: { value: AcquisitionMode, label: string }[] = [
             <input
               v-model.number="store.leasingTermMonths"
               type="number"
-              class="input-base font-num mt-1"
+              class="input-base font-num mt-1 min-h-11"
             >
           </div>
           <div>
@@ -106,7 +106,7 @@ const ACQUISITION_MODES: { value: AcquisitionMode, label: string }[] = [
             <input
               v-model.number="store.leasingMileageCapPerYear"
               type="number"
-              class="input-base font-num mt-1"
+              class="input-base font-num mt-1 min-h-11"
             >
           </div>
           <div>
@@ -115,7 +115,7 @@ const ACQUISITION_MODES: { value: AcquisitionMode, label: string }[] = [
               v-model.number="store.leasingOverageCostPerKm"
               type="number"
               step="0.01"
-              class="input-base font-num mt-1"
+              class="input-base font-num mt-1 min-h-11"
             >
           </div>
           <div class="flex items-end">
@@ -129,7 +129,7 @@ const ACQUISITION_MODES: { value: AcquisitionMode, label: string }[] = [
             <input
               v-model.number="store.leasingBuyOptionPrice"
               type="number"
-              class="input-base font-num mt-1"
+              class="input-base font-num mt-1 min-h-11"
             >
           </div>
         </div>

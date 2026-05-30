@@ -22,7 +22,7 @@ const option = computed<EChartsOption>(() => {
 
   return {
     ...BASE_CHART_OPTIONS,
-    legend: { data: [store.vehicleA.label, store.vehicleB.label], top: 0, textStyle: LEGEND_TEXT, icon: 'roundRect' },
+    legend: { data: [store.vehicleA.label, store.vehicleB.label], top: 0, type: 'scroll', textStyle: LEGEND_TEXT, icon: 'roundRect' },
     xAxis: {
       type: 'category',
       data: years,
@@ -90,6 +90,6 @@ const option = computed<EChartsOption>(() => {
     <p class="text-xs text-ink-subtle mb-4">
       Plus la courbe monte vite, plus la voiture coûte cher. L'intersection éventuelle marque le point d'équilibre.
     </p>
-    <VChart class="w-full" :option="option" autoresize :style="fill ? 'flex:1 1 0;min-height:0' : 'height:320px'" />
+    <VChart class="w-full" :option="option" autoresize :style="fill ? 'flex:1 1 0;min-height:240px' : 'height:320px'" />
   </div>
 </template>

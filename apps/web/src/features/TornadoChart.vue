@@ -10,6 +10,7 @@ import { computed } from 'vue'
 import VChart from 'vue-echarts'
 import { ACCENT_GLOW, AXIS_LABEL, AXIS_LINE, BASE_CHART_OPTIONS, SERIES_COLORS, SPLIT_LINE } from '~/composables/useChartTheme'
 import { formatEuro } from '~/composables/useFormatters'
+import { useIsMobile } from '~/composables/useIsMobile'
 import { useSimulationStore } from '~/stores/simulation'
 
 use([CanvasRenderer, BarChart, GridComponent, TooltipComponent, MarkLineComponent])
@@ -17,6 +18,7 @@ use([CanvasRenderer, BarChart, GridComponent, TooltipComponent, MarkLineComponen
 defineProps<{ fill?: boolean }>()
 
 const store = useSimulationStore()
+const isMobile = useIsMobile()
 
 const DELTA_PERCENT = 15
 
@@ -26,6 +28,14 @@ const FACTOR_LABELS: Record<SensitivityFactor, string> = {
   depreciation: 'Dépréciation (prix d\'achat)',
   duration: 'Durée de détention',
   apr: 'Taux du crédit (TAEG)',
+}
+
+const FACTOR_LABELS_SHORT: Record<SensitivityFactor, string> = {
+  annualKm: 'Kilométrage',
+  energyPrice: 'Énergie',
+  depreciation: 'Dépréciation',
+  duration: 'Durée',
+  apr: 'TAEG',
 }
 
 function buildInput(which: 'a' | 'b'): TCOInput {
@@ -59,7 +69,8 @@ const option = computed<EChartsOption>(() => {
   // Bottom-to-top: ECharts category axis stacks the first item at the bottom,
   // so reverse to keep the widest swing on top.
   const ordered = [...rows.value].reverse()
-  const labels = ordered.map(r => FACTOR_LABELS[r.factor])
+  const labelMap = isMobile.value ? FACTOR_LABELS_SHORT : FACTOR_LABELS
+  const labels = ordered.map(r => labelMap[r.factor])
   const base = baseline.value
 
   const lows = ordered.map(r => Math.min(r.lowSavings, r.highSavings))
@@ -67,7 +78,7 @@ const option = computed<EChartsOption>(() => {
 
   return {
     ...BASE_CHART_OPTIONS,
-    grid: { left: 184, right: 28, top: 16, bottom: 40 },
+    grid: { left: isMobile.value ? 96 : 184, right: 28, top: 16, bottom: 40 },
     xAxis: {
       type: 'value',
       axisLine: { show: false },
@@ -142,6 +153,6 @@ const option = computed<EChartsOption>(() => {
       Impact d'une variation de ±{{ DELTA_PERCENT }} % de chaque hypothèse sur l'économie finale.
       Plus la barre est longue, plus l'hypothèse est déterminante.
     </p>
-    <VChart class="w-full" :option="option" autoresize :style="fill ? 'flex:1 1 0;min-height:0' : 'height:280px'" />
+    <VChart class="w-full" :option="option" autoresize :style="fill ? 'flex:1 1 0;min-height:240px' : 'height:280px'" />
   </div>
 </template>

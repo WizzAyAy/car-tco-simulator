@@ -72,7 +72,7 @@ onKeyStroke('ArrowLeft', (e) => {
         <section
           v-for="(s, i) in slides"
           :key="s.key"
-          class="shrink-0 w-full h-full flex flex-col px-5 sm:px-10 pt-5 pb-3 overflow-y-auto"
+          class="shrink-0 w-full h-full flex flex-col px-4 sm:px-10 pt-5 pb-3 overflow-y-auto pl-safe pr-safe"
           :aria-hidden="i !== current"
           :inert="i !== current ? true : undefined"
         >
@@ -108,29 +108,34 @@ onKeyStroke('ArrowLeft', (e) => {
     </div>
 
     <!-- Bottom nav -->
-    <nav class="shrink-0 flex items-center justify-between gap-4 px-5 sm:px-8 py-3 border-t border-line glass">
+    <nav class="shrink-0 flex items-center justify-between gap-4 px-4 sm:px-8 py-3 border-t border-line glass pb-safe pl-safe pr-safe">
       <button
         type="button"
-        class="btn btn-ghost text-sm py-1.5 md:hidden"
+        class="btn btn-ghost text-sm md:hidden min-h-11 min-w-11"
         :disabled="current === 0"
         :class="{ '!opacity-30': current === 0 }"
+        aria-label="Slide précédente"
         @click="prev"
       >←</button>
 
       <div class="flex items-center gap-3 mx-auto md:mx-0">
-        <div class="flex items-center gap-1.5">
+        <div class="flex items-center">
           <button
             v-for="(s, i) in slides"
             :key="s.key"
             type="button"
-            class="h-2 rounded-full transition-all duration-300"
-            :class="i === current
-              ? 'w-6 bg-accent shadow-[0_0_12px_-1px_rgba(52,232,158,0.8)]'
-              : 'w-2 bg-white/20 hover:bg-white/40'"
+            class="grid place-items-center min-h-11 min-w-6 px-1"
             :aria-label="`Aller à : ${s.title}`"
             :aria-current="i === current ? 'true' : undefined"
             @click="go(i)"
-          />
+          >
+            <span
+              class="h-2 rounded-full transition-all duration-300"
+              :class="i === current
+                ? 'w-6 bg-accent shadow-[0_0_12px_-1px_rgba(52,232,158,0.8)]'
+                : 'w-2 bg-white/20 hover:bg-white/40'"
+            />
+          </button>
         </div>
         <span class="text-xs text-ink-subtle font-num tabular-nums">{{ current + 1 }} / {{ count }}</span>
       </div>
@@ -139,9 +144,10 @@ onKeyStroke('ArrowLeft', (e) => {
         <slot name="nav-actions" />
         <button
           type="button"
-          class="btn btn-ghost text-sm py-1.5 md:hidden"
+          class="btn btn-ghost text-sm md:hidden min-h-11 min-w-11"
           :disabled="current === count - 1"
           :class="{ '!opacity-30': current === count - 1 }"
+          aria-label="Slide suivante"
           @click="next"
         >→</button>
       </div>

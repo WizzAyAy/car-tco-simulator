@@ -1,4 +1,6 @@
 <script setup lang="ts" generic="T extends string">
+import { computed } from 'vue'
+
 interface Choice {
   value: T
   label: string
@@ -6,7 +8,7 @@ interface Choice {
   icon: string
 }
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   modelValue: T
   options: Choice[]
   columns?: number
@@ -17,13 +19,16 @@ withDefaults(defineProps<{
 defineEmits<{
   (e: 'update:modelValue', value: T): void
 }>()
+
+// Mobile-first: fewer columns on small screens, full count from `sm`.
+// Full class strings only — interpolated names would be purged by the JIT.
+const gridClass = computed(() =>
+  props.columns >= 3 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2',
+)
 </script>
 
 <template>
-  <div
-    class="grid gap-2.5"
-    :style="{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }"
-  >
+  <div class="grid gap-2.5" :class="gridClass">
     <button
       v-for="opt in options"
       :key="opt.value"

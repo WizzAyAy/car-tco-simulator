@@ -5,6 +5,7 @@ import AnimatedNumber from '~/components/AnimatedNumber.vue'
 import AppHeader from '~/components/AppHeader.vue'
 import { formatEuro, formatYears } from '~/composables/useFormatters'
 import { useLiveVerdict } from '~/composables/useOgImage'
+import { useOnboarding } from '~/composables/useOnboarding'
 import { usePageMeta, useSocialImage } from '~/composables/usePageMeta'
 import { useShareState } from '~/composables/useShareState'
 import BreakdownChart from '~/features/BreakdownChart.vue'
@@ -35,10 +36,25 @@ const props = withDefaults(defineProps<{
 
 const store = useSimulationStore()
 const share = useShareState()
+const { onboarded, markOnboarded } = useOnboarding()
 const wizardOpen = ref(false)
 const drawerOpen = ref(false)
 const copied = ref(false)
 const deckCurrent = ref(0)
+
+// Captured once: `watchStore()` keeps rewriting `?s=` into the URL, so a reactive
+// read would disable the gate on the first sync. A shared link carries an explicit
+// comparison and bypasses the onboarding gate.
+const hasSharedState = typeof window !== 'undefined'
+  && new URL(window.location.href).searchParams.has('s')
+
+const gateActive = computed(() => props.managedMeta && !onboarded.value && !hasSharedState)
+
+function onWizardApplied() {
+  deckCurrent.value = 1
+  if (gateActive.value)
+    markOnboarded()
+}
 
 const verdict = useLiveVerdict()
 const ogImage = computed(() => verdict.value.ogImageUrl)
@@ -98,8 +114,8 @@ async function onShare() {
   <div class="h-[100dvh] flex flex-col bg-canvas overflow-hidden">
     <AppHeader />
 
-    <main class="flex-1 min-h-0">
-      <ComparisonDeck v-model:current="deckCurrent" :slides="[...SLIDES]" :nav-locked="wizardOpen || drawerOpen">
+    <main class="flex-1 min-h-0" :inert="gateActive || undefined">
+      <ComparisonDeck v-model:current="deckCurrent" :slides="[...SLIDES]" :nav-locked="wizardOpen || drawerOpen || gateActive">
         <!-- 1 · Verdict -->
         <template #verdict>
           <div class="h-full flex flex-col justify-center gap-6 max-w-4xl mx-auto w-full">
@@ -129,7 +145,7 @@ async function onShare() {
                   </div>
                 </button>
               </div>
-              <button type="button" class="btn btn-primary shrink-0" @click="wizardOpen = true">
+              <button type="button" class="btn btn-primary w-full sm:w-auto sm:shrink-0" @click="wizardOpen = true">
                 ✨ Aide-moi à choisir en 2 minutes
               </button>
             </div>
@@ -247,10 +263,10 @@ async function onShare() {
             </div>
 
             <div class="flex flex-wrap items-center gap-3">
-              <button type="button" class="btn btn-primary" @click="onShare">
+              <button type="button" class="btn btn-primary w-full sm:w-auto" @click="onShare">
                 {{ copied ? '✓ Lien copié' : 'Partager ce comparatif' }}
               </button>
-              <button type="button" class="btn btn-ghost" @click="drawerOpen = true">
+              <button type="button" class="btn btn-ghost w-full sm:w-auto" @click="drawerOpen = true">
                 ⚙︎ Ajuster les hypothèses
               </button>
             </div>
@@ -296,7 +312,7 @@ async function onShare() {
       </ComparisonDeck>
     </main>
 
-    <WizardModal :open="wizardOpen" @applied="deckCurrent = 1" @close="wizardOpen = false" />
+    <WizardModal :open="wizardOpen || gateActive" :gate="gateActive" @applied="onWizardApplied" @close="wizardOpen = false" />
     <SettingsDrawer :open="drawerOpen" @close="drawerOpen = false" />
   </div>
 </template>

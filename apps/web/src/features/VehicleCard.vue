@@ -94,7 +94,7 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
         v-for="opt in conditionOptions"
         :key="opt.value"
         type="button"
-        class="px-2 py-2 rounded-md border text-left transition-all duration-200"
+        class="px-2 py-2 min-h-11 rounded-md border text-left transition-all duration-200"
         :class="condition === opt.value
           ? 'border-accent/60 bg-accent-soft text-accent shadow-[0_0_18px_-6px_rgba(52,232,158,0.6)]'
           : 'border-line bg-canvas-inset text-ink-muted hover:border-line-strong hover:text-ink'"
@@ -121,7 +121,7 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
           </div>
           <input
             type="number"
-            class="input-base font-num"
+            class="input-base font-num min-h-11"
             :value="vehicle.purchasePrice"
             @input="update('purchasePrice', Number(($event.target as HTMLInputElement).value))"
           >
@@ -133,7 +133,7 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
           <input
             type="number"
             step="0.1"
-            class="input-base font-num"
+            class="input-base font-num min-h-11"
             :value="vehicle.consumption"
             @input="update('consumption', Number(($event.target as HTMLInputElement).value))"
           >
@@ -144,7 +144,7 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
           </div>
           <input
             type="number"
-            class="input-base font-num"
+            class="input-base font-num min-h-11"
             :value="vehicle.maintenanceAnnual"
             @input="update('maintenanceAnnual', Number(($event.target as HTMLInputElement).value))"
           >
@@ -157,7 +157,7 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
             type="number"
             min="1"
             max="50"
-            class="input-base font-num"
+            class="input-base font-num min-h-11"
             :value="vehicle.insuranceCategory"
             @input="update('insuranceCategory', Number(($event.target as HTMLInputElement).value))"
           >
@@ -168,7 +168,7 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
           </div>
           <input
             type="number"
-            class="input-base font-num"
+            class="input-base font-num min-h-11"
             :value="vehicle.malus"
             @input="update('malus', Number(($event.target as HTMLInputElement).value))"
           >
@@ -179,7 +179,7 @@ function update<K extends keyof Vehicle>(key: K, value: Vehicle[K]) {
           </div>
           <input
             type="number"
-            class="input-base font-num"
+            class="input-base font-num min-h-11"
             :value="vehicle.bonus"
             @input="update('bonus', Number(($event.target as HTMLInputElement).value))"
           >

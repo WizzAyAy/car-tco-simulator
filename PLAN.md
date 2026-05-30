@@ -294,6 +294,11 @@ Page dédiée à chaque voiture avec breakdown complet de chaque poste.
 - **Type-check** : `vue-tsc --noEmit` doit passer en CI
 - **Lint** : ESLint Antfu strict
 
+## 12bis. Onboarding & mobile-first (post-MVP)
+
+- **Gate d'onboarding** : le `WizardModal` (10 étapes) devient un passage obligé avant la comparaison, à la première visite seulement (flag localStorage `cts:onboarded:v1`). Exemptions : pages SEO, `/embed`, `/recommend`, liens partagés `?s=`. Détail d'implémentation dans `CLAUDE.md` (section « Parcours & UI »).
+- **Refonte mobile-first** : toutes les vues repensées base-mobile → desktop (cibles 44 px, safe-area, wizard en sheet plein écran, `YearlyTable` en cartes, charts adaptés). Voir `DESIGN.md` §7.
+
 ## 12. Out of scope MVP
 
 - Comparaison à 3+ voitures

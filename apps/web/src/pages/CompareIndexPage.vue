@@ -20,7 +20,7 @@ const pairs = computed(() =>
   <div class="min-h-full flex flex-col bg-canvas">
     <AppHeader />
 
-    <main class="mx-auto max-w-[1400px] w-full px-6 py-8 flex-1">
+    <main class="mx-auto max-w-[1400px] w-full px-4 sm:px-6 py-8 flex-1">
       <section class="mb-8 max-w-3xl">
         <h1 class="text-3xl sm:text-4xl font-semibold leading-tight mb-3">
           Comparatifs de voitures populaires

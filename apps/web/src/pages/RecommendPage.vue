@@ -75,7 +75,7 @@ const cheapest = computed(() => ranking.value[0] ?? null)
   <div class="min-h-full flex flex-col bg-canvas">
     <AppHeader />
 
-    <main class="mx-auto max-w-[1100px] w-full px-6 py-8 flex-1">
+    <main class="mx-auto max-w-[1100px] w-full px-4 sm:px-6 py-8 flex-1">
       <section class="mb-8 max-w-3xl">
         <h1 class="text-3xl sm:text-4xl font-semibold leading-tight mb-3">
           Quelle voiture coûte le moins cher<br>pour ton usage ?
@@ -119,7 +119,7 @@ const cheapest = computed(() => ranking.value[0] ?? null)
 
         <label class="block">
           <span class="text-sm font-medium text-ink">Type de trajet</span>
-          <select v-model="form.tripType" class="input-base mt-2">
+          <select v-model="form.tripType" class="input-base mt-2 min-h-11">
             <option v-for="(label, key) in TRIP_LABELS" :key="key" :value="key">
               {{ label }}
             </option>

@@ -17,6 +17,8 @@ Web app pour simuler et comparer le **coût total d'usage (TCO)** de 2 voitures 
 - **Prix en temps réel** — carburants et électricité via les open data, avec fallback statique snapshoté.
 - **Partage social** — image Open Graph générée dynamiquement (`/api/og`) + meta injectées par comparaison (côté serveur pour les crawlers, côté client pour le SEO).
 - **Pages SEO** `/compare/:a-vs-:b`, **recommandation inversée** `/recommend`, et **widget `<iframe>`** `/embed`.
+- **Onboarding guidé** — à la première visite, un questionnaire de 10 étapes profile l'usage et pré-remplit la comparaison (mémorisé localement ; liens partagés et pages SEO/embed exemptés).
+- **Mobile-first** — interface pensée d'abord pour le mobile : sheet plein écran, cibles tactiles 44 px, safe-area iPhone, tableaux en cartes, charts adaptés aux petits écrans.
 
 ## Stack
 

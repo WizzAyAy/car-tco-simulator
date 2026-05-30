@@ -40,6 +40,26 @@ packages/shared/ — Types et moteur TCO partagés
 - **Docs toujours synchrones avec le code** : toute PR qui change l'archi, une commande, un service, une route, un type, une constante ou un poste de coût doit mettre à jour **tous** les fichiers `.md` concernés dans le même commit — `CLAUDE.md` (conventions/archi), `README.md` (usage public + features), `PLAN.md` (plan/scope), `DESIGN.md` (système de design). Un `.md` périmé est traité comme un bug. `CLAUDE.md` reste la source de vérité des conventions, `README.md` celle de l'usage.
 - Toute modification de l'UI passe par le système de design `DESIGN.md`
 
+## Parcours & UI (frontend)
+
+### Onboarding obligatoire (gate)
+
+À la **première visite**, l'utilisateur doit compléter le `WizardModal` (10 étapes) avant d'accéder à la comparaison. Mémorisé en localStorage.
+
+- Flag : `useOnboarding()` (`composables/useOnboarding.ts`), clé **`cts:onboarded:v1`** (bumper le suffixe `:vN` pour reforcer le gate après un changement structurel du wizard). Expose `onboarded` / `markOnboarded()` / `resetOnboarding()`.
+- Décision dans `ComparisonPage.vue` : `gateActive = managedMeta && !onboarded && !hasSharedState`. `hasSharedState` est capturé **une seule fois** au setup (lecture non réactive de `?s=`) car `useShareState.watchStore()` réécrit `?s=` en continu. Le gate marque `onboarded` via `@applied`.
+- **Exemptions** : pages SEO (`managedMeta=false`, `CompareSeoPage`), `/embed`, `/recommend`, et tout lien partagé `?s=` (comparaison explicite).
+- `WizardModal` accepte une prop `gate` : masque le `×` et neutralise le click-outside (le composant reste agnostique de l'onboarding). Quand le gate est actif, `<main>` est `inert` et le deck `nav-locked`.
+
+### Mobile-first
+
+Base = mobile, enrichissement progressif `sm:`/`md:`/`lg:` (breakpoints Tailwind par défaut). On ne cache jamais d'info utile derrière `hidden sm:`.
+
+- Cibles tactiles ≥ 44 px (`min-h-11`/`min-w-11`) sur tout élément tappable.
+- Safe-area : `viewport-fit=cover` (`index.html`) + utilitaires `.pt-safe`/`.pb-safe`/`.pl-safe`/`.pr-safe` (`main.css`) sur les barres fixes (header, bottom-nav du deck, footer wizard, drawer).
+- `useIsMobile()` (`composables/useIsMobile.ts`, `max-width:767px`) **uniquement** quand le layout doit brancher en JS (ex. `TornadoChart` : marge gauche + labels courts). Sinon, classes Tailwind responsive pures.
+- Le deck reste un carrousel swipe + scroll vertical interne par slide (identité cockpit) ; `YearlyTable` bascule en cartes sous `sm` (table en `hidden sm:block`) ; `WizardModal` est un sheet plein écran sous `sm` avec footer sticky.
+
 ## Domaine TCO
 
 Le moteur de calcul vit dans `packages/shared/src/tco/`. Fonctions pures uniquement.

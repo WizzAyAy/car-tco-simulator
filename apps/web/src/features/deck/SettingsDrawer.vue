@@ -28,7 +28,7 @@ onKeyStroke('Escape', () => {
         role="dialog"
         aria-label="Réglages de la simulation"
       >
-        <header class="flex items-center justify-between px-5 py-4 border-b border-line shrink-0">
+        <header class="flex items-center justify-between px-5 py-4 border-b border-line shrink-0 pt-safe">
           <div>
             <div class="eyebrow mb-0.5">
               Réglages
@@ -39,7 +39,7 @@ onKeyStroke('Escape', () => {
           </div>
           <button
             type="button"
-            class="text-ink-subtle hover:text-ink text-xl leading-none"
+            class="text-ink-subtle hover:text-ink text-xl leading-none grid place-items-center min-h-11 min-w-11"
             aria-label="Fermer les réglages"
             @click="emit('close')"
           >
@@ -47,7 +47,7 @@ onKeyStroke('Escape', () => {
           </button>
         </header>
 
-        <div class="flex-1 overflow-y-auto p-4 space-y-4">
+        <div class="flex-1 overflow-y-auto p-4 space-y-4 pb-safe">
           <p class="text-xs text-ink-subtle leading-relaxed">
             Ajuste librement — tout se recalcule en direct sur la slide affichée.
           </p>
