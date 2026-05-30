@@ -1,5 +1,6 @@
 import type { Energy, Vehicle } from '../types'
 import { CATEGORY_LABELS_FR, CATEGORY_ORDER } from '../types'
+import { VEHICLE_IMAGES } from './images.generated'
 import { VEHICLE_PRESETS } from './presets'
 
 /**
@@ -134,6 +135,20 @@ export function buildArchetypes(presets: readonly Vehicle[] = VEHICLE_PRESETS): 
         const range = roundTo(median(sample.map(v => v.wltpRangeKm ?? 0).filter(n => n > 0)), 5)
         if (range > 0)
           archetype.wltpRangeKm = range
+      }
+
+      // Borrow the photo of the segment's most representative model (closest to
+      // the median price, with an image) so archetypes are never photo-less.
+      const representative = [...sample]
+        .filter(v => VEHICLE_IMAGES[v.id])
+        .sort((a, b) =>
+          Math.abs(a.purchasePrice - archetype.purchasePrice)
+          - Math.abs(b.purchasePrice - archetype.purchasePrice)
+          || a.id.localeCompare(b.id))[0]
+      const img = representative && VEHICLE_IMAGES[representative.id]
+      if (img) {
+        archetype.imageUrl = img.imageUrl
+        archetype.imageCredit = img.imageCredit
       }
 
       archetypes.push(archetype)

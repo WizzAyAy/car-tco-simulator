@@ -21,6 +21,51 @@ export const VEHICLE_IMAGES: Record<string, { imageUrl: string, imageCredit: Veh
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Clio_V_Genf_2019_1Y7A5590.jpg"
     }
   },
+  "clio-etech-hybrid": {
+    "imageUrl": "/vehicles/clio-etech-hybrid.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Clio_V_Genf_2019_1Y7A5590.jpg"
+    }
+  },
+  "clio3-essence-2009": {
+    "imageUrl": "/vehicles/clio3-essence-2009.jpg",
+    "imageCredit": {
+      "author": "Rudolf Stricker",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Clio_front_20071102.jpg"
+    }
+  },
+  "clio3-diesel-2010": {
+    "imageUrl": "/vehicles/clio3-diesel-2010.jpg",
+    "imageCredit": {
+      "author": "Rudolf Stricker",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Clio_front_20071102.jpg"
+    }
+  },
+  "clio4-essence-2013": {
+    "imageUrl": "/vehicles/clio4-essence-2013.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Clio_TCe_90_Luxe_(IV)_%E2%80%93_Frontansicht%2C_17._Mai_2013%2C_M%C3%BCnster.jpg"
+    }
+  },
+  "clio4-diesel-2013": {
+    "imageUrl": "/vehicles/clio4-diesel-2013.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Clio_TCe_90_Luxe_(IV)_%E2%80%93_Frontansicht%2C_17._Mai_2013%2C_M%C3%BCnster.jpg"
+    }
+  },
   "zoe-electric": {
     "imageUrl": "/vehicles/zoe-electric.jpg",
     "imageCredit": {
@@ -30,31 +75,13 @@ export const VEHICLE_IMAGES: Record<string, { imageUrl: string, imageCredit: Veh
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Zoe_charging.jpg"
     }
   },
-  "e208-electric": {
-    "imageUrl": "/vehicles/e208-electric.jpg",
+  "zoe-q210-electric-2013": {
+    "imageUrl": "/vehicles/zoe-q210-electric-2013.jpg",
     "imageCredit": {
-      "author": "Vauxford",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_Peugeot_208_GT_Line_PureTech_1.2_Front.jpg"
-    }
-  },
-  "208-essence": {
-    "imageUrl": "/vehicles/208-essence.jpg",
-    "imageCredit": {
-      "author": "Vauxford",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_Peugeot_208_GT_Line_PureTech_1.2_Front.jpg"
-    }
-  },
-  "yaris-hybrid": {
-    "imageUrl": "/vehicles/yaris-hybrid.jpg",
-    "imageCredit": {
-      "author": "Alexander-93",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2024_Toyota_Yaris_Hybrid_130_(XP210)_IMG_9910.jpg"
+      "author": "werner hillebrand-hansen",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Zoe_charging.jpg"
     }
   },
   "megane-estate-essence": {
@@ -66,130 +93,40 @@ export const VEHICLE_IMAGES: Record<string, { imageUrl: string, imageCredit: Veh
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:2017_Renault_Megane_Dynamique_S_NAV_DC_1.5_Front.jpg"
     }
   },
-  "passat-sw-diesel": {
-    "imageUrl": "/vehicles/passat-sw-diesel.jpg",
-    "imageCredit": {
-      "author": "Herranderssvensson",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Volkswagen_Passat_B8_fr.jpg"
-    }
-  },
-  "3008-hybrid": {
-    "imageUrl": "/vehicles/3008-hybrid.jpg",
-    "imageCredit": {
-      "author": "© M 93",
-      "license": "CC BY-SA 3.0 de",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peugeot_3008_THP_165_EAT6_Allure_GT-Line_(II)_%E2%80%93_Frontansicht_(1)%2C_20._September_2017%2C_D%C3%BCsseldorf.jpg"
-    }
-  },
-  "3008-phev": {
-    "imageUrl": "/vehicles/3008-phev.jpg",
-    "imageCredit": {
-      "author": "© M 93",
-      "license": "CC BY-SA 3.0 de",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peugeot_3008_THP_165_EAT6_Allure_GT-Line_(II)_%E2%80%93_Frontansicht_(1)%2C_20._September_2017%2C_D%C3%BCsseldorf.jpg"
-    }
-  },
-  "model3-electric": {
-    "imageUrl": "/vehicles/model3-electric.jpg",
-    "imageCredit": {
-      "author": "Alexander-93",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tesla_Model_3_(2023)_Autofr%C3%BChling_Ulm_IMG_9282.jpg"
-    }
-  },
-  "modely-electric": {
-    "imageUrl": "/vehicles/modely-electric.jpg",
-    "imageCredit": {
-      "author": "Alexander Migl",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_(2025)_MYLE_Festival_2025_DSC_9565.jpg"
-    }
-  },
-  "id4-electric": {
-    "imageUrl": "/vehicles/id4-electric.jpg",
-    "imageCredit": {
-      "author": "© M 93",
-      "license": "CC BY-SA 3.0 de",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:VW_ID.4_1st_%E2%80%93_f_26122020.jpg"
-    }
-  },
-  "berlingo-essence": {
-    "imageUrl": "/vehicles/berlingo-essence.jpg",
+  "megane-estate-hybrid": {
+    "imageUrl": "/vehicles/megane-estate-hybrid.jpg",
     "imageCredit": {
       "author": "Vauxford",
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Peugeot_Rifter_Allure_BlueHDi_1.6_Front.jpg"
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2017_Renault_Megane_Dynamique_S_NAV_DC_1.5_Front.jpg"
     }
   },
-  "eberlingo-electric": {
-    "imageUrl": "/vehicles/eberlingo-electric.jpg",
+  "megane3-essence-2009": {
+    "imageUrl": "/vehicles/megane3-essence-2009.jpg",
     "imageCredit": {
-      "author": "Vauxford",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Peugeot_Rifter_Allure_BlueHDi_1.6_Front.jpg"
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_M%C3%A9gane_(III%2C_Facelift)_%E2%80%93_Frontansicht%2C_21._April_2013%2C_M%C3%BCnster.jpg"
     }
   },
-  "sandero-essence": {
-    "imageUrl": "/vehicles/sandero-essence.jpg",
+  "megane3-diesel-2010": {
+    "imageUrl": "/vehicles/megane3-diesel-2010.jpg",
     "imageCredit": {
-      "author": "Alexander Migl",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dacia_Sandero_Stepway_III_IMG_4214.jpg"
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_M%C3%A9gane_(III%2C_Facelift)_%E2%80%93_Frontansicht%2C_21._April_2013%2C_M%C3%BCnster.jpg"
     }
   },
-  "c3-essence": {
-    "imageUrl": "/vehicles/c3-essence.jpg",
+  "megane3-estate-diesel-2010": {
+    "imageUrl": "/vehicles/megane3-estate-diesel-2010.jpg",
     "imageCredit": {
-      "author": "El monty",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C3_-_2016_(17).jpg"
-    }
-  },
-  "polo-essence": {
-    "imageUrl": "/vehicles/polo-essence.jpg",
-    "imageCredit": {
-      "author": "Vauxford",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Volkswagen_Polo_SE_1.0_Front.jpg"
-    }
-  },
-  "308-essence": {
-    "imageUrl": "/vehicles/308-essence.jpg",
-    "imageCredit": {
-      "author": "A.BourgeoisP",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_-_Peugeot_308_III_(C)_-_196.jpg"
-    }
-  },
-  "308-hybrid": {
-    "imageUrl": "/vehicles/308-hybrid.jpg",
-    "imageCredit": {
-      "author": "A.BourgeoisP",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_-_Peugeot_308_III_(C)_-_196.jpg"
-    }
-  },
-  "e308-electric": {
-    "imageUrl": "/vehicles/e308-electric.jpg",
-    "imageCredit": {
-      "author": "A.BourgeoisP",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_-_Peugeot_308_III_(C)_-_196.jpg"
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_M%C3%A9gane_(III%2C_Facelift)_%E2%80%93_Frontansicht%2C_21._April_2013%2C_M%C3%BCnster.jpg"
     }
   },
   "megane-etech-electric": {
@@ -199,15 +136,6 @@ export const VEHICLE_IMAGES: Record<string, { imageUrl: string, imageCredit: Veh
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Megane_E-Tech_IAA_2021_1X7A0209.jpg"
-    }
-  },
-  "golf-essence": {
-    "imageUrl": "/vehicles/golf-essence.jpg",
-    "imageCredit": {
-      "author": "Vauxford",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_Volkswagen_Golf_Style_TDi_S-A_2.0.jpg"
     }
   },
   "captur-essence": {
@@ -228,6 +156,249 @@ export const VEHICLE_IMAGES: Record<string, { imageUrl: string, imageCredit: Veh
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Captur_II_at_IAA_2019_IMG_0446.jpg"
     }
   },
+  "captur-phev": {
+    "imageUrl": "/vehicles/captur-phev.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Captur_II_at_IAA_2019_IMG_0446.jpg"
+    }
+  },
+  "sandero-essence": {
+    "imageUrl": "/vehicles/sandero-essence.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dacia_Sandero_Stepway_III_IMG_4214.jpg"
+    }
+  },
+  "duster-essence": {
+    "imageUrl": "/vehicles/duster-essence.jpg",
+    "imageCredit": {
+      "author": "Matti Blume",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Paris_Motor_Show_2018%2C_Paris_(1Y7A1737).jpg"
+    }
+  },
+  "duster-hybrid": {
+    "imageUrl": "/vehicles/duster-hybrid.jpg",
+    "imageCredit": {
+      "author": "Matti Blume",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Paris_Motor_Show_2018%2C_Paris_(1Y7A1737).jpg"
+    }
+  },
+  "duster-diesel": {
+    "imageUrl": "/vehicles/duster-diesel.jpg",
+    "imageCredit": {
+      "author": "Matti Blume",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Paris_Motor_Show_2018%2C_Paris_(1Y7A1737).jpg"
+    }
+  },
+  "duster-1-diesel-2012": {
+    "imageUrl": "/vehicles/duster-1-diesel-2012.jpg",
+    "imageCredit": {
+      "author": "Matti Blume",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Paris_Motor_Show_2018%2C_Paris_(1Y7A1737).jpg"
+    }
+  },
+  "jogger-hybrid": {
+    "imageUrl": "/vehicles/jogger-hybrid.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dacia_Jogger_IAA_2021_1X7A0140.jpg"
+    }
+  },
+  "jogger-essence": {
+    "imageUrl": "/vehicles/jogger-essence.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dacia_Jogger_IAA_2021_1X7A0140.jpg"
+    }
+  },
+  "spring-electric": {
+    "imageUrl": "/vehicles/spring-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dacia_Spring_Extreme_IMG_7667.jpg"
+    }
+  },
+  "kangoo-diesel": {
+    "imageUrl": "/vehicles/kangoo-diesel.jpg",
+    "imageCredit": {
+      "author": "Cutlass",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2024_Renault_Kangoo_in_Mineral_White%2C_front_left%2C_06-12-2025.jpg"
+    }
+  },
+  "kangoo-etech-electric": {
+    "imageUrl": "/vehicles/kangoo-etech-electric.jpg",
+    "imageCredit": {
+      "author": "Cutlass",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2024_Renault_Kangoo_in_Mineral_White%2C_front_left%2C_06-12-2025.jpg"
+    }
+  },
+  "kangoo-2-diesel-2010": {
+    "imageUrl": "/vehicles/kangoo-2-diesel-2010.jpg",
+    "imageCredit": {
+      "author": "Thomas doerfer",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Kangoo_II_Rapid_Phase_I_dCi.JPG"
+    }
+  },
+  "koleos-1-diesel-2010": {
+    "imageUrl": "/vehicles/koleos-1-diesel-2010.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Renault_Koleos_Initiale_Paris_DCi_4X4_2.0_Front.jpg"
+    }
+  },
+  "laguna3-diesel-2009": {
+    "imageUrl": "/vehicles/laguna3-diesel-2009.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Laguna_III_Phase_I_front-1.JPG"
+    }
+  },
+  "twingo-2-essence-2008": {
+    "imageUrl": "/vehicles/twingo-2-essence-2008.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2011_Renault_Twingo_Pzaz_1.1.jpg"
+    }
+  },
+  "austral-etech-hybrid": {
+    "imageUrl": "/vehicles/austral-etech-hybrid.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Austral_1X7A6971.jpg"
+    }
+  },
+  "rafale-phev": {
+    "imageUrl": "/vehicles/rafale-phev.jpg",
+    "imageCredit": {
+      "author": "Harvey Bold",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2024_Renault_Rafale_Techno_esprit_Alpine_HEV_-_1199cc_1.2_(200PS)_Petrol_Hybrid_-_Flame_Red_-_07-2024%2C_Front.jpg"
+    }
+  },
+  "scenic-etech-electric": {
+    "imageUrl": "/vehicles/scenic-etech-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Sc%C3%A9nic_E-Tech_GIMS_2024_1X7A2035.jpg"
+    }
+  },
+  "symbioz-hybrid": {
+    "imageUrl": "/vehicles/symbioz-hybrid.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_Symbioz_IMG_0676.jpg"
+    }
+  },
+  "r4-etech-electric": {
+    "imageUrl": "/vehicles/r4-etech-electric.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_4_E-Tech_150_Comfort_Range_Techno_%E2%80%93_f_22062025.jpg"
+    }
+  },
+  "r5-etech-electric": {
+    "imageUrl": "/vehicles/r5-etech-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Renault_5_E-Tech_Electric_DSC_7279.jpg"
+    }
+  },
+  "e208-electric": {
+    "imageUrl": "/vehicles/e208-electric.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_Peugeot_208_GT_Line_PureTech_1.2_Front.jpg"
+    }
+  },
+  "208-essence": {
+    "imageUrl": "/vehicles/208-essence.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_Peugeot_208_GT_Line_PureTech_1.2_Front.jpg"
+    }
+  },
+  "peugeot-208-1-essence-2012": {
+    "imageUrl": "/vehicles/peugeot-208-1-essence-2012.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2017_Peugeot_208_Active_1.2_facelift_Front.jpg"
+    }
+  },
+  "peugeot-208-1-diesel-2012": {
+    "imageUrl": "/vehicles/peugeot-208-1-diesel-2012.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2017_Peugeot_208_Active_1.2_facelift_Front.jpg"
+    }
+  },
+  "peugeot-207-essence-2008": {
+    "imageUrl": "/vehicles/peugeot-207-essence-2008.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peugeot_207_75_Forever_(Facelift)_%E2%80%93_Frontansicht%2C_5._Mai_2012%2C_Ratingen.jpg"
+    }
+  },
+  "peugeot-207-diesel-2009": {
+    "imageUrl": "/vehicles/peugeot-207-diesel-2009.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peugeot_207_75_Forever_(Facelift)_%E2%80%93_Frontansicht%2C_5._Mai_2012%2C_Ratingen.jpg"
+    }
+  },
   "2008-essence": {
     "imageUrl": "/vehicles/2008-essence.jpg",
     "imageCredit": {
@@ -235,6 +406,1653 @@ export const VEHICLE_IMAGES: Record<string, { imageUrl: string, imageCredit: Veh
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peugeot_2008_B_Retro_Classics_2020_IMG_0025.jpg"
+    }
+  },
+  "e2008-electric": {
+    "imageUrl": "/vehicles/e2008-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peugeot_2008_B_Retro_Classics_2020_IMG_0025.jpg"
+    }
+  },
+  "3008-hybrid": {
+    "imageUrl": "/vehicles/3008-hybrid.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peugeot_3008_THP_165_EAT6_Allure_GT-Line_(II)_%E2%80%93_Frontansicht_(1)%2C_20._September_2017%2C_D%C3%BCsseldorf.jpg"
+    }
+  },
+  "3008-phev": {
+    "imageUrl": "/vehicles/3008-phev.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peugeot_3008_THP_165_EAT6_Allure_GT-Line_(II)_%E2%80%93_Frontansicht_(1)%2C_20._September_2017%2C_D%C3%BCsseldorf.jpg"
+    }
+  },
+  "3008-diesel": {
+    "imageUrl": "/vehicles/3008-diesel.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peugeot_3008_THP_165_EAT6_Allure_GT-Line_(II)_%E2%80%93_Frontansicht_(1)%2C_20._September_2017%2C_D%C3%BCsseldorf.jpg"
+    }
+  },
+  "peugeot-3008-1-diesel-2010": {
+    "imageUrl": "/vehicles/peugeot-3008-1-diesel-2010.jpg",
+    "imageCredit": {
+      "author": "OSX",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2014_Peugeot_3008_(T8_MY13)_Allure_HDi_wagon_(2015-07-16)_01.jpg"
+    }
+  },
+  "308-essence": {
+    "imageUrl": "/vehicles/308-essence.jpg",
+    "imageCredit": {
+      "author": "A.BourgeoisP",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_-_Peugeot_308_III_(C)_-_196.jpg"
+    }
+  },
+  "308-hybrid": {
+    "imageUrl": "/vehicles/308-hybrid.jpg",
+    "imageCredit": {
+      "author": "A.BourgeoisP",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_-_Peugeot_308_III_(C)_-_196.jpg"
+    }
+  },
+  "308-diesel": {
+    "imageUrl": "/vehicles/308-diesel.jpg",
+    "imageCredit": {
+      "author": "A.BourgeoisP",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_-_Peugeot_308_III_(C)_-_196.jpg"
+    }
+  },
+  "308-phev": {
+    "imageUrl": "/vehicles/308-phev.jpg",
+    "imageCredit": {
+      "author": "A.BourgeoisP",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_-_Peugeot_308_III_(C)_-_196.jpg"
+    }
+  },
+  "e308-electric": {
+    "imageUrl": "/vehicles/e308-electric.jpg",
+    "imageCredit": {
+      "author": "A.BourgeoisP",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_-_Peugeot_308_III_(C)_-_196.jpg"
+    }
+  },
+  "308-sw-essence": {
+    "imageUrl": "/vehicles/308-sw-essence.jpg",
+    "imageCredit": {
+      "author": "A.BourgeoisP",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_-_Peugeot_308_III_(C)_-_196.jpg"
+    }
+  },
+  "308-sw-hybrid": {
+    "imageUrl": "/vehicles/308-sw-hybrid.jpg",
+    "imageCredit": {
+      "author": "A.BourgeoisP",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_-_Peugeot_308_III_(C)_-_196.jpg"
+    }
+  },
+  "peugeot-308-t7-essence-2008": {
+    "imageUrl": "/vehicles/peugeot-308-t7-essence-2008.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peugeot_308_5-T%C3%BCrer_front-1.JPG"
+    }
+  },
+  "peugeot-308-t7-diesel-2009": {
+    "imageUrl": "/vehicles/peugeot-308-t7-diesel-2009.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peugeot_308_5-T%C3%BCrer_front-1.JPG"
+    }
+  },
+  "peugeot-308-sw-t7-diesel-2010": {
+    "imageUrl": "/vehicles/peugeot-308-sw-t7-diesel-2010.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peugeot_308_5-T%C3%BCrer_front-1.JPG"
+    }
+  },
+  "peugeot-308-t9-diesel-2014": {
+    "imageUrl": "/vehicles/peugeot-308-t9-diesel-2014.jpg",
+    "imageCredit": {
+      "author": "A.BourgeoisP",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_-_Peugeot_308_II_(B)_-_55.jpg"
+    }
+  },
+  "peugeot-407-diesel-2008": {
+    "imageUrl": "/vehicles/peugeot-407-diesel-2008.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2008_Peugeot_407_Sport_HDi_2.0_Front.jpg"
+    }
+  },
+  "508-essence": {
+    "imageUrl": "/vehicles/508-essence.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2019_Peugeot_508_GT-Line_BlueHDi_1.5_(130_PS)_Front_(1).jpg"
+    }
+  },
+  "508-diesel": {
+    "imageUrl": "/vehicles/508-diesel.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2019_Peugeot_508_GT-Line_BlueHDi_1.5_(130_PS)_Front_(1).jpg"
+    }
+  },
+  "508-sw-hybrid": {
+    "imageUrl": "/vehicles/508-sw-hybrid.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2019_Peugeot_508_GT-Line_BlueHDi_1.5_(130_PS)_Front_(1).jpg"
+    }
+  },
+  "peugeot-508-1-diesel-2011": {
+    "imageUrl": "/vehicles/peugeot-508-1-diesel-2011.jpg",
+    "imageCredit": {
+      "author": "Mic from Reading - Berkshire, United Kingdom",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mondial_de_l'Automobile_2010%2C_Paris_-_France_(5057913461).jpg"
+    }
+  },
+  "rifter-essence": {
+    "imageUrl": "/vehicles/rifter-essence.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Peugeot_Rifter_Allure_BlueHDi_1.6_Front.jpg"
+    }
+  },
+  "rifter-diesel": {
+    "imageUrl": "/vehicles/rifter-diesel.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Peugeot_Rifter_Allure_BlueHDi_1.6_Front.jpg"
+    }
+  },
+  "erifter-electric": {
+    "imageUrl": "/vehicles/erifter-electric.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Peugeot_Rifter_Allure_BlueHDi_1.6_Front.jpg"
+    }
+  },
+  "partner-2-diesel-2010": {
+    "imageUrl": "/vehicles/partner-2-diesel-2010.jpg",
+    "imageCredit": {
+      "author": "78maze",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Thepeugeotpartner.JPG"
+    }
+  },
+  "c3-essence": {
+    "imageUrl": "/vehicles/c3-essence.jpg",
+    "imageCredit": {
+      "author": "El monty",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C3_-_2016_(17).jpg"
+    }
+  },
+  "ec3-electric": {
+    "imageUrl": "/vehicles/ec3-electric.jpg",
+    "imageCredit": {
+      "author": "Original photo by Alexander Migl, retouched by NearEMPTiness",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C3_(4th_generation)_DSC_7103_(retouched).jpg"
+    }
+  },
+  "citroen-c3-2-essence-2009": {
+    "imageUrl": "/vehicles/citroen-c3-2-essence-2009.jpg",
+    "imageCredit": {
+      "author": "TTTNIS",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2nd_generation_Citro%C3%ABn_C3.jpg"
+    }
+  },
+  "ec3-aircross-electric": {
+    "imageUrl": "/vehicles/ec3-aircross-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_%C3%AB-C3_Aircross_IMG_3525.jpg"
+    }
+  },
+  "aygox-essence-c3-aircross": {
+    "imageUrl": "/vehicles/aygox-essence-c3-aircross.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_%C3%AB-C3_Aircross_IMG_3525.jpg"
+    }
+  },
+  "c4-essence": {
+    "imageUrl": "/vehicles/c4-essence.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2025_Citro%C3%ABn_C4_Auto_Zuerich_2024_DSC_6108.jpg"
+    }
+  },
+  "ec4-electric": {
+    "imageUrl": "/vehicles/ec4-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Citroen_C4_(2020)_1X7A5851.jpg"
+    }
+  },
+  "citroen-c4-2-essence-2009": {
+    "imageUrl": "/vehicles/citroen-c4-2-essence-2009.jpg",
+    "imageCredit": {
+      "author": "Luc106",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn-C4_Mk2_Front-view.JPG"
+    }
+  },
+  "c1-essence-2008": {
+    "imageUrl": "/vehicles/c1-essence-2008.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2017_Citroen_C1_Flair_Puretech_1.2_Front.jpg"
+    }
+  },
+  "berlingo-essence": {
+    "imageUrl": "/vehicles/berlingo-essence.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Peugeot_Rifter_Allure_BlueHDi_1.6_Front.jpg"
+    }
+  },
+  "eberlingo-electric": {
+    "imageUrl": "/vehicles/eberlingo-electric.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Peugeot_Rifter_Allure_BlueHDi_1.6_Front.jpg"
+    }
+  },
+  "berlingo-diesel": {
+    "imageUrl": "/vehicles/berlingo-diesel.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Peugeot_Rifter_Allure_BlueHDi_1.6_Front.jpg"
+    }
+  },
+  "berlingo-2-diesel-2010": {
+    "imageUrl": "/vehicles/berlingo-2-diesel-2010.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peugeot_Partner_Tepee_(II)_%E2%80%93_Frontansicht%2C_17._September_2011%2C_Hilden.jpg"
+    }
+  },
+  "golf-essence": {
+    "imageUrl": "/vehicles/golf-essence.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_Volkswagen_Golf_Style_TDi_S-A_2.0.jpg"
+    }
+  },
+  "golf-diesel": {
+    "imageUrl": "/vehicles/golf-diesel.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_Volkswagen_Golf_Style_TDi_S-A_2.0.jpg"
+    }
+  },
+  "golf-ehybrid-phev": {
+    "imageUrl": "/vehicles/golf-ehybrid-phev.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_Volkswagen_Golf_Style_TDi_S-A_2.0.jpg"
+    }
+  },
+  "golf-sw-essence": {
+    "imageUrl": "/vehicles/golf-sw-essence.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_Volkswagen_Golf_Style_TDi_S-A_2.0.jpg"
+    }
+  },
+  "golf6-essence-2009": {
+    "imageUrl": "/vehicles/golf6-essence-2009.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:VW_Golf_1.2_TSI_Move_(VI)_%E2%80%93_Frontansicht%2C_25._August_2012%2C_Velbert.jpg"
+    }
+  },
+  "golf6-diesel-2010": {
+    "imageUrl": "/vehicles/golf6-diesel-2010.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:VW_Golf_1.2_TSI_Move_(VI)_%E2%80%93_Frontansicht%2C_25._August_2012%2C_Velbert.jpg"
+    }
+  },
+  "golf6-sw-diesel-2010": {
+    "imageUrl": "/vehicles/golf6-sw-diesel-2010.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:VW_Golf_1.2_TSI_Move_(VI)_%E2%80%93_Frontansicht%2C_25._August_2012%2C_Velbert.jpg"
+    }
+  },
+  "golf7-essence-2013": {
+    "imageUrl": "/vehicles/golf7-essence-2013.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2013_Volkswagen_Golf_SE_BlueMotion_Technology_1.4_Front.jpg"
+    }
+  },
+  "golf7-diesel-2013": {
+    "imageUrl": "/vehicles/golf7-diesel-2013.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2013_Volkswagen_Golf_SE_BlueMotion_Technology_1.4_Front.jpg"
+    }
+  },
+  "polo-essence": {
+    "imageUrl": "/vehicles/polo-essence.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Volkswagen_Polo_SE_1.0_Front.jpg"
+    }
+  },
+  "polo-5-essence-2010": {
+    "imageUrl": "/vehicles/polo-5-essence-2010.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:VW_Polo_beats_(VI)_%E2%80%93_f_03032019.jpg"
+    }
+  },
+  "passat-sw-diesel": {
+    "imageUrl": "/vehicles/passat-sw-diesel.jpg",
+    "imageCredit": {
+      "author": "Herranderssvensson",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Volkswagen_Passat_B8_fr.jpg"
+    }
+  },
+  "passat-b6-diesel-2009": {
+    "imageUrl": "/vehicles/passat-b6-diesel-2009.jpg",
+    "imageCredit": {
+      "author": "IFCAR",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:6th-Volkswagen-Passat.jpg"
+    }
+  },
+  "passat-sw-b6-diesel-2009": {
+    "imageUrl": "/vehicles/passat-sw-b6-diesel-2009.jpg",
+    "imageCredit": {
+      "author": "IFCAR",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:6th-Volkswagen-Passat.jpg"
+    }
+  },
+  "tiguan-essence": {
+    "imageUrl": "/vehicles/tiguan-essence.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Volkswagen_Tiguan_III_IMG_8823_(cropped).jpg"
+    }
+  },
+  "tiguan-diesel": {
+    "imageUrl": "/vehicles/tiguan-diesel.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Volkswagen_Tiguan_III_IMG_8823_(cropped).jpg"
+    }
+  },
+  "tiguan-1-diesel-2010": {
+    "imageUrl": "/vehicles/tiguan-1-diesel-2010.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Volkswagen_Tiguan_III_IMG_8823_(cropped).jpg"
+    }
+  },
+  "caddy-diesel": {
+    "imageUrl": "/vehicles/caddy-diesel.jpg",
+    "imageCredit": {
+      "author": "Charles01",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Volkswagen_Caddy_Maxi_postfacelift_in_Deidesheim.jpg"
+    }
+  },
+  "caddy-3-diesel-2011": {
+    "imageUrl": "/vehicles/caddy-3-diesel-2011.jpg",
+    "imageCredit": {
+      "author": "Charles01",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Volkswagen_Caddy_Maxi_postfacelift_in_Deidesheim.jpg"
+    }
+  },
+  "id3-electric": {
+    "imageUrl": "/vehicles/id3-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Volkswagen_ID.3_at_IAA_2019_IMG_0779.jpg"
+    }
+  },
+  "id4-electric": {
+    "imageUrl": "/vehicles/id4-electric.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:VW_ID.4_1st_%E2%80%93_f_26122020.jpg"
+    }
+  },
+  "yaris-hybrid": {
+    "imageUrl": "/vehicles/yaris-hybrid.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2024_Toyota_Yaris_Hybrid_130_(XP210)_IMG_9910.jpg"
+    }
+  },
+  "yaris-2-essence-2009": {
+    "imageUrl": "/vehicles/yaris-2-essence-2009.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_Toyota_Yaris_Design_HEV_CVT_1.5_Front.jpg"
+    }
+  },
+  "yaris-2-hybrid-2013": {
+    "imageUrl": "/vehicles/yaris-2-hybrid-2013.jpg",
+    "imageCredit": {
+      "author": "MercurySable99",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2017_Toyota_Yaris_L_5-door%2C_front_right%2C_08-25-2024.jpg"
+    }
+  },
+  "yariscross-hybrid": {
+    "imageUrl": "/vehicles/yariscross-hybrid.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Toyota_Yaris_Cross_Hybrid_(XP210)_1X7A1846.jpg"
+    }
+  },
+  "aygox-essence": {
+    "imageUrl": "/vehicles/aygox-essence.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Toyota_Aygo_X_1X7A5861.jpg"
+    }
+  },
+  "corolla-hybrid": {
+    "imageUrl": "/vehicles/corolla-hybrid.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Toyota_Corolla_Limousine_Hybrid_Genf_2019_1Y7A5576.jpg"
+    }
+  },
+  "corolla-sedan-essence": {
+    "imageUrl": "/vehicles/corolla-sedan-essence.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Toyota_Corolla_Limousine_Hybrid_Genf_2019_1Y7A5576.jpg"
+    }
+  },
+  "corolla-sedan-hybrid": {
+    "imageUrl": "/vehicles/corolla-sedan-hybrid.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Toyota_Corolla_Limousine_Hybrid_Genf_2019_1Y7A5576.jpg"
+    }
+  },
+  "corolla-ts-hybrid": {
+    "imageUrl": "/vehicles/corolla-ts-hybrid.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Toyota_Corolla_Limousine_Hybrid_Genf_2019_1Y7A5576.jpg"
+    }
+  },
+  "auris-1-essence-2010": {
+    "imageUrl": "/vehicles/auris-1-essence-2010.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Toyota_Auris_2.0_D-4D_Executive_(II)_%E2%80%93_Frontansicht%2C_1._Juni_2013%2C_D%C3%BCsseldorf.jpg"
+    }
+  },
+  "chr-hybrid": {
+    "imageUrl": "/vehicles/chr-hybrid.jpg",
+    "imageCredit": {
+      "author": "EurovisionNim",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2017_Toyota_C-HR_(NGX10R)_Koba_2WD_hatchback_(2018-08-06)_01.jpg"
+    }
+  },
+  "rav4-hybrid": {
+    "imageUrl": "/vehicles/rav4-hybrid.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2019_Toyota_RAV4_Hybrid_01.jpg"
+    }
+  },
+  "rav4-3-diesel-2010": {
+    "imageUrl": "/vehicles/rav4-3-diesel-2010.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2019_Toyota_RAV4_Hybrid_01.jpg"
+    }
+  },
+  "prius3-hybrid-2010": {
+    "imageUrl": "/vehicles/prius3-hybrid-2010.jpg",
+    "imageCredit": {
+      "author": "IFCAR",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2012_Toyota_Prius_plug-in_hyrid_--_07-14-2012.JPG"
+    }
+  },
+  "model3-electric": {
+    "imageUrl": "/vehicles/model3-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tesla_Model_3_(2023)_Autofr%C3%BChling_Ulm_IMG_9282.jpg"
+    }
+  },
+  "model3-lr-electric": {
+    "imageUrl": "/vehicles/model3-lr-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tesla_Model_3_(2023)_Autofr%C3%BChling_Ulm_IMG_9282.jpg"
+    }
+  },
+  "modely-electric": {
+    "imageUrl": "/vehicles/modely-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_(2025)_MYLE_Festival_2025_DSC_9565.jpg"
+    }
+  },
+  "modely-lr-electric": {
+    "imageUrl": "/vehicles/modely-lr-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_(2025)_MYLE_Festival_2025_DSC_9565.jpg"
+    }
+  },
+  "modely-perf-electric": {
+    "imageUrl": "/vehicles/modely-perf-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_(2025)_MYLE_Festival_2025_DSC_9565.jpg"
+    }
+  },
+  "i10-essence": {
+    "imageUrl": "/vehicles/i10-essence.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hyundai_i10_1.0_Intro_(III)_%E2%80%93_f_03012021.jpg"
+    }
+  },
+  "i20-essence": {
+    "imageUrl": "/vehicles/i20-essence.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hyundai_i20_(III%2C_Facelift)_%E2%80%93_f_11102025.jpg"
+    }
+  },
+  "kona-electric": {
+    "imageUrl": "/vehicles/kona-electric.jpg",
+    "imageCredit": {
+      "author": "Elise240SX",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Hyundai_Kona_Preferred_in_Tangerine_Comet%2C_Front_Left%2C_06-12-2022.jpg"
+    }
+  },
+  "tucson-hybrid": {
+    "imageUrl": "/vehicles/tucson-hybrid.jpg",
+    "imageCredit": {
+      "author": "SsmIntrigue",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_Hyundai_Tucson_Preferred%2C_Front_Right%2C_05-24-2021.jpg"
+    }
+  },
+  "tucson-diesel": {
+    "imageUrl": "/vehicles/tucson-diesel.jpg",
+    "imageCredit": {
+      "author": "SsmIntrigue",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_Hyundai_Tucson_Preferred%2C_Front_Right%2C_05-24-2021.jpg"
+    }
+  },
+  "tucson-essence": {
+    "imageUrl": "/vehicles/tucson-essence.jpg",
+    "imageCredit": {
+      "author": "SsmIntrigue",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_Hyundai_Tucson_Preferred%2C_Front_Right%2C_05-24-2021.jpg"
+    }
+  },
+  "ioniq-hybrid": {
+    "imageUrl": "/vehicles/ioniq-hybrid.jpg",
+    "imageCredit": {
+      "author": "Pablo Montoya",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hyundai_Ioniq_Electric_(12).JPG"
+    }
+  },
+  "ioniq5-electric": {
+    "imageUrl": "/vehicles/ioniq5-electric.jpg",
+    "imageCredit": {
+      "author": "Damian B Oh",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hyundai_IONIQ_5_NE_Gravity_Gold_Matte_(9).jpg"
+    }
+  },
+  "hyundai-inster-electric": {
+    "imageUrl": "/vehicles/hyundai-inster-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hyundai_Inster_DSC_7947.jpg"
+    }
+  },
+  "ix35-diesel-2011": {
+    "imageUrl": "/vehicles/ix35-diesel-2011.jpg",
+    "imageCredit": {
+      "author": "Mick from Northamptonshire, England",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hyundai_IX35_Premium_CRDi_-_Flickr_-_mick_-_Lumix.jpg"
+    }
+  },
+  "picanto-essence": {
+    "imageUrl": "/vehicles/picanto-essence.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Kia_Picanto_3_Automatic_1.2_Front.jpg"
+    }
+  },
+  "ceed-hybrid": {
+    "imageUrl": "/vehicles/ceed-hybrid.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Kia_Ceed_First_Edition_1.4_Front.jpg"
+    }
+  },
+  "niro-hybrid": {
+    "imageUrl": "/vehicles/niro-hybrid.jpg",
+    "imageCredit": {
+      "author": "Makizox",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2017_Kia_Niro_3_S-A_1.6.jpg"
+    }
+  },
+  "kia-niro-ev-electric": {
+    "imageUrl": "/vehicles/kia-niro-ev-electric.jpg",
+    "imageCredit": {
+      "author": "Makizox",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2017_Kia_Niro_3_S-A_1.6.jpg"
+    }
+  },
+  "ev6-electric": {
+    "imageUrl": "/vehicles/ev6-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kia_EV6_Auto_Zuerich_2021_IMG_0435.jpg"
+    }
+  },
+  "kia-ev3-electric": {
+    "imageUrl": "/vehicles/kia-ev3-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kia_EV3_GT-Line_Automesse_Ludwigsburg_2024_IMG_1674.jpg"
+    }
+  },
+  "sportage-phev": {
+    "imageUrl": "/vehicles/sportage-phev.jpg",
+    "imageCredit": {
+      "author": "Adulko",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Motiv_02freestyle_hev_053_v4.jpg"
+    }
+  },
+  "sportage-diesel": {
+    "imageUrl": "/vehicles/sportage-diesel.jpg",
+    "imageCredit": {
+      "author": "Adulko",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Motiv_02freestyle_hev_053_v4.jpg"
+    }
+  },
+  "sportage-essence": {
+    "imageUrl": "/vehicles/sportage-essence.jpg",
+    "imageCredit": {
+      "author": "Adulko",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Motiv_02freestyle_hev_053_v4.jpg"
+    }
+  },
+  "sportage-3-diesel-2011": {
+    "imageUrl": "/vehicles/sportage-3-diesel-2011.jpg",
+    "imageCredit": {
+      "author": "Adulko",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Motiv_02freestyle_hev_053_v4.jpg"
+    }
+  },
+  "fiesta-6-essence-2010": {
+    "imageUrl": "/vehicles/fiesta-6-essence-2010.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ford_Fiesta_ST-Line_(VII%2C_Facelift)_%E2%80%93_f_30012023.jpg"
+    }
+  },
+  "focus-diesel": {
+    "imageUrl": "/vehicles/focus-diesel.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Ford_Focus_ST-Line_X_1.0.jpg"
+    }
+  },
+  "focus-sw-essence": {
+    "imageUrl": "/vehicles/focus-sw-essence.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Ford_Focus_ST-Line_X_1.0.jpg"
+    }
+  },
+  "focus2-essence-2008": {
+    "imageUrl": "/vehicles/focus2-essence-2008.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Ford_Focus_ST-Line_X_1.0.jpg"
+    }
+  },
+  "kuga-diesel": {
+    "imageUrl": "/vehicles/kuga-diesel.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_Ford_Kuga_Titanium_First_Edition_EcoBlue_1.5.jpg"
+    }
+  },
+  "kuga-1-diesel-2010": {
+    "imageUrl": "/vehicles/kuga-1-diesel-2010.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_Ford_Kuga_Titanium_First_Edition_EcoBlue_1.5.jpg"
+    }
+  },
+  "mondeo-sw-4-diesel-2009": {
+    "imageUrl": "/vehicles/mondeo-sw-4-diesel-2009.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ford_Mondeo_Turnier_2.0_EcoBlue_ST-Line_(V%2C_Facelift)_%E2%80%93_f_18042021.jpg"
+    }
+  },
+  "puma-essence": {
+    "imageUrl": "/vehicles/puma-essence.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_Ford_Puma_ST_1.5_Front.jpg"
+    }
+  },
+  "tourneo-connect-electric": {
+    "imageUrl": "/vehicles/tourneo-connect-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ford_Tourneo_Connect_Genf_2018.jpg"
+    }
+  },
+  "corsa-essence": {
+    "imageUrl": "/vehicles/corsa-essence.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Opel_Corsa-e_at_IAA_2019_IMG_0738.jpg"
+    }
+  },
+  "i20-electric-corsa": {
+    "imageUrl": "/vehicles/i20-electric-corsa.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Opel_Corsa-e_at_IAA_2019_IMG_0738.jpg"
+    }
+  },
+  "corsa-d-essence-2009": {
+    "imageUrl": "/vehicles/corsa-d-essence-2009.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Opel_Corsa-e_at_IAA_2019_IMG_0738.jpg"
+    }
+  },
+  "astra-diesel": {
+    "imageUrl": "/vehicles/astra-diesel.jpg",
+    "imageCredit": {
+      "author": "order_242 from Chile",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Opel_Astra_1.4_GL_1995_(10127667484).jpg"
+    }
+  },
+  "astra-j-essence-2010": {
+    "imageUrl": "/vehicles/astra-j-essence-2010.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Opel_Astra_Design_Edition_(J)_%E2%80%93_Frontansicht_(1)%2C_14._August_2011%2C_Heiligenhaus.jpg"
+    }
+  },
+  "mokka-essence": {
+    "imageUrl": "/vehicles/mokka-essence.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Opel_Mokka_1.4_Turbo_ecoFLEX_Innovation_%E2%80%93_Frontansicht%2C_20._Oktober_2012%2C_Heiligenhaus.jpg"
+    }
+  },
+  "mokka-electric": {
+    "imageUrl": "/vehicles/mokka-electric.jpg",
+    "imageCredit": {
+      "author": "M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Opel_Mokka_1.4_Turbo_ecoFLEX_Innovation_%E2%80%93_Frontansicht%2C_20._Oktober_2012%2C_Heiligenhaus.jpg"
+    }
+  },
+  "combo-diesel": {
+    "imageUrl": "/vehicles/combo-diesel.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Opel_Combo_1.5_Diesel_Edition_(V%2C_Facelift)_%E2%80%93_f_04112025.jpg"
+    }
+  },
+  "comboe-electric": {
+    "imageUrl": "/vehicles/comboe-electric.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Opel_Combo_1.5_Diesel_Edition_(V%2C_Facelift)_%E2%80%93_f_04112025.jpg"
+    }
+  },
+  "frontera-hybrid": {
+    "imageUrl": "/vehicles/frontera-hybrid.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Opel_Frontera_1.2_DIT_Hybrid_Ultimate_(C)_%E2%80%93_f_03042026.jpg"
+    }
+  },
+  "bmw-serie1-essence": {
+    "imageUrl": "/vehicles/bmw-serie1-essence.jpg",
+    "imageCredit": {
+      "author": "Wikisympathisant",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:BMW_F70-120_M-line_side.jpg"
+    }
+  },
+  "bmw-serie1-e87-essence-2009": {
+    "imageUrl": "/vehicles/bmw-serie1-e87-essence-2009.jpg",
+    "imageCredit": {
+      "author": "Wikisympathisant",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:BMW_F70-120_M-line_side.jpg"
+    }
+  },
+  "bmw-serie3-essence": {
+    "imageUrl": "/vehicles/bmw-serie3-essence.jpg",
+    "imageCredit": {
+      "author": "Pjt56 --- If you use the picture outside Wikipedia I would appreciate a short e-mail to pjt56@gmx.net or a message on my discussion page",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:BMW3er-pjt.jpg"
+    }
+  },
+  "bmw-320d-diesel": {
+    "imageUrl": "/vehicles/bmw-320d-diesel.jpg",
+    "imageCredit": {
+      "author": "Pjt56 --- If you use the picture outside Wikipedia I would appreciate a short e-mail to pjt56@gmx.net or a message on my discussion page",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:BMW3er-pjt.jpg"
+    }
+  },
+  "bmw-330e-phev": {
+    "imageUrl": "/vehicles/bmw-330e-phev.jpg",
+    "imageCredit": {
+      "author": "Pjt56 --- If you use the picture outside Wikipedia I would appreciate a short e-mail to pjt56@gmx.net or a message on my discussion page",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:BMW3er-pjt.jpg"
+    }
+  },
+  "bmw-serie3-touring-diesel": {
+    "imageUrl": "/vehicles/bmw-serie3-touring-diesel.jpg",
+    "imageCredit": {
+      "author": "Pjt56 --- If you use the picture outside Wikipedia I would appreciate a short e-mail to pjt56@gmx.net or a message on my discussion page",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:BMW3er-pjt.jpg"
+    }
+  },
+  "bmw-320d-e90-diesel-2009": {
+    "imageUrl": "/vehicles/bmw-320d-e90-diesel-2009.jpg",
+    "imageCredit": {
+      "author": "Pjt56 --- If you use the picture outside Wikipedia I would appreciate a short e-mail to pjt56@gmx.net or a message on my discussion page",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:BMW3er-pjt.jpg"
+    }
+  },
+  "bmw-320d-f30-diesel-2013": {
+    "imageUrl": "/vehicles/bmw-320d-f30-diesel-2013.jpg",
+    "imageCredit": {
+      "author": "Pjt56 --- If you use the picture outside Wikipedia I would appreciate a short e-mail to pjt56@gmx.net or a message on my discussion page",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:BMW3er-pjt.jpg"
+    }
+  },
+  "bmw-x3-f25-diesel-2011": {
+    "imageUrl": "/vehicles/bmw-x3-f25-diesel-2011.jpg",
+    "imageCredit": {
+      "author": "Dinkun Chen",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:BMW_X3_(G01)_China_(2).jpg"
+    }
+  },
+  "bmw-i4": {
+    "imageUrl": "/vehicles/bmw-i4.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:BMW_i4_IMG_6695.jpg"
+    }
+  },
+  "mercedes-classe-a-essence": {
+    "imageUrl": "/vehicles/mercedes-classe-a-essence.jpg",
+    "imageCredit": {
+      "author": "Luc106, Vajotwo and Kev22 This image was created with PhotoScape.",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_A-Class_timeline.jpg"
+    }
+  },
+  "mercedes-classe-a-w176-diesel-2013": {
+    "imageUrl": "/vehicles/mercedes-classe-a-w176-diesel-2013.jpg",
+    "imageCredit": {
+      "author": "Luc106, Vajotwo and Kev22 This image was created with PhotoScape.",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_A-Class_timeline.jpg"
+    }
+  },
+  "mercedes-c220d-diesel": {
+    "imageUrl": "/vehicles/mercedes-c220d-diesel.jpg",
+    "imageCredit": {
+      "author": "Vajotwo (W202-W205) This image was created with PhotoScape.Herranderssvensson (W206)",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_C-Class_timeline.jpg"
+    }
+  },
+  "mercedes-c220d-w204-diesel-2010": {
+    "imageUrl": "/vehicles/mercedes-c220d-w204-diesel-2010.jpg",
+    "imageCredit": {
+      "author": "Vajotwo (W202-W205) This image was created with PhotoScape.Herranderssvensson (W206)",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_C-Class_timeline.jpg"
+    }
+  },
+  "mercedes-glc300e-phev": {
+    "imageUrl": "/vehicles/mercedes-glc300e-phev.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_X254_1X7A6343.jpg"
+    }
+  },
+  "audi-a3-essence": {
+    "imageUrl": "/vehicles/audi-a3-essence.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Audi_A3_8Y_Sedan_IMG_5936.jpg"
+    }
+  },
+  "audi-a3-8p-essence-2008": {
+    "imageUrl": "/vehicles/audi-a3-8p-essence-2008.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Audi_A3_8Y_Sedan_IMG_5936.jpg"
+    }
+  },
+  "audi-a3-8v-essence-2013": {
+    "imageUrl": "/vehicles/audi-a3-8v-essence-2013.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Audi_A3_8Y_Sedan_IMG_5936.jpg"
+    }
+  },
+  "audi-a4-avant-diesel": {
+    "imageUrl": "/vehicles/audi-a4-avant-diesel.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Audi_A4_Sport_TDi_Quattro_S-A_2.0.jpg"
+    }
+  },
+  "audi-a4-b8-diesel-2009": {
+    "imageUrl": "/vehicles/audi-a4-b8-diesel-2009.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Audi_A4_B9_sedans_(FL)_1X7A2441.jpg"
+    }
+  },
+  "audi-a4-avant-b8-diesel-2009": {
+    "imageUrl": "/vehicles/audi-a4-avant-b8-diesel-2009.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Audi_A4_B9_sedans_(FL)_1X7A2441.jpg"
+    }
+  },
+  "audi-q3-essence": {
+    "imageUrl": "/vehicles/audi-q3-essence.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Audi_Q3_F3_DSC_7494.jpg"
+    }
+  },
+  "audi-q5-8r-diesel-2010": {
+    "imageUrl": "/vehicles/audi-q5-8r-diesel-2010.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Audi_Q5_FY_Facelift_IMG_IMG_5014.jpg"
+    }
+  },
+  "q4-etron": {
+    "imageUrl": "/vehicles/q4-etron.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Audi_Q4_e-tron_50_Quattro_IMG_6069.jpg"
+    }
+  },
+  "octavia-essence": {
+    "imageUrl": "/vehicles/octavia-essence.png",
+    "imageCredit": {
+      "author": "skoda",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Octavia-logo.svg"
+    }
+  },
+  "octavia-diesel": {
+    "imageUrl": "/vehicles/octavia-diesel.png",
+    "imageCredit": {
+      "author": "skoda",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Octavia-logo.svg"
+    }
+  },
+  "octavia-combi-2-diesel-2009": {
+    "imageUrl": "/vehicles/octavia-combi-2-diesel-2009.png",
+    "imageCredit": {
+      "author": "skoda",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Octavia-logo.svg"
+    }
+  },
+  "superb-essence": {
+    "imageUrl": "/vehicles/superb-essence.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Skoda_Superb_L%26K_(IV)_%E2%80%93_f_12042026.jpg"
+    }
+  },
+  "superb-diesel": {
+    "imageUrl": "/vehicles/superb-diesel.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Skoda_Superb_L%26K_(IV)_%E2%80%93_f_12042026.jpg"
+    }
+  },
+  "superb-combi-diesel": {
+    "imageUrl": "/vehicles/superb-combi-diesel.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Skoda_Superb_L%26K_(IV)_%E2%80%93_f_12042026.jpg"
+    }
+  },
+  "kamiq-essence": {
+    "imageUrl": "/vehicles/kamiq-essence.jpg",
+    "imageCredit": {
+      "author": "Navigator84",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%C5%A0koda_Kamiq_CN_001_China_2019-03-25.jpg"
+    }
+  },
+  "enyaq-electric": {
+    "imageUrl": "/vehicles/enyaq-electric.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Skoda_Enyaq_iV_80_%E2%80%93_f1_03052021.jpg"
+    }
+  },
+  "elroq-electric": {
+    "imageUrl": "/vehicles/elroq-electric.jpg",
+    "imageCredit": {
+      "author": "Y.Leclercq",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%C5%A0koda_Elroq_-_01.jpg"
+    }
+  },
+  "ibiza-essence": {
+    "imageUrl": "/vehicles/ibiza-essence.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_SEAT_Ibiza_SE_Technology_MPi_1.0_Front.jpg"
+    }
+  },
+  "leon-diesel": {
+    "imageUrl": "/vehicles/leon-diesel.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:SEAT_Leon_Mk4_IMG_4099.jpg"
+    }
+  },
+  "leon-ehybrid-phev": {
+    "imageUrl": "/vehicles/leon-ehybrid-phev.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_SEAT_Leon_FR_TSi_Evo_1.5_Front.jpg"
+    }
+  },
+  "cupra-born-electric": {
+    "imageUrl": "/vehicles/cupra-born-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cupra_Born_IAA_2021_1X7A0212.jpg"
+    }
+  },
+  "cupra-formentor-phev": {
+    "imageUrl": "/vehicles/cupra-formentor-phev.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cupra_Formentor_IMG_9668.jpg"
+    }
+  },
+  "fiat500-hybrid": {
+    "imageUrl": "/vehicles/fiat500-hybrid.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2010_Fiat_500_Lounge_1.2_Front.jpg"
+    }
+  },
+  "fiat500e-electric": {
+    "imageUrl": "/vehicles/fiat500e-electric.jpg",
+    "imageCredit": {
+      "author": "Daniel Przygoda",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fiat-500-vorne2.jpg"
+    }
+  },
+  "fiat500-essence-2010": {
+    "imageUrl": "/vehicles/fiat500-essence-2010.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2010_Fiat_500_Lounge_1.2_Front.jpg"
+    }
+  },
+  "doblo-2-diesel-2011": {
+    "imageUrl": "/vehicles/doblo-2-diesel-2011.jpg",
+    "imageCredit": {
+      "author": "Fiat500multijet",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fiat_Dobl%C3%B2_second_generation_2010.jpg"
+    }
+  },
+  "civic-hybrid": {
+    "imageUrl": "/vehicles/civic-hybrid.jpg",
+    "imageCredit": {
+      "author": "JustAnotherCarDesigner",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Honda_Civic_XI_hatchback_001.jpg"
+    }
+  },
+  "civic-8-essence-2008": {
+    "imageUrl": "/vehicles/civic-8-essence-2008.jpg",
+    "imageCredit": {
+      "author": "JustAnotherCarDesigner",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Honda_Civic_XI_hatchback_001.jpg"
+    }
+  },
+  "hrv-hybrid": {
+    "imageUrl": "/vehicles/hrv-hybrid.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2023_Honda_HR-V_Advance_i-MMD_CVT_1.5.jpg"
+    }
+  },
+  "jazz-hybrid": {
+    "imageUrl": "/vehicles/jazz-hybrid.jpg",
+    "imageCredit": {
+      "author": "Matti Blume",
+      "license": "CC BY-SA",
+      "licenseUrl": "//commons.wikimedia.org/wiki/File:Honda,_Auto_2024,_Zurich_(PANA0741).jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Honda%2C_Auto_2024%2C_Zurich_(PANA0741).jpg"
+    }
+  },
+  "juke-essence": {
+    "imageUrl": "/vehicles/juke-essence.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2020_Nissan_Juke_N-Connecta_DiG-T_S-A_1.0_Front.jpg"
+    }
+  },
+  "leaf-1-electric-2013": {
+    "imageUrl": "/vehicles/leaf-1-electric-2013.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_Nissan_Leaf_Tekna_Front.jpg"
+    }
+  },
+  "qashqai-epower-hybrid": {
+    "imageUrl": "/vehicles/qashqai-epower-hybrid.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2024_Nissan_Qashqai_e-Power_IMG_2187.jpg"
+    }
+  },
+  "qashqai-diesel": {
+    "imageUrl": "/vehicles/qashqai-diesel.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2024_Nissan_Qashqai_e-Power_IMG_2187.jpg"
+    }
+  },
+  "qashqai-j10-diesel-2009": {
+    "imageUrl": "/vehicles/qashqai-j10-diesel-2009.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2024_Nissan_Qashqai_e-Power_IMG_2187.jpg"
+    }
+  },
+  "mini-cooper-e": {
+    "imageUrl": "/vehicles/mini-cooper-e.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mini_Hatch_(J01)_Ditzingen_Mobil_IMG_9772_(cropped).jpg"
+    }
+  },
+  "mini-cooper-r56-essence-2010": {
+    "imageUrl": "/vehicles/mini-cooper-r56-essence-2010.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mini_Hatch_(J01)_Ditzingen_Mobil_IMG_9772_(cropped).jpg"
+    }
+  },
+  "swift-hybrid": {
+    "imageUrl": "/vehicles/swift-hybrid.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Suzuki_Swift_(2024)_hybrid_DSC_6076.jpg"
+    }
+  },
+  "swace-hybrid": {
+    "imageUrl": "/vehicles/swace-hybrid.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Suzuki_Swace_1X7A0433.jpg"
+    }
+  },
+  "mazda6-essence": {
+    "imageUrl": "/vehicles/mazda6-essence.jpg",
+    "imageCredit": {
+      "author": "Matti Blume",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Geneva_International_Motor_Show_2018%2C_Le_Grand-Saconnex_(1X7A9688).jpg"
+    }
+  },
+  "mg4-electric": {
+    "imageUrl": "/vehicles/mg4-electric.jpg",
+    "imageCredit": {
+      "author": "Calreyn88",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_MG_4_SE.jpg"
+    }
+  },
+  "mgzs-electric": {
+    "imageUrl": "/vehicles/mgzs-electric.jpg",
+    "imageCredit": {
+      "author": "Vauxford",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2018_MG_ZS_Exclusive_1.5_Front.jpg"
+    }
+  },
+  "byd-atto3": {
+    "imageUrl": "/vehicles/byd-atto3.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:BYD_Atto_3_1X7A6491.jpg"
+    }
+  },
+  "byd-dolphin-electric": {
+    "imageUrl": "/vehicles/byd-dolphin-electric.jpg",
+    "imageCredit": {
+      "author": "JamesYoung8167",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:BYD_Dolphin_Shishi_01_2022-11-04.jpg"
+    }
+  },
+  "seal-dmi-hybrid": {
+    "imageUrl": "/vehicles/seal-dmi-hybrid.jpg",
+    "imageCredit": {
+      "author": "Evnerd",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:BYD_Seal_2023010701.jpg"
+    }
+  },
+  "polestar2": {
+    "imageUrl": "/vehicles/polestar2.jpg",
+    "imageCredit": {
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Polestar_2_Genf_2019_1Y7A6000.jpg"
+    }
+  },
+  "volvo-ex30-electric": {
+    "imageUrl": "/vehicles/volvo-ex30-electric.jpg",
+    "imageCredit": {
+      "author": "Herranderssvensson",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Volvo_EX30_fl.jpg"
+    }
+  },
+  "smart-hashtag1-electric": {
+    "imageUrl": "/vehicles/smart-hashtag1-electric.jpg",
+    "imageCredit": {
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Smart_Hashtag_3_Brabus_Auto_Zuerich_2023_1X7A1489.jpg"
+    }
+  },
+  "jeep-avenger-electric": {
+    "imageUrl": "/vehicles/jeep-avenger-electric.png",
+    "imageCredit": {
+      "author": "Autosdeprimera",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2023_Jeep_Avenger_front_view.png"
+    }
+  },
+  "leapmotor-b10-electric": {
+    "imageUrl": "/vehicles/leapmotor-b10-electric.jpg",
+    "imageCredit": {
+      "author": "© M 93",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Leapmotor_B10_Design_Pro_Max_%E2%80%93_f_25012026.jpg"
     }
   }
 }
